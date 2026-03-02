@@ -19,6 +19,25 @@ DecisionLENS is an end-to-end data science portfolio project that applies predic
 
 ---
 
+## Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Data | [AACT / ClinicalTrials.gov](https://aact.ctti-clinicaltrials.org/) (public) |
+| Data wrangling | pyarrow, polars |
+| Modeling | Cox PH (lifelines), XGBoost, scikit-learn |
+| Explainability | SHAP (TreeExplainer) |
+| Generative AI | `llama-3.3-70b-versatile` - [Groq API](https://console.groq.com/) |
+| Visualization | Plotly Express / Graph Objects |
+| Dashboard | Streamlit |
+| Testing | pytest |
+
+---
+
+## Demo: https://decisionlens-yuan.streamlit.app/
+
+---
+
 ## Architecture
 
 ```
@@ -283,21 +302,6 @@ The `sql/` directory contains equivalent PostgreSQL queries for teams with live 
 | `enrollment_extract.sql` | Full modeling dataset — joins 8 AACT tables, engineers all features |
 | `competitor_landscape.sql` | Active competing trials, sponsor market share, site distribution |
 | `investigator_sites.sql` | Site completion rates, enrollment performance by country |
-
----
-
-## Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Data | [AACT / ClinicalTrials.gov](https://aact.ctti-clinicaltrials.org/) (public) |
-| Data wrangling | pandas, pyarrow |
-| Modeling | scikit-learn, XGBoost, lifelines (Cox PH) |
-| Explainability | SHAP (TreeExplainer) |
-| Generative AI | [Groq API](https://console.groq.com/) — `llama-3.3-70b-versatile` |
-| Visualization | Plotly Express / Graph Objects |
-| Dashboard | Streamlit |
-| Testing | pytest |
 
 ---
 

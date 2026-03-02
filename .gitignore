@@ -4,6 +4,8 @@
 # Data (potentially large — download locally, never commit)
 data/
 figures/
+models_backup/
+project_plan/
 
 # Python
 __pycache__/
