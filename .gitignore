@@ -3,6 +3,7 @@
 
 # Data (potentially large — download locally, never commit)
 data/
+figures/
 
 # Python
 __pycache__/
