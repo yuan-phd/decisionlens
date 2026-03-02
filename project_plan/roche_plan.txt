@@ -1,0 +1,53 @@
+Refined & Optimized Project: DecisionLENS
+
+Here's the tightened version, now specifically aligned to every major JD bullet:
+Data Sources (all free/open)
+
+AACT Database (ClinicalTrials.gov structured data via PostgreSQL) — the core
+WHO ICTRP data — for competitive intelligence module (how many competing trials in same condition/geography)
+FDA Orange Book / Drug@FDA — to add drug approval context
+PubMed API — for the GenAI module to pull investigator publication profiles
+
+Module 1: Enrollment Forecasting Model (predictive modeling, ML)
+Same as before but sharper. Predict two things: (a) will a trial meet its enrollment target? (b) time-to-enrollment-completion. Use survival analysis (Cox PH — leverages your biophysics stats background naturally) and gradient boosting (XGBoost). Add a site-level analysis — predict which countries/regions are likely to under-enroll based on historical patterns. This directly maps to "monitors and assesses the effectiveness of enrollment and engagement efforts and identifies opportunities to optimize value of investments."
+Module 2: Competitive Intelligence & Investigator Insights (the differentiator most candidates will miss)
+The JD specifically lists "Competitive Intelligence" and "Investigator Insights" as expertise areas. Build a module that, given a planned study's condition and therapeutic area, automatically surfaces: how many competing trials are currently recruiting for the same indication, who the top-enrolling investigators are in that space (from AACT's facility/investigator data), and geographic recruitment saturation maps. This is directly solving a real Clinical Operations problem. Visualize with Plotly geographic maps and network graphs.
+Module 3: Interactive Decision Support Dashboard (Streamlit + Tableau)
+Streamlit app: A clinical operations lead inputs planned study parameters → gets enrollment forecast with confidence intervals, competitive landscape view, site recommendation heatmap, and risk flags. Use Plotly for all interactive charts.
+Tableau Public dashboard: A complementary summary view — a portfolio-level dashboard showing across multiple trials: enrollment status vs. targets, geographic distribution, risk scoring. This mimics what Roche actually does internally (model predictions → Tableau dashboard for stakeholders).
+Module 4: GenAI-Powered Eligibility Criteria Analyzer (generative AI at systems level)
+This is where you show API integration and prompt engineering. Build a pipeline where: user pastes trial eligibility criteria text → LLM via API analyzes restrictiveness, flags overly narrow criteria, estimates impact on eligible patient pool, and generates a plain-English executive briefing for stakeholders. Show structured prompt engineering, not just a chatbot wrapper. Also add auto-generated documentation of analysis results — mapping to "generation of insights and documentation."
+Module 5: SQL Data Layer (database systems, query languages)
+All data extraction from AACT PostgreSQL via well-documented SQL scripts. Include complex joins, CTEs, window functions. Show you work at the data layer.
+Updated Repo Structure
+trialpulse/
+├── README.md                     # Business context, methodology, results
+├── sql/
+│   ├── enrollment_extract.sql
+│   ├── competitor_landscape.sql
+│   └── investigator_network.sql
+├── notebooks/
+│   ├── 01_eda_trial_landscape.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   ├── 03_enrollment_survival_model.ipynb
+│   ├── 04_competitive_intelligence.ipynb
+│   └── 05_model_evaluation.ipynb
+├── app/
+│   ├── streamlit_app.py          # Main SDS dashboard
+│   ├── pages/
+│   │   ├── enrollment_forecast.py
+│   │   ├── competitive_intel.py
+│   │   ├── investigator_insights.py
+│   │   └── eligibility_analyzer.py   # GenAI module
+│   └── utils/
+├── tableau/
+│   └── trial_portfolio_dashboard.twbx
+├── src/
+│   ├── pipeline.py
+│   ├── models.py
+│   └── genai_utils.py            # LLM API integration
+└── docs/
+    └── methodology.md
+Why This Is Now the Closest Possible Match
+JD RequirementProject CoveragePredictive modeling & MLEnrollment forecasting (survival + XGBoost)Clinical operational dataAACT — same structure as real trial dataStudy Decision SupportFull interactive Streamlit SDS toolPatient/Investigator InsightsInvestigator network + site analysisCompetitive IntelligenceCompeting trial landscape moduleEnrollment monitoringEnrollment vs. target trackingd3, plotly, Shiny, StreamlitStreamlit + Plotly throughoutEnterprise dashboard awarenessTableau Public companion dashboardGenAI at systems level (APIs)Eligibility criteria analyzer with API integrationSQL & databasesPostgreSQL extraction from AACTGrowth mindset / 80-20 / MVPExplicitly frame as iterative MVP in README
+One more tip: in your README and when presenting, use their exact language — "Study Decision Support," "SDS landscape," "Clinical Operations," "speed of business," "data-driven study decisions." That terminology alignment signals domain fluency even before they look at your code.

@@ -1,0 +1,38 @@
+{
+  "risk_factors": [
+    "Age 18-75 years",
+    "No prior systemic anti-cancer therapy for advanced disease",
+    "Known active brain metastases",
+    "Active or prior documented autoimmune disease requiring systemic treatment within 2 years",
+    "Systemic corticosteroid therapy > 10 mg/day prednisone equivalent within 14 days of first dose",
+    "Active hepatitis B or C infection",
+    "Any prior malignancy within 3 years"
+  ],
+  "severity_scores": [
+    "medium",
+    "low",
+    "high",
+    "medium",
+    "medium",
+    "high",
+    "high"
+  ],
+  "simplification_suggestions": [
+    "Consider broadening age range to 18-80 years, given improving healthspan and life expectancy",
+    "Allow prior systemic anti-cancer therapy for advanced disease, considering disease-free interval and response",
+    "Include patients with treated, stable brain metastases, ensuring close monitoring for CNS progression",
+    "Extend timeframe for autoimmune disease treatment or consider asymptomatic, well-controlled conditions",
+    "Relax corticosteroid dosage threshold to 20 mg/day prednisone equivalent, balancing immunosuppression and trial participation",
+    "Consider enrolling patients with well-controlled hepatitis B or C, using antiviral therapy and regular monitoring",
+    "Expand prior malignancy exclusion to 5 years, allowing more patients to participate while minimizing confounding"
+  ],
+  "estimated_population_impact": [
+    "eliminates ~10% of target patients at older age",
+    "narrows by ~20% due to prior therapy restrictions",
+    "eliminates ~20% of target patients with CNS involvement",
+    "excludes ~10% of target patients with autoimmune conditions",
+    "restricts ~5% of target patients on high-dose corticosteroids",
+    "excludes ~5% of target patients with active hepatitis",
+    "eliminates ~15% of target patients with prior malignancies"
+  ]
+}

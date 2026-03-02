@@ -1,0 +1,18 @@
+{
+  "risk_factors": [
+    "Age 18-65",
+    "Pregnant women"
+  ],
+  "severity_scores": [
+    "medium",
+    "high"
+  ],
+  "simplification_suggestions": [
+    "Consider expanding the age range to 18-75 or using a more nuanced age-related criterion based on health status",
+    "Evaluate the feasibility of including pregnant women in a separate cohort with modified safety protocols"
+  ],
+  "estimated_population_impact": [
+    "eliminates ~20% of target patients above age 65",
+    "eliminates ~1-2% of target patients who are pregnant"
+  ]
+}
