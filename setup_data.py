@@ -1,18 +1,19 @@
 """
 setup_data.py — DecisionLENS data setup script.
 
-Looks for any .zip file in data/raw/, extracts the pipe-delimited .txt
-tables, converts them to parquet, and saves them to data/processed/.
-If multiple zips are present the most recently modified one is used.
-
-If no zip is found (or extraction fails), a realistic synthetic dataset is
-generated so the project runs end-to-end for demo purposes.
+Data source priority (first available wins):
+  1. data/processed/  — pre-existing parquet files from a previous run
+  2. data/deployment/ — parquet sample created by create_deployment_sample.py
+  3. HuggingFace Hub  — yuanphd/decisionlens-aact-sample (auto-downloaded)
+  4. Local zip        — AACT flat-file zip placed in data/raw/
+  5. Synthetic        — seeded 10 K-study fallback for demo / CI
 
 Usage:
     python setup_data.py [--data-dir ./data] [--force-synthetic]
 
-Download the AACT flat files from: https://aact.ctti-clinicaltrials.org/downloads
-Place the zip (e.g. 20260228_clinical_trials.zip) inside data/raw/ before running.
+To use a local AACT zip instead of HuggingFace:
+    Download from https://aact.ctti-clinicaltrials.org/downloads
+    Place the zip (e.g. 20260228_clinical_trials.zip) in data/raw/
 """
 
 import argparse
@@ -55,6 +56,9 @@ REQUIRED_TABLES = [
 SYNTHETIC_N_STUDIES = 10_000
 SYNTHETIC_SEED = 42
 
+#: HuggingFace dataset repo containing the pre-built AACT parquet sample.
+HF_REPO: str = "yuanphd/decisionlens-aact-sample"
+
 
 # ---------------------------------------------------------------------------
 # Directory setup
@@ -67,6 +71,113 @@ def create_directories(data_dir: Path) -> None:
         (data_dir / subdir).mkdir(parents=True, exist_ok=True)
     Path("models").mkdir(exist_ok=True)
     log.info("Directories ready: %s", data_dir)
+
+
+# ---------------------------------------------------------------------------
+# Helpers: detect and load already-prepared parquet directories
+# ---------------------------------------------------------------------------
+
+
+def _dir_has_data(directory: Path) -> bool:
+    """Return True if *directory* contains a non-empty studies.parquet."""
+    p = directory / "studies.parquet"
+    return p.exists() and p.stat().st_size > 0
+
+
+def _load_parquet_tables(src_dir: Path) -> dict[str, pd.DataFrame]:
+    """Load all REQUIRED_TABLES parquet files from *src_dir* that exist."""
+    tables: dict[str, pd.DataFrame] = {}
+    for table in REQUIRED_TABLES:
+        p = src_dir / f"{table}.parquet"
+        if not p.exists():
+            log.warning("  %-22s  not found in %s — skipping", table, src_dir)
+            continue
+        df = pd.read_parquet(p)
+        tables[table] = df
+        log.info("  loaded  %-22s  %7s rows", table, f"{len(df):,}")
+    return tables
+
+
+def _copy_to_processed(
+    src_dir: Path, dest_dir: Path
+) -> dict[str, pd.DataFrame]:
+    """
+    Copy parquet files from *src_dir* into *dest_dir*.
+
+    Skips tables already present in *dest_dir* to avoid redundant I/O.
+    Returns the loaded tables dict (read from dest after copying).
+    """
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    for table in REQUIRED_TABLES:
+        src = src_dir / f"{table}.parquet"
+        dst = dest_dir / f"{table}.parquet"
+        if not src.exists():
+            continue
+        if dst.exists():
+            log.info("  %-22s  already in processed/ — skipping copy", table)
+            continue
+        dst.write_bytes(src.read_bytes())
+        log.info("  copied  %-22s  (%.1f MB)", table, dst.stat().st_size / 1e6)
+    return _load_parquet_tables(dest_dir)
+
+
+# ---------------------------------------------------------------------------
+# HuggingFace download
+# ---------------------------------------------------------------------------
+
+
+def download_from_huggingface(
+    processed_dir: Path,
+) -> dict[str, pd.DataFrame]:
+    """
+    Download the AACT parquet sample from HuggingFace Hub.
+
+    Files are downloaded directly into *processed_dir* (skipping any table
+    whose parquet already exists there).  Returns an empty dict if
+    ``huggingface_hub`` is not installed or the download fails.
+
+    Args:
+        processed_dir: Destination directory for the parquet files.
+
+    Returns:
+        Dict of {table_name: DataFrame}, or {} on failure.
+    """
+    try:
+        from huggingface_hub import hf_hub_download
+    except ImportError:
+        log.warning(
+            "huggingface_hub is not installed — skipping HuggingFace download. "
+            "Install with: pip install huggingface_hub"
+        )
+        return {}
+
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    log.info("Downloading from HuggingFace: %s", HF_REPO)
+
+    failed: list[str] = []
+    for table in REQUIRED_TABLES:
+        filename = f"{table}.parquet"
+        dest = processed_dir / filename
+        if dest.exists() and dest.stat().st_size > 0:
+            log.info("  %-22s  already exists — skipping download", filename)
+            continue
+        try:
+            hf_hub_download(
+                repo_id=HF_REPO,
+                filename=filename,
+                repo_type="dataset",
+                local_dir=str(processed_dir),
+            )
+            log.info("  downloaded  %s  (%.1f MB)", filename, dest.stat().st_size / 1e6)
+        except Exception as exc:
+            log.error("  failed to download %s: %s", filename, exc)
+            failed.append(table)
+
+    if failed:
+        log.error("HuggingFace download incomplete — missing: %s", ", ".join(failed))
+        return {}
+
+    return _load_parquet_tables(processed_dir)
 
 
 # ---------------------------------------------------------------------------
@@ -527,27 +638,56 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     data_dir: Path = args.data_dir
-    raw_dir = data_dir / "raw"
-    processed_dir = data_dir / "processed"
+    raw_dir        = data_dir / "raw"
+    processed_dir  = data_dir / "processed"
+    deployment_dir = data_dir / "deployment"
 
     create_directories(data_dir)
 
-    using_real_data = False
-    if not args.force_synthetic:
-        extracted = extract_local_zip(raw_dir)
-        if extracted:
-            tables = load_raw_tables(raw_dir, processed_dir)
-            if tables:
-                using_real_data = True
+    tables: dict[str, pd.DataFrame] = {}
+    source: str = ""
 
-    if not using_real_data:
+    if not args.force_synthetic:
+
+        # ── Priority 1: data/processed/ already contains parquet files ──────
+        if _dir_has_data(processed_dir):
+            log.info("Priority 1: found existing parquet files in %s", processed_dir)
+            tables = _load_parquet_tables(processed_dir)
+            source = "local (data/processed)"
+
+        # ── Priority 2: data/deployment/ sample (copy to processed/) ────────
+        elif _dir_has_data(deployment_dir):
+            log.info(
+                "Priority 2: deployment sample found in %s — copying to %s",
+                deployment_dir, processed_dir,
+            )
+            tables = _copy_to_processed(deployment_dir, processed_dir)
+            source = "local deployment sample (data/deployment)"
+
+        # ── Priority 3: HuggingFace download ────────────────────────────────
+        else:
+            log.info("Priority 3: attempting HuggingFace download …")
+            tables = download_from_huggingface(processed_dir)
+            if tables:
+                source = f"HuggingFace ({HF_REPO})"
+
+        # ── Priority 4: local AACT zip ───────────────────────────────────────
+        if not tables:
+            log.info("Priority 4: looking for local AACT zip in %s …", raw_dir)
+            if extract_local_zip(raw_dir):
+                tables = load_raw_tables(raw_dir, processed_dir)
+                if tables:
+                    source = "local AACT zip"
+
+    # ── Priority 5 (final): synthetic data ──────────────────────────────────
+    if not tables:
         if not args.force_synthetic:
-            log.warning("Falling back to synthetic data generation.")
+            log.warning("All data sources exhausted — generating synthetic data.")
         tables = generate_synthetic_data(processed_dir)
+        source = "synthetic (fallback)"
 
     print_summary(tables)
-    source = "AACT" if using_real_data else "synthetic"
-    log.info("Setup complete. Data source: %s. Files in: %s", source, processed_dir)
+    log.info("Setup complete. Source: %s  |  Files in: %s", source, processed_dir)
 
 
 if __name__ == "__main__":

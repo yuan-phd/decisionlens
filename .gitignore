@@ -6,6 +6,11 @@ data/
 figures/
 models_backup/
 project_plan/
+.claude
+debug.py
+create_deployment_sample.py
+decisionlens_steps.md
+decisionlens_prompt.md
 
 # Python
 __pycache__/

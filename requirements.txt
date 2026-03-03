@@ -7,6 +7,7 @@ plotly>=5.18
 streamlit>=1.30
 anthropic>=0.40
 python-dotenv>=1.0
+huggingface_hub>=0.22
 requests>=2.31
 pyarrow>=14.0
 scipy>=1.11
