@@ -6,6 +6,8 @@ DecisionLENS is an end-to-end data science portfolio project that applies predic
 
 > Built with: Python · XGBoost · Lifelines · Groq (Llama 3.3-70B) · Streamlit · Plotly · AACT / ClinicalTrials.gov data
 
+## Demo: https://decisionlens-yuan.streamlit.app/
+
 ---
 
 ## What it does
@@ -31,10 +33,6 @@ DecisionLENS is an end-to-end data science portfolio project that applies predic
 | Visualization | Plotly Express / Graph Objects |
 | Dashboard | Streamlit |
 | Testing | pytest |
-
----
-
-## Demo: https://decisionlens-yuan.streamlit.app/
 
 ---
 

@@ -259,8 +259,10 @@ class EligibilityAnalyzer:
     at ``CACHE_DIR`` so repeated identical calls do not consume quota.
 
     Args:
-        api_key: Groq API key. Falls back to ``GROQ_API_KEY`` environment
-                 variable if ``None``.
+        api_key: Groq API key. Resolution order when ``None``:
+                 1. ``st.secrets["GROQ_API_KEY"]`` (Streamlit Cloud)
+                 2. ``GROQ_API_KEY`` environment variable (local .env)
+                 3. Demo mode (no key found or groq not installed)
         model: Model ID. Defaults to ``MODEL`` (``llama-3.3-70b-versatile``).
         cache_dir: Directory for disk-based response cache.
                    Defaults to ``{project_root}/.cache/genai/``.
@@ -276,7 +278,14 @@ class EligibilityAnalyzer:
         self.cache_dir = cache_dir
         self._cache: dict[str, object] = {}
 
-        resolved_key    = api_key or os.environ.get("GROQ_API_KEY", "")
+        if api_key:
+            resolved_key = api_key
+        else:
+            try:
+                import streamlit as st
+                resolved_key = st.secrets.get("GROQ_API_KEY", "") or os.environ.get("GROQ_API_KEY", "")
+            except Exception:
+                resolved_key = os.environ.get("GROQ_API_KEY", "")
         self._demo_mode = not bool(resolved_key) or not _GROQ_AVAILABLE
 
         if self._demo_mode:
