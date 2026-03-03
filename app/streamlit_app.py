@@ -52,43 +52,29 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# Data initialisation — runs once per server process (cached by Streamlit)
+# Data initialisation — runs on every page load; exits immediately if data
+# is already present (cheap file-existence check).
 # ---------------------------------------------------------------------------
 
-@st.cache_resource(show_spinner="Downloading data from HuggingFace… (first run only, ~2 min)")
-def initialize_data() -> bool:
+def ensure_data() -> None:
     """
     Ensure data/processed/ has the AACT parquet files.
 
-    On first run (or when the processed/ directory is absent), calls
-    ``setup_data.py --source=huggingface`` as a subprocess so the download
-    log streams to the server terminal.  Returns immediately on subsequent
-    runs thanks to ``@st.cache_resource``.
+    Checks for conditions.parquet as a proxy for a complete dataset.
+    On first run triggers setup_data.py --source=huggingface via subprocess.
     """
     data_dir = ROOT / "data" / "processed"
-    if (data_dir / "studies.parquet").exists():
-        return True   # already present — nothing to do
-
-    st.info(
-        "Downloading AACT trial data from HuggingFace on first run. "
-        "This takes about 2 minutes. The page will refresh automatically.",
-        icon="⏬",
-    )
-    result = subprocess.run(
-        [sys.executable, str(ROOT / "setup_data.py"), "--source=huggingface"],
-        cwd=str(ROOT),
-        check=False,
-    )
-    if result.returncode != 0:
-        log.warning(
-            "setup_data.py --source=huggingface exited with code %d — "
-            "app will use synthetic fallback data.",
-            result.returncode,
+    if (data_dir / "conditions.parquet").exists():
+        return
+    with st.spinner("Downloading data… (first run only, ~2 mins)"):
+        subprocess.run(
+            [sys.executable, str(ROOT / "setup_data.py"), "--source=huggingface"],
+            cwd=str(ROOT),
+            check=True,
         )
-    return True
 
 
-initialize_data()
+ensure_data()
 
 # ---------------------------------------------------------------------------
 # Global CSS — clinical/pharma theme
