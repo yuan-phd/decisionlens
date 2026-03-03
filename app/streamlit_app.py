@@ -12,6 +12,7 @@ The four analysis pages live in ``app/pages/``.
 from __future__ import annotations
 
 import logging
+import subprocess
 import sys
 from pathlib import Path
 
@@ -49,6 +50,45 @@ st.set_page_config(
         ),
     },
 )
+
+# ---------------------------------------------------------------------------
+# Data initialisation — runs once per server process (cached by Streamlit)
+# ---------------------------------------------------------------------------
+
+@st.cache_resource(show_spinner="Downloading data from HuggingFace… (first run only, ~2 min)")
+def initialize_data() -> bool:
+    """
+    Ensure data/processed/ has the AACT parquet files.
+
+    On first run (or when the processed/ directory is absent), calls
+    ``setup_data.py --source=huggingface`` as a subprocess so the download
+    log streams to the server terminal.  Returns immediately on subsequent
+    runs thanks to ``@st.cache_resource``.
+    """
+    data_dir = ROOT / "data" / "processed"
+    if (data_dir / "studies.parquet").exists():
+        return True   # already present — nothing to do
+
+    st.info(
+        "Downloading AACT trial data from HuggingFace on first run. "
+        "This takes about 2 minutes. The page will refresh automatically.",
+        icon="⏬",
+    )
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "setup_data.py"), "--source=huggingface"],
+        cwd=str(ROOT),
+        check=False,
+    )
+    if result.returncode != 0:
+        log.warning(
+            "setup_data.py --source=huggingface exited with code %d — "
+            "app will use synthetic fallback data.",
+            result.returncode,
+        )
+    return True
+
+
+initialize_data()
 
 # ---------------------------------------------------------------------------
 # Global CSS — clinical/pharma theme
@@ -271,7 +311,7 @@ with nav_col1:
             <p>
                 Configure a hypothetical trial (phase, condition, sites,
                 countries) and get an instant enrollment-completion probability,
-                predicted duration, and SHAP feature-importance waterfall.
+                predicted duration, and XGBoost feature importances.
             </p>
         </div>
         """,
@@ -372,7 +412,7 @@ with st.expander("⚙️  Technical Architecture", expanded=False):
                 ├──► EnrollmentForecaster (src/models.py)
                 │         XGBoost classifier + regressor
                 │         Cox Proportional Hazards (lifelines)
-                │         SHAP explainability
+                │         XGBoost feature importances
                 │
                 ├──► CompetitiveAnalyzer (src/competitive_intel.py)
                 │         landscape metrics, choropleth, Gantt

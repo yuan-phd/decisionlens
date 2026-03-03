@@ -630,7 +630,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--force-synthetic",
         action="store_true",
-        help="Skip zip extraction and go straight to synthetic data generation",
+        help="Skip all other sources and generate synthetic data",
+    )
+    parser.add_argument(
+        "--source",
+        choices=["auto", "huggingface"],
+        default="auto",
+        help=(
+            "auto (default): try sources in priority order "
+            "(processed → deployment → huggingface → local-zip → synthetic). "
+            "huggingface: skip processed/deployment checks and go directly to "
+            "the HuggingFace download, then fall back to synthetic."
+        ),
     )
     return parser.parse_args()
 
@@ -647,15 +658,29 @@ def main() -> None:
     tables: dict[str, pd.DataFrame] = {}
     source: str = ""
 
-    if not args.force_synthetic:
+    if args.force_synthetic:
+        # Explicit override — skip everything else
+        pass
 
-        # ── Priority 1: data/processed/ already contains parquet files ──────
+    elif args.source == "huggingface":
+        # ── Direct HuggingFace mode (used by Streamlit's initialize_data) ───
+        log.info("Source: huggingface (forced) — downloading from %s", HF_REPO)
+        tables = download_from_huggingface(processed_dir)
+        if tables:
+            source = f"HuggingFace ({HF_REPO})"
+        else:
+            log.warning("HuggingFace download failed — falling back to synthetic.")
+
+    else:
+        # ── Auto mode: try sources in priority order ─────────────────────────
+
+        # Priority 1: data/processed/ already contains parquet files
         if _dir_has_data(processed_dir):
             log.info("Priority 1: found existing parquet files in %s", processed_dir)
             tables = _load_parquet_tables(processed_dir)
             source = "local (data/processed)"
 
-        # ── Priority 2: data/deployment/ sample (copy to processed/) ────────
+        # Priority 2: data/deployment/ sample (copy to processed/)
         elif _dir_has_data(deployment_dir):
             log.info(
                 "Priority 2: deployment sample found in %s — copying to %s",
@@ -664,14 +689,14 @@ def main() -> None:
             tables = _copy_to_processed(deployment_dir, processed_dir)
             source = "local deployment sample (data/deployment)"
 
-        # ── Priority 3: HuggingFace download ────────────────────────────────
+        # Priority 3: HuggingFace download
         else:
             log.info("Priority 3: attempting HuggingFace download …")
             tables = download_from_huggingface(processed_dir)
             if tables:
                 source = f"HuggingFace ({HF_REPO})"
 
-        # ── Priority 4: local AACT zip ───────────────────────────────────────
+        # Priority 4: local AACT zip
         if not tables:
             log.info("Priority 4: looking for local AACT zip in %s …", raw_dir)
             if extract_local_zip(raw_dir):
@@ -679,7 +704,7 @@ def main() -> None:
                 if tables:
                     source = "local AACT zip"
 
-    # ── Priority 5 (final): synthetic data ──────────────────────────────────
+    # ── Final fallback: synthetic data ───────────────────────────────────────
     if not tables:
         if not args.force_synthetic:
             log.warning("All data sources exhausted — generating synthetic data.")
