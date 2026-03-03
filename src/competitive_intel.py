@@ -358,6 +358,14 @@ class CompetitiveAnalyzer:
             if "phase" in plot_df.columns
             else "N/A"
         )
+
+        # Keep only trials with a defined phase (Phase 1–4); exclude N/A
+        plot_df = plot_df[plot_df["phase_clean"] != "N/A"].copy()
+        if plot_df.empty:
+            return self._empty_figure(
+                f"No Phase 1–4 trials with valid dates for: {condition!r}"
+            )
+
         plot_df["status_clean"] = plot_df["overall_status"].fillna("Unknown")
         plot_df["enrollment_str"] = (
             plot_df["enrollment"].apply(

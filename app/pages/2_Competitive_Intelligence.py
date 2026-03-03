@@ -161,6 +161,7 @@ st.markdown(
 )
 fig_timeline = analyzer.plot_competition_timeline(condition)
 st.plotly_chart(fig_timeline, use_container_width=True)
+st.caption("Showing interventional trials with defined phase only (Phase 1–4).")
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
