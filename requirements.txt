@@ -14,3 +14,5 @@ scipy>=1.11
 shap>=0.44
 pytest>=7.4
 groq
+langgraph
+openai
