@@ -1,0 +1,2330 @@
+{
+  "scan_id": "d4c6a3e9954f",
+  "timestamp": "2026-04-26T20:49:29.877321+00:00",
+  "scope": "Recruiting oncology trials",
+  "scope_filters": {
+    "therapeutic_area": "oncology",
+    "overall_status": "Recruiting",
+    "limit": 200
+  },
+  "data_source_note": "AACT registry + PubMed + OpenFDA (proxies for EDC/CTMS)",
+  "trials_scanned": 11,
+  "checks_executed": [
+    "temporal",
+    "enrollment",
+    "status",
+    "endpoint"
+  ],
+  "agent_iterations": 2,
+  "issues": {
+    "critical": 4,
+    "high": 1,
+    "medium": 2,
+    "low": 5
+  },
+  "llmops_summary": {
+    "total_llm_calls": 5,
+    "total_prompt_tokens": 3526,
+    "total_completion_tokens": 1751,
+    "total_tokens": 5277,
+    "total_latency_ms": 30984.6,
+    "total_estimated_cost_usd": 0.001579,
+    "calls": [
+      {
+        "call_id": "aa2b8b78-37c7-4201-aabb-a4054e620859",
+        "model": "gpt-4o-mini",
+        "purpose": "planning",
+        "prompt_tokens": 129,
+        "completion_tokens": 130,
+        "latency_ms": 2860.7,
+        "estimated_cost_usd": 9.7e-05,
+        "status": "ok"
+      },
+      {
+        "call_id": "a5f14831-4126-4478-9823-6f46b496ac1a",
+        "model": "gpt-4o-mini",
+        "purpose": "review",
+        "prompt_tokens": 363,
+        "completion_tokens": 146,
+        "latency_ms": 2566.3,
+        "estimated_cost_usd": 0.000142,
+        "status": "ok"
+      },
+      {
+        "call_id": "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+        "model": "gpt-4o-mini",
+        "purpose": "review",
+        "prompt_tokens": 363,
+        "completion_tokens": 150,
+        "latency_ms": 3971.6,
+        "estimated_cost_usd": 0.000144,
+        "status": "ok"
+      },
+      {
+        "call_id": "58f26653-4ee5-4e12-8d4e-34e33d8025df",
+        "model": "gpt-4o-mini",
+        "purpose": "prioritisation",
+        "prompt_tokens": 1153,
+        "completion_tokens": 855,
+        "latency_ms": 13002.0,
+        "estimated_cost_usd": 0.000686,
+        "status": "ok"
+      },
+      {
+        "call_id": "de09aeba-ff1e-4ce5-8dee-44a795b155d0",
+        "model": "gpt-4o-mini",
+        "purpose": "clustering",
+        "prompt_tokens": 1518,
+        "completion_tokens": 470,
+        "latency_ms": 8584.0,
+        "estimated_cost_usd": 0.00051,
+        "status": "ok"
+      }
+    ]
+  },
+  "prioritised_issues": [
+    {
+      "trial_id": "NCT04983095",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "N/A"
+      },
+      "completion_risk_score": 0.9895220631733537,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "LOW",
+      "explanation": "Minor data quality note: No Primary outcome row registered in outcome_counts.",
+      "potential_impact": "",
+      "suggested_action": "Monitor. No immediate action required.",
+      "confidence": 0.7,
+      "related_trials": [
+        "NCT05002465",
+        "NCT06141993",
+        "NCT05242744",
+        "NCT05627778",
+        "NCT06496581"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "NCT04983095[All Fields]",
+          "results_found": 1,
+          "pmids": [
+            "41882599"
+          ]
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.747367+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "aa2b8b78-37c7-4201-aabb-a4054e620859",
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT05186116",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "N/A"
+      },
+      "completion_risk_score": 0.9893025541678071,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "LOW",
+      "explanation": "Minor data quality note: No Primary outcome row registered in outcome_counts.",
+      "potential_impact": "",
+      "suggested_action": "Monitor. No immediate action required.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.748414+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "aa2b8b78-37c7-4201-aabb-a4054e620859",
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06512662",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "N/A"
+      },
+      "completion_risk_score": 0.989106816239655,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "LOW",
+      "explanation": "Minor data quality note: No Primary outcome row registered in outcome_counts.",
+      "potential_impact": "",
+      "suggested_action": "Monitor. No immediate action required.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "NCT06512662[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.749823+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "aa2b8b78-37c7-4201-aabb-a4054e620859",
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT04123535",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "N/A"
+      },
+      "completion_risk_score": 0.988940536044538,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "LOW",
+      "explanation": "Minor data quality note: No Primary outcome row registered in outcome_counts.",
+      "potential_impact": "",
+      "suggested_action": "Monitor. No immediate action required.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.749722+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "aa2b8b78-37c7-4201-aabb-a4054e620859",
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT05704010",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "N/A"
+      },
+      "completion_risk_score": 0.9876584894955158,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "LOW",
+      "explanation": "Minor data quality note: No Primary outcome row registered in outcome_counts.",
+      "potential_impact": "",
+      "suggested_action": "Monitor. No immediate action required.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.749164+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "aa2b8b78-37c7-4201-aabb-a4054e620859",
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT01408225",
+      "check_name": "completion_far_future",
+      "check_category": "temporal",
+      "finding": "Completion date 2050-03-31 is more than 20 years in the future.",
+      "data_points": {
+        "completion_date": "2050-03-31",
+        "horizon_years": 20
+      },
+      "completion_risk_score": 0.5,
+      "risk_reliable": false,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "The completion date for this trial is set for March 31, 2050, which is over 20 years in the future. This raises concerns about the feasibility and relevance of the trial's timeline.",
+      "potential_impact": "The long completion date may indicate a lack of urgency or relevance in the trial's objectives, potentially affecting participant recruitment and funding.",
+      "suggested_action": "Review the trial's timeline and objectives to ensure they are realistic and relevant.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "completion_date"
+          ],
+          "check_rule": "completion_far_future"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:47.302128+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": false
+      }
+    },
+    {
+      "trial_id": "NCT06078930",
+      "check_name": "enrollment_implausibly_large",
+      "check_category": "enrollment",
+      "finding": "Planned enrollment of 100000 exceeds plausibility threshold (50,000).",
+      "data_points": {
+        "enrollment": 100000.0,
+        "threshold": 50000
+      },
+      "completion_risk_score": 0.5,
+      "risk_reliable": false,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "The planned enrollment for this trial is 100,000 participants, which significantly exceeds the plausibility threshold of 50,000. Such an inflated number raises questions about the trial's design and feasibility.",
+      "potential_impact": "An implausibly large enrollment may lead to logistical challenges and could undermine the trial's credibility and funding.",
+      "suggested_action": "Reassess the enrollment goals and adjust them to align with realistic expectations based on the trial's design.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "enrollment"
+          ],
+          "check_rule": "enrollment_implausibly_large"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:47.728385+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": false
+      }
+    },
+    {
+      "trial_id": "NCT06512662",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2026-03-31 was 26 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2026-03-31",
+        "days_past_completion": 26
+      },
+      "completion_risk_score": 0.989106816239655,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "This trial is currently marked as 'Recruiting', yet its completion date of March 31, 2026, was 26 days ago. This discrepancy suggests a significant oversight in trial management.",
+      "potential_impact": "Continuing to recruit after the completion date can lead to ethical concerns and may affect participant trust and data integrity.",
+      "suggested_action": "Update the trial status to reflect its actual state and investigate the reasons for the delay in completion.",
+      "confidence": 0.85,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "NCT06512662[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.242163+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06598839",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-12-30 was 117 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-12-30",
+        "days_past_completion": 117
+      },
+      "completion_risk_score": 0.9868594435974956,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The trial is still listed as 'Recruiting', but the completion date of December 30, 2025, has already passed by 117 days. This indicates a serious misalignment in trial management.",
+      "potential_impact": "Recruiting beyond the completion date can compromise the validity of the trial results and raise ethical issues regarding participant engagement.",
+      "suggested_action": "Reassess the trial's status and take necessary actions to either conclude the trial or provide updates to stakeholders.",
+      "confidence": 0.85,
+      "related_trials": [
+        "NCT05584267",
+        "NCT07337096",
+        "NCT04455438",
+        "NCT03217071",
+        "NCT04754815"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "NCT06598839[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Thymosin Alpha1",
+          "total_adverse_events": 1,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.242143+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT05629611",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-10-31 was 177 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-10-31",
+        "days_past_completion": 177
+      },
+      "completion_risk_score": 0.980518164113164,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The trial's status is 'Recruiting', yet the completion date of October 31, 2025, was 177 days ago. This situation reflects a critical issue in trial oversight.",
+      "potential_impact": "Continuing recruitment after the completion date can lead to ethical dilemmas and affect the integrity of the trial's findings.",
+      "suggested_action": "Review the trial's status and take corrective actions to align it with the actual timeline.",
+      "confidence": 0.85,
+      "related_trials": [
+        "NCT03548831",
+        "NCT03645304"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "NCT05629611[All Fields]",
+          "results_found": 1,
+          "pmids": [
+            "41204237"
+          ]
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.240818+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06106165",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-12-31 was 116 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-12-31",
+        "days_past_completion": 116
+      },
+      "completion_risk_score": 0.9704559408128262,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "This trial is still marked as 'Recruiting', but the completion date of December 31, 2025, has passed by 116 days. This discrepancy indicates a serious oversight in trial management.",
+      "potential_impact": "Recruiting beyond the completion date can raise ethical concerns and affect participant trust and data integrity.",
+      "suggested_action": "Update the trial status to reflect its actual state and investigate the reasons for the delay in completion.",
+      "confidence": 0.85,
+      "related_trials": [
+        "NCT03624543",
+        "NCT05130840",
+        "NCT02900469",
+        "NCT02913729",
+        "NCT03772353"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "NCT06106165[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.239759+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06403540",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-08-01 was 268 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-08-01",
+        "days_past_completion": 268
+      },
+      "completion_risk_score": 0.5,
+      "risk_reliable": false,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "HIGH",
+      "explanation": "The trial is currently labeled as 'Recruiting', yet the completion date of August 1, 2025, was 268 days ago. This raises concerns about the trial's management and adherence to timelines.",
+      "potential_impact": "Continuing to recruit after the completion date may lead to ethical concerns and could undermine the trial's credibility.",
+      "suggested_action": "Review the trial's status and take necessary actions to either conclude the trial or provide updates to stakeholders.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:48:48.239218+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "a5f14831-4126-4478-9823-6f46b496ac1a",
+          "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+          "58f26653-4ee5-4e12-8d4e-34e33d8025df"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": false
+      }
+    }
+  ],
+  "root_cause_clusters": [
+    {
+      "cluster_id": "RC001",
+      "root_cause": "Systematic failure to register primary outcomes across multiple trials.",
+      "pattern": "All trials have missing primary outcome rows; all trials are sponsored by unknown entities.",
+      "affected_trials": [
+        "NCT04983095",
+        "NCT05186116",
+        "NCT06512662",
+        "NCT04123535",
+        "NCT05704010"
+      ],
+      "issue_indices": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "cluster_severity": "LOW",
+      "recommended_action": "Implement a standardized process for registering primary outcomes in all trials."
+    },
+    {
+      "cluster_id": "RC002",
+      "root_cause": "Multiple trials reporting recruiting status past their completion dates indicates a lack of timely updates.",
+      "pattern": "All trials are marked as 'Recruiting' despite completion dates having passed; all trials are sponsored by unknown entities.",
+      "affected_trials": [
+        "NCT06512662",
+        "NCT06598839",
+        "NCT05629611",
+        "NCT06106165",
+        "NCT06403540"
+      ],
+      "issue_indices": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "cluster_severity": "CRITICAL",
+      "recommended_action": "Establish a protocol for regular updates on trial status to ensure accuracy."
+    },
+    {
+      "cluster_id": "RC003",
+      "root_cause": "Inconsistencies in enrollment numbers and completion dates suggest potential data entry errors or unrealistic planning.",
+      "pattern": "Trials exhibit implausibly large enrollment numbers or completion dates far in the future; all trials are sponsored by unknown entities.",
+      "affected_trials": [
+        "NCT01408225",
+        "NCT06078930"
+      ],
+      "issue_indices": [
+        6,
+        7
+      ],
+      "cluster_severity": "MEDIUM",
+      "recommended_action": "Review and validate enrollment projections and completion timelines during trial design."
+    }
+  ],
+  "pattern_library_updates": [
+    {
+      "source": "planning",
+      "rationale": "For recruiting oncology trials, it is essential to assess the temporal aspect to ensure that the trial timelines are appropriate and align with recruitment goals. Enrollment checks are crucial to verify that the trials are actively recruiting participants as stated, which directly impacts the trial's success. Status checks will confirm that the trials are indeed in a recruiting phase and have not changed to a different status. Lastly, endpoint checks are necessary to ensure that the objectives of the trials are clearly defined and relevant to the oncology field, which is vital for evaluating the trial's scientific merit and potential impact."
+    },
+    {
+      "source": "scan_cap",
+      "check_name": "recruiting_past_completion",
+      "found": 33,
+      "kept": 5,
+      "note": "recruiting_past_completion: 33 issues found, kept top 5 by risk score"
+    },
+    {
+      "source": "scan_cap",
+      "check_name": "missing_primary_outcome",
+      "found": 200,
+      "kept": 5,
+      "note": "missing_primary_outcome: 200 issues found, kept top 5 by risk score"
+    },
+    {
+      "source": "scan_summary",
+      "before_cap": 235,
+      "after_cap": 12,
+      "checks_capped": 2,
+      "issues_dropped": 223
+    },
+    {
+      "source": "prioritisation_skip",
+      "note": "Skipped LLM for 5 LOW issues (deterministic template)",
+      "count": 5
+    },
+    {
+      "source": "prioritisation_wall",
+      "batches": 1,
+      "wall_ms": 13003.5,
+      "note": "Prioritisation ran 1 batch(es) concurrently in 13003 ms wall-clock."
+    }
+  ],
+  "audit_log": [
+    {
+      "call_id": "aa2b8b78-37c7-4201-aabb-a4054e620859",
+      "model": "gpt-4o-mini",
+      "purpose": "planning",
+      "prompt_tokens": 129,
+      "completion_tokens": 130,
+      "latency_ms": 2860.7,
+      "estimated_cost_usd": 9.7e-05,
+      "status": "ok"
+    },
+    {
+      "call_id": "a5f14831-4126-4478-9823-6f46b496ac1a",
+      "model": "gpt-4o-mini",
+      "purpose": "review",
+      "prompt_tokens": 363,
+      "completion_tokens": 146,
+      "latency_ms": 2566.3,
+      "estimated_cost_usd": 0.000142,
+      "status": "ok"
+    },
+    {
+      "call_id": "2aa8b10e-098f-42ae-9c41-c56a5bb20609",
+      "model": "gpt-4o-mini",
+      "purpose": "review",
+      "prompt_tokens": 363,
+      "completion_tokens": 150,
+      "latency_ms": 3971.6,
+      "estimated_cost_usd": 0.000144,
+      "status": "ok"
+    },
+    {
+      "call_id": "58f26653-4ee5-4e12-8d4e-34e33d8025df",
+      "model": "gpt-4o-mini",
+      "purpose": "prioritisation",
+      "prompt_tokens": 1153,
+      "completion_tokens": 855,
+      "latency_ms": 13002.0,
+      "estimated_cost_usd": 0.000686,
+      "status": "ok"
+    },
+    {
+      "call_id": "de09aeba-ff1e-4ce5-8dee-44a795b155d0",
+      "model": "gpt-4o-mini",
+      "purpose": "clustering",
+      "prompt_tokens": 1518,
+      "completion_tokens": 470,
+      "latency_ms": 8584.0,
+      "estimated_cost_usd": 0.00051,
+      "status": "ok"
+    }
+  ],
+  "trial_cache": {
+    "NCT04983095": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:30.010104+00:00",
+        "trial_id": "NCT04983095",
+        "details": {
+          "nct_id": "NCT04983095",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2021-06-01",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2026-02-11",
+          "study_first_submitted_qc_date": "2021-07-27",
+          "study_first_posted_date": "2021-07-30",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2026-02-11",
+          "last_update_posted_date": "2026-02-17",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2021-10-27",
+          "start_date_type": "ACTUAL",
+          "start_date": "2021-10-27",
+          "verification_month_year": "2026-02",
+          "verification_date": "2026-02-28",
+          "completion_month_year": "2033-12",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2033-12-31",
+          "primary_completion_month_year": "2031-12-31",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2031-12-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "METRO",
+          "baseline_population": null,
+          "brief_title": "Metastasis Directed Stereotactic Body Radiotherapy for Oligo Metastatic Hormone Sensitive Prostate Cancer",
+          "official_title": "Metastasis Directed Stereotactic Body Radiotherapy for Oligo Metastatic Hormone Sensitive Prostate Cancer",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 118.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Ume\u00e5 University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": "Planned publication of study at study start",
+          "ipd_access_criteria": "Open access publication",
+          "ipd_url": null,
+          "plan_to_share_ipd": "YES",
+          "plan_to_share_ipd_description": "SBRT-plans will be shared in detail for all treatment related adverse effects grade\\>3 according to CTCAE vers 5 in both final and interim analyses.~Study protocol including Statistical Analysis Plan will be made public through per review scientific publication",
+          "created_at": "2026-02-27 18:48:03.653063",
+          "updated_at": "2026-02-27 18:48:03.653063",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:30.195736+00:00",
+        "trial_id": "NCT04983095",
+        "gender": "MALE",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~1. Histologically confirmed prostate cancer (ICD-O-3 C61)~2. WHO/ECOG performance status 0-1~3. 1-3 skeletal or extra pelvic lymph node metastases detected by PSMA-PET/CT in de novo prostate cancer or PSA-relapse after definitive RT or prostatectomy~4. Willing and able to provide informed consent-~Exclusion Criteria:~1. Castration resistant prostate cancer (progression with castrate levels of testosterone)~2. Any treatment known to affect PSA (including ADT) for prostate cancer within 6 months (exception: ADT started due to oligometastatic disease within 2 weeks of study entry)~3. Patient eligible for other treatment (e.g., early docetaxel) than standard treatment described in the protocol as judged by treating physician~4. Life expectancy \\<3 years by any reason, including concomitant or previous malignancies~5. Previous radiotherapy or surgery that may interfere with the planned treatment (including intra-prostatic recurrence if previous RT to the prostate)~6. \\> 3 PSMA-PET/CT positive target lesions (excluding the prostate and regional lymph node metastasis in de novo patients or prostate bed and or regional lymph node metastasis in recurrent patients)~7. PSMA-PET verified metastases other than skeletal or lymph nodes~8. Metastases in base of scull and/or calotte~9. Any target lesions not treatable with image guided RT (IGRT) due to overlap with previous RT fields or exceeded dose constraint to OAR(s) as specified in study protocol",
+        "criteria_length": 1478
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:30.214200+00:00",
+        "nct_id": "NCT04983095",
+        "query": "NCT04983095[All Fields]",
+        "total_found": 1,
+        "results_returned": 1,
+        "max_results": 5,
+        "publications": [
+          {
+            "pmid": "41882599",
+            "title": "Metastasis-directed SBRT for oligometastatic hormone sensitive prostate cancer (METRO): protocol for a prospective randomised phase III trial, NCT04983095.",
+            "authors": [
+              "S\u00f6derkvist K",
+              "Zia M",
+              "Gunnlaugsson A",
+              "Josefsson A",
+              "Aksness\u00e6ther B",
+              "Li C",
+              "Thellenberg-Karlsson C",
+              "Alm D",
+              "Kudr\u00e9n D",
+              "Lundin E",
+              "Moise G",
+              "Brandell JK",
+              "Kindblom J",
+              "Bj\u00f6rnlinger K",
+              "Karlsson K",
+              "Riklund K",
+              "Westin M",
+              "Hedman M",
+              "Skorve N",
+              "Wikstr\u00f6m P",
+              "Strandberg S",
+              "Jonsson J"
+            ],
+            "journal": "BMC cancer",
+            "date": "2026 Mar 25",
+            "abstract_snippet": "BACKGROUND: Metastasis-directed stereotactic body radiotherapy (MD-SBRT) has shown promise in retrospective and phase II studies for oligometastatic hormone-sensitive prostate cancer. However, prospective randomized phase III data-particularly in newly diagnosed cases and in combination with androge\u2026"
+          }
+        ]
+      },
+      "risk": {
+        "risk_score": 0.9895220631733537,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT05186116": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:30.323426+00:00",
+        "trial_id": "NCT05186116",
+        "details": {
+          "nct_id": "NCT05186116",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2021-11-24",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-09-20",
+          "study_first_submitted_qc_date": "2022-01-06",
+          "study_first_posted_date": "2022-01-11",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-09-20",
+          "last_update_posted_date": "2025-09-25",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2022-01-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2022-01-01",
+          "verification_month_year": "2025-09",
+          "verification_date": "2025-09-30",
+          "completion_month_year": "2032-01-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2032-01-01",
+          "primary_completion_month_year": "2027-01-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2027-01-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "LIVERMORE",
+          "baseline_population": null,
+          "brief_title": "LDLT in Non Resectable Colo-rectal Cancer Liver Metastasis",
+          "official_title": "Living Donor Liver Transplantation (LDLT) in Non Resectable Colo-rectal Cancer Liver Metastasis. The LIVERMORE Trial (LIVing Donor livEr tRansplant Modena cOloRectal mEtastasis) [Original Title in Italian: Trapianto di Fegato da Donatore Vivente Per Metastasi Epatiche Non Resecabili da Adenocarcinoma Del Colon]",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 25.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Azienda Ospedaliero-Universitaria di Modena",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 19:44:24.684456",
+          "updated_at": "2026-02-27 19:44:24.684456",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:30.493115+00:00",
+        "trial_id": "NCT05186116",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "77 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Age \u226518.~* Histologically confirmed colon and rectum (intraperitoneal) adenocarcinoma.~* Pathological classification of primary tumor as pT1-3, without peritoneal tumor deposits, absence of mucinous component \\>50%, confirmed R0 resection, no limitations for RAS mutations, B-RAF wild type.~* No signs of extra hepatic metastatic disease or local recurrence according to CT scan+MRI+PET/CT scans.~* Liver metastases not eligible for curative liver resection~* Objective response according to RECIST 1.1 to first-line treatment, with sustained response for at least 4 months, OR disease control (complete \\[CR\\] or partial response \\[PR\\] or standard disease \\[SD\\]) during second- line treatment for at least 4 months.~* Carcinoembryonic Antigen (CEA) values stable or decreasing during the enrollment prior to liver transplant.~* Performance status, ECOG (Eastern Cooperative Oncology Group) 0-2.~* Signed informed consent and expected cooperation of the patients for the treatment and follow-up, and national/local regulations.~Exclusion Criteria:~* Hereditary CRC syndromes including FAP (Familial adenomatous polyposis) and Lynch syndrome.~* Prior extra hepatic metastatic disease or primary tumor local relapse.~* Palliative resection of primary CRC tumor.~* Disease progression~* Other malignancies in the previous 5 years (with exception of in situ cervical carcinoma and basal cell carcinoma; superficial bladder tumors are allowed if curatively treated).~* Active intra-venous or alcohol abusers (patients may be eligible if abstention \\> 6 months is demonstrated)~* Active HIV infection~* Psychiatric disorders and patient low compliance~* Any reason why, in the judgment of the investigators, the patient should not participate (to be formally declared)",
+        "criteria_length": 1786
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:31.257024+00:00",
+        "nct_id": "NCT05186116",
+        "query": "NCT05186116[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9893025541678071,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06512662": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:31.382757+00:00",
+        "trial_id": "NCT06512662",
+        "details": {
+          "nct_id": "NCT06512662",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2024-07-16",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-10-08",
+          "study_first_submitted_qc_date": "2024-07-16",
+          "study_first_posted_date": "2024-07-22",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-10-08",
+          "last_update_posted_date": "2024-10-10",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2024-10-08",
+          "start_date_type": "ACTUAL",
+          "start_date": "2024-10-08",
+          "verification_month_year": "2024-10",
+          "verification_date": "2024-10-31",
+          "completion_month_year": "2026-03-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-03-31",
+          "primary_completion_month_year": "2025-10-31",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-10-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "PAKO-HDJ",
+          "baseline_population": null,
+          "brief_title": "Support Pathway for ENT Cancer Patients in a Support Care Day Hospital",
+          "official_title": "Support Pathway for ENT Cancer Patients in a Support Care Day Hospital Single-centre Prospective Randomised Interventional Study",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 60.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Clinique Pasteur Lanroze",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 16:25:20.291703",
+          "updated_at": "2026-02-26 16:25:20.291703",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:31.571463+00:00",
+        "trial_id": "NCT06512662",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* patient undergoing surgery for VADS cancer requiring at least one night's post-operative hospitalisation~* Understanding of spoken and written French~* Patient covered by a social security scheme~Exclusion Criteria:~* Protected patient under a protective measure or legal safeguard~* Pregnant or breast-feeding patients~* Patients suffering from major cognitive disorders~* Patients with major anxiety disorders prior to the onset of cancer",
+        "criteria_length": 462
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:31.588264+00:00",
+        "nct_id": "NCT06512662",
+        "query": "NCT06512662[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.989106816239655,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT04123535": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:31.696250+00:00",
+        "trial_id": "NCT04123535",
+        "details": {
+          "nct_id": "NCT04123535",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2019-10-09",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-08-08",
+          "study_first_submitted_qc_date": "2019-10-09",
+          "study_first_posted_date": "2019-10-11",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-08-08",
+          "last_update_posted_date": "2025-08-13",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2020-01-23",
+          "start_date_type": "ACTUAL",
+          "start_date": "2020-01-23",
+          "verification_month_year": "2025-08",
+          "verification_date": "2025-08-31",
+          "completion_month_year": "2026-06-30",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-06-30",
+          "primary_completion_month_year": "2026-06-30",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-06-30",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "HIFU-UPS",
+          "baseline_population": null,
+          "brief_title": "Focused Ultrasound to Promote Immune Responses for Undifferentiated Pleomorphic Sarcoma",
+          "official_title": "Focused Ultrasound to Promote Immune Responses for Undifferentiated Pleomorphic Sarcoma",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 20.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "University of California, San Francisco",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "t",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-28 01:21:32.191728",
+          "updated_at": "2026-02-28 01:21:32.191728",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:31.871840+00:00",
+        "trial_id": "NCT04123535",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~1. Men and women \\>= 18 years old.~2. Eastern Cooperative Oncology Group (ECOG) performance-status score of 0-1.~3. Subjects must have either 1) a biopsy-proven new diagnosis of undifferentiated pleomorphic sarcoma (UPS) (within the last 6 months) or 2) a lesion highly suspicious for metastatic UPS based on CT or MRI imaging (within the last 6 months).~4. Target tumor \\>= 2 cm in maximum diameter and \\<= 20 cm in maximum diameter.~5. Target tumor accessible to the ExAblate device in the soft tissues of the chest, abdomen, pelvis, or upper or lower extremities.~6. Target tumor must be \\> 1 cm from any critical structure. Critical structures are defined as skin, major nerve/vascular bundles, nerve roots, any solid organ, and any portion of the bowel.~7. Target tumor must be clearly visible by non-contrast magnetic resonance imaging (MRI)~8. For patients with newly diagnosed, not previously treated UPS, tumor must be deemed to be surgically resectable by tumor board documentation or surgeon's note.~9. To clarify, patient's being treated with institutional standard neoadjuvant chemotherapy may be included in this study if all other inclusion/exclusion criteria are met.~   * Note: There has never been a prospective study comparing patients receiving chemotherapy to those not receiving chemotherapy in the neoadjuvant setting for soft tissue sarcoma. Our local institutional standard is to treat patients with neoadjuvant chemotherapy prior to surgical resection when tumors are \\> 5 cm in maximal dimension and within deep muscular compartments. Our institutional standard is to treat patients with doxorubicin plus ifosfamide for younger patients (typically \\<50 years old) and gemcitabine plus taxotere for older patients (typically \\>= 50 years old).~Exclusion Criteria:~1. Subjects requiring systemic treatment with corticosteroids or other immunosuppressive medications within 14 days of Magnetic Resonance-guided Focused Ultrasound (MRgFUS) treatment date.~2. History of interstitial lung disease or other active malignancy (may confound immune response results).~3. History of previous malignancies (except non-melanoma skin cancers) (may confound immune response results).~4. All toxicities attributed to prior anti-cancer therapy other than alopecia and fatigue must have resolved to grade 1 (NCI CTCAE version 4) or baseline.~5. Subjects must have recovered from the effects of major surgery or significant trauma at least 14 days before the study procedure.~6. Subjects with an acute medical condition expected to hinder them from completing the study, unstable cardiovascular status, and severe cerebrovascular disease.~7. Treatment with any investigational agent within 28 days of the treatment procedure.~8. Any absolute contraindications for study magnetic resonance imaging (MRI) per standard University of California, San Francisco (UCSF) departmental MRI safety guidance (https://radiology.ucsf.edu/patient-care/patient-safety/mri) and additionally:~   * Metal in other parts of body that will cause safety issues~  * Claustrophobia~  * Weight \\> 400 pounds (lb) or 181.4 kilograms (kg).~  * Pregnancy~  * Known intolerance or allergy to magnetic resonance (MR) contrast agent (gadolinium chelates)~9. Unable to safely receive anesthesia/sedation for the treatment, or known intolerance or allergy to medications used for sedation/anesthesia.~10. Unable to verbally communicate with the investigator and staff.~11. For Group 1 Patients (newly diagnosed disease) only: Have received neoadjuvant radiotherapy or planning to receive neoadjuvant radiotherapy.",
+        "criteria_length": 3609
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:32.612583+00:00",
+        "nct_id": "NCT04123535",
+        "query": "NCT04123535[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.988940536044538,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT05704010": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:32.748262+00:00",
+        "trial_id": "NCT05704010",
+        "details": {
+          "nct_id": "NCT05704010",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-01-13",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-11-26",
+          "study_first_submitted_qc_date": "2023-01-27",
+          "study_first_posted_date": "2023-01-30",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-11-26",
+          "last_update_posted_date": "2024-11-27",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2018-11-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2018-11-01",
+          "verification_month_year": "2024-11",
+          "verification_date": "2024-11-30",
+          "completion_month_year": "2026-12-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-12-31",
+          "primary_completion_month_year": "2025-12-31",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-12-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Videocapsule Endoscopy in Lynch Syndrome",
+          "official_title": "Role of Videocapsule Endoscopy in Lynch Syndrome: a Multicenter Italian Registry Study",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 100.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "San Raffaele University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": null,
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "UNDECIDED",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 12:26:14.05194",
+          "updated_at": "2026-02-26 12:26:14.05194",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:32.942452+00:00",
+        "trial_id": "NCT05704010",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "t",
+        "criteria": "Inclusion Criteria:~* Pathogenic germline variant in one of the MMR genes (MLH1, MSH2/Epcam, MSH6, or PMS2).~Exclusion Criteria:~* Patients younger than 18 years of age~* Patients unwilling or unable to provide informed consent~* Patients with prior small bowel surgery~* Patients with a contraindication to VCE",
+        "criteria_length": 311
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:33.698912+00:00",
+        "nct_id": "NCT05704010",
+        "query": "NCT05704010[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9876584894955158,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT01408225": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:33.822379+00:00",
+        "trial_id": "NCT01408225",
+        "details": {
+          "nct_id": "NCT01408225",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2011-08-01",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-01-27",
+          "study_first_submitted_qc_date": "2011-08-02",
+          "study_first_posted_date": "2011-08-03",
+          "study_first_posted_date_type": "ESTIMATED",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-01-27",
+          "last_update_posted_date": "2025-01-29",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2011-03-17",
+          "start_date_type": "ACTUAL",
+          "start_date": "2011-03-17",
+          "verification_month_year": "2025-01",
+          "verification_date": "2025-01-31",
+          "completion_month_year": "2050-03",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2050-03-31",
+          "primary_completion_month_year": "2050-03",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2050-03-31",
+          "target_duration": "10 Years",
+          "study_type": "OBSERVATIONAL",
+          "acronym": "B-SCR-MM",
+          "baseline_population": null,
+          "brief_title": "Ohio State University Multiple Myeloma and Amyloidosis Data Registry and Sample Resource",
+          "official_title": "Buckeye Surveillance, Contact, and Research for Multiple Myeloma and Amyloidosis",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 5000.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Ohio State University Comprehensive Cancer Center",
+          "limitations_and_caveats": null,
+          "number_of_arms": null,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": "SAMPLES_WITH_DNA",
+          "biospec_description": "blood and bone marrow",
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 21:42:09.721931",
+          "updated_at": "2026-02-26 21:42:09.721931",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": "t",
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:34.007343+00:00",
+        "trial_id": "NCT01408225",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion:~Diagnosis of a plasma cell dyscrasia~Exclusion:~Prisoners are excluded from participation as they have no standard access to the Ohio State myeloma clinic and would impede the research objective of this protocol.",
+        "criteria_length": 223
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:36.283959+00:00",
+        "nct_id": "NCT01408225",
+        "query": "NCT01408225[All Fields]",
+        "total_found": 1,
+        "results_returned": 1,
+        "max_results": 5,
+        "publications": [
+          {
+            "pmid": "31593552",
+            "title": "MiR-16 regulates crosstalk in NF-\u03baB tolerogenic inflammatory signaling between myeloma cells and bone marrow macrophages.",
+            "authors": [
+              "Khalife J",
+              "Ghose J",
+              "Martella M",
+              "Viola D",
+              "Rocci A",
+              "Troadec E",
+              "Terrazas C",
+              "Satoskar AR",
+              "Gunes EG",
+              "Dona A",
+              "Sanchez JF",
+              "Bergsagel PL",
+              "Chesi M",
+              "Pozhitkov A",
+              "Rosen S",
+              "Marcucci G",
+              "Keats JJ",
+              "Hofmeister CC",
+              "Krishnan A",
+              "Caserta E",
+              "Pichiorri F"
+            ],
+            "journal": "JCI insight",
+            "date": "2019 Nov 1",
+            "abstract_snippet": "High levels of circulating miR-16 in the serum of multiple myeloma (MM) patients are independently associated with longer survival. Although the tumor suppressor function of intracellular miR-16 in MM plasma cells (PCs) has been elucidated, its extracellular role in maintaining a nonsupportive cance\u2026"
+          }
+        ]
+      },
+      "risk": {
+        "risk_score": 0.5,
+        "risk_reliable": false,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": "risk score unavailable for withdrawn/unknown trials"
+      }
+    },
+    "NCT06078930": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:36.431990+00:00",
+        "trial_id": "NCT06078930",
+        "details": {
+          "nct_id": "NCT06078930",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-10-05",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-05-29",
+          "study_first_submitted_qc_date": "2023-10-05",
+          "study_first_posted_date": "2023-10-12",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-05-29",
+          "last_update_posted_date": "2025-06-04",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2021-06-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2021-06-01",
+          "verification_month_year": "2025-05",
+          "verification_date": "2025-05-31",
+          "completion_month_year": "2026-12-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-12-31",
+          "primary_completion_month_year": "2025-06-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-06-01",
+          "target_duration": "5 Years",
+          "study_type": "OBSERVATIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Development of Novel Gastric Cancer Screening and Diagnosis Technologies Using Tongue Imaging and Study of Tongue Image Changes Mechanisms",
+          "official_title": "A Multi-center Observational Clinical Study on the Development of Artificial Intelligence-Based Gastric Cancer Screening and Diagnosis Technology Using Multi-Omics Analysis of Tongue Imaging and Tongue Coating",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 100000.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Zhejiang Cancer Hospital",
+          "limitations_and_caveats": null,
+          "number_of_arms": null,
+          "number_of_groups": 2.0,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": null,
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": "We currently have no plans to share individual participant data (IPD) with other researchers.",
+          "created_at": "2026-02-28 02:52:10.863997",
+          "updated_at": "2026-02-28 02:52:10.863997",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": "t",
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:36.623818+00:00",
+        "trial_id": "NCT06078930",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "90 Years",
+        "healthy_volunteers": "t",
+        "criteria": "Inclusion Criteria for Gastric Cancer Patients:~* 18\u2264age\u226490~* Histologically or cytologically confirmed gastric cancer~* No prior chemotherapy, radiotherapy, biotherapy, immunotherapy or other anti-tumor treatment for gastric cancer~* Subject volunteers to join the study, Signs informed consent, has good compliance and can cooperate with follow-up~Exclusion Criteria for Gastric Cancer Patients:~* Two or more kinds of malignant tumors at the same time~* Gastric cancer that has been treated by chemotherapy, radiotherapy, biotherapy, immunotherapy or other anti-tumor therapy~* The use of glucocorticoids and antibiotics in the past three months~* History of long-term medication~* Presence of oral diseases such as tooth and gum diseases~* Subjects who had other factors that might force them to terminate the research ahead of time, such as the development of other severe disease (including mental disease) that required combined treatment, seriously abnormal laboratory examination value, and family or social factors that might affect the subject safety or experimental data collection, as judged by the researchers~Inclusion Criteria for Healthy Participants:~* 18\u2264age\u226490~* Willingness to participate in the study, signing an informed consent form, and demonstrating good compliance~Exclusion Criteria for Healthy Participants:~* History of malignant tumors~* The use of glucocorticoids and antibiotics in the past three months~* History of long-term medication~* Presence of oral diseases such as tooth and gum diseases~* Subjects who had other factors that might force them to terminate the research ahead of time, such as the development of other severe disease (including mental disease) that required combined treatment, seriously abnormal laboratory examination value, and family or social factors that might affect the subject safety or experimental data collection, as judged by the researchers",
+        "criteria_length": 1911
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:37.369536+00:00",
+        "nct_id": "NCT06078930",
+        "query": "NCT06078930[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.5,
+        "risk_reliable": false,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": "risk score unavailable for withdrawn/unknown trials"
+      }
+    },
+    "NCT06598839": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:37.497375+00:00",
+        "trial_id": "NCT06598839",
+        "details": {
+          "nct_id": "NCT06598839",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2024-09-12",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-09-12",
+          "study_first_submitted_qc_date": "2024-09-12",
+          "study_first_posted_date": "2024-09-19",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-09-12",
+          "last_update_posted_date": "2024-09-19",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2024-06-30",
+          "start_date_type": "ACTUAL",
+          "start_date": "2024-06-30",
+          "verification_month_year": "2024-09",
+          "verification_date": "2024-09-30",
+          "completion_month_year": "2025-12-30",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-12-30",
+          "primary_completion_month_year": "2025-09-30",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-09-30",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Immuno-effect of T\u03b11 for Stage I NSCLC",
+          "official_title": "Assessment of the Efficacy of Immunomodulatory Therapy With Thymosin Alpha 1 (T\u03b11) Following Surgical Resection in Patients With Stage I Non-Small Cell Lung Cancer",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 40.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Cancer Institute and Hospital, Chinese Academy of Medical Sciences",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 09:44:52.139657",
+          "updated_at": "2026-02-26 09:44:52.139657",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:37.690786+00:00",
+        "trial_id": "NCT06598839",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "75 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Pathologically confirmed stage I (per AJCC 8th edition) invasive NSCLC~* Resectable tumor~* undergoing lobectomy and systemic lymph node dessection~* Without a previous history of malignant tumors or other concurrent malignancies~* Na\u00efve to any anticancer therapies or other immunostimulatory agents~* Eastern Cooperative Oncology Group (ECOG) performance status (PS) score 0-1, with cardiac, pulmonary, hepatic, cerebral, and renal functions capable of withstanding surgery~* Aged \u226518 years and \u226475 years~* Having signed written informed consent and capable of adhering to the visit schedule and related procedures outlined in the study protocol~Exclusion Criteria:~* With a pathologically confirmed non-invasive NSCLC, including preinvasive lesions, small cell lung cancer, and benign lesions~* Post-diagnostic use of immunosuppressive medications or other immunostimulatory agents~* With known or suspected active autoimmune disease~* Allergic to thymopeptides~* With other uncontrolled serious illnesses or having acute or chronic conditions that may confound test outcomes, including active severe clinical infections ( \\&gt;NCI-CTCAE grade 2 infection); diagnosed with epilepsy requiring antiepileptic treatment; on renal dialysis; with non-healing wounds, ulcers, or fractures; with a history of arteriovenous thrombotic events, including cerebrovascular accident, deep vein thrombosis, and pulmonary embolism, within six months prior to the first dose",
+        "criteria_length": 1481
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:37.708291+00:00",
+        "nct_id": "NCT06598839",
+        "query": "NCT06598839[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9868594435974956,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT05629611": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:37.822197+00:00",
+        "trial_id": "NCT05629611",
+        "details": {
+          "nct_id": "NCT05629611",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2022-10-31",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-09-30",
+          "study_first_submitted_qc_date": "2022-11-17",
+          "study_first_posted_date": "2022-11-29",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-09-30",
+          "last_update_posted_date": "2024-10-01",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2023-01-20",
+          "start_date_type": "ACTUAL",
+          "start_date": "2023-01-20",
+          "verification_month_year": "2024-09",
+          "verification_date": "2024-09-30",
+          "completion_month_year": "2025-10-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-10-31",
+          "primary_completion_month_year": "2024-12",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2024-12-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Efficacy and Safety Evaluation of Vi-sealer",
+          "official_title": "Efficacy and Safety Evaluation of Advanced Vessel Sealing Device (Vi-sealer)",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 280.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "CHA University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 4.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 21:39:52.34458",
+          "updated_at": "2026-02-27 21:39:52.34458",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:38.000644+00:00",
+        "trial_id": "NCT05629611",
+        "gender": "FEMALE",
+        "minimum_age": "20 Years",
+        "maximum_age": "65 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~1. Aged 20 to 65 years~2. Clinically diagnosed with benign gynecologic neoplasms (eg. adenomyosis, uterine fibroids, etc.)~3. Eligible for hysterectomy~4. Signing an written consent form indicating that they understand the purpose of and procedures required for the study and are willing to participate in the study prior to any other study-related assessments or procedure~Exclusion Criteria:~1. Large uterus size over 16 weeks of gestational age~2. Cervical or intraligamentary fibroids~3. Severe endometriosis (stage 3 or 4)~4. Suspected malignancy of the uterus or adnexa~5. Contraindicated for the use of energy devices (such as implantable cardioverter defibrillators, pacemakers)~6. Previous pelvic surgery \u2265 3 times~7. Not suitable for laparoscopic surgery",
+        "criteria_length": 784
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:38.017845+00:00",
+        "nct_id": "NCT05629611",
+        "query": "NCT05629611[All Fields]",
+        "total_found": 1,
+        "results_returned": 1,
+        "max_results": 5,
+        "publications": [
+          {
+            "pmid": "41204237",
+            "title": "Efficacy and safety evaluation of a reusable advanced hemostatic device (Vi-Sealer) during total laparoscopic hysterectomy in South Korea (KGOG4009/Vi-TLH trial): study protocol for a multicenter, open-label, non-inferiority randomized controlled trial.",
+            "authors": [
+              "Kim M",
+              "Seong SJ",
+              "Kim K",
+              "Kim SW",
+              "Park ST",
+              "Kim WY",
+              "Choi YJ",
+              "Hong DG",
+              "Park H"
+            ],
+            "journal": "Trials",
+            "date": "2025 Nov 7",
+            "abstract_snippet": "BACKGROUND: Advanced hemostatic devices (AHDs) are widely utilized in gynecologic minimally invasive surgeries. These AHDs control ultrasonic or bipolar electric/thermal energy with a feedback mechanism and effectively seal vessels without thermal spread. However, most AHDs are single-use, potential\u2026"
+          }
+        ]
+      },
+      "risk": {
+        "risk_score": 0.980518164113164,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06106165": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:38.127164+00:00",
+        "trial_id": "NCT06106165",
+        "details": {
+          "nct_id": "NCT06106165",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-08-16",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-04-11",
+          "study_first_submitted_qc_date": "2023-10-23",
+          "study_first_posted_date": "2023-10-30",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-04-11",
+          "last_update_posted_date": "2025-04-16",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2023-11-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2023-11-01",
+          "verification_month_year": "2024-05",
+          "verification_date": "2024-05-31",
+          "completion_month_year": "2025-12",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-12-31",
+          "primary_completion_month_year": "2025-10",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-10-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "IMCAN",
+          "baseline_population": null,
+          "brief_title": "Improving Muslim Women's Uptake of Cancer Screening (IMCAN)",
+          "official_title": "Improving Uptake of Breast, Bowel and Cervical Cancer Screening Among Muslim Women: a Non-randomised Feasibility Study of a Peer-led, Faith-based Intervention",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 200.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "University of Sunderland",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 08:42:13.120769",
+          "updated_at": "2026-02-27 08:42:13.120769",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:38.305837+00:00",
+        "trial_id": "NCT06106165",
+        "gender": "FEMALE",
+        "minimum_age": "25 Years",
+        "maximum_age": "74 Years",
+        "healthy_volunteers": "t",
+        "criteria": "Inclusion Criteria:~* Women from any ethnicity identifying as Muslim~* Muslim Women aged 25-74 years~* Muslim women living in North East England or Scotland~* Muslim women who are not up-to-date with all cancer screening they are eligible for; women who are up-to-date with one type of screening but not others would be eligible (for example, women might be up-to-date with breast cancer screening but not cervical or bowel cancer screening)~Exclusion Criteria:~* Women who do not identify as Muslim~* Women aged less than 25 years or older than 74 years~* Women who are up-to-date with all the screening they are eligible for~* Women who had either breast, cervical or bowel cancer before as their knowledge of the disease and treatment would differ from other women who do not have any prior experience with the disease~* Women who have had BReast CAncer gene testing and underwent mastectomy and/or hysterectomy",
+        "criteria_length": 914
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:38.324916+00:00",
+        "nct_id": "NCT06106165",
+        "query": "NCT06106165[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9704559408128262,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06403540": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:38.435845+00:00",
+        "trial_id": "NCT06403540",
+        "details": {
+          "nct_id": "NCT06403540",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2024-05-03",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-04-29",
+          "study_first_submitted_qc_date": "2024-05-03",
+          "study_first_posted_date": "2024-05-08",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-04-29",
+          "last_update_posted_date": "2025-04-30",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2025-01-30",
+          "start_date_type": "ACTUAL",
+          "start_date": "2025-01-30",
+          "verification_month_year": "2025-04",
+          "verification_date": "2025-04-30",
+          "completion_month_year": "2025-08-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-08-01",
+          "primary_completion_month_year": "2025-07",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-07-31",
+          "target_duration": null,
+          "study_type": "OBSERVATIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "The Impact of Laparotomy and Analgesia Methods on Diaphragm",
+          "official_title": "The Impact of Laparotomy and Analgesia Methods on Postoperative Diaphragm Muscle Contraction in Major Abdominal Surgeries.",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "N/A",
+          "enrollment": 90.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Prof. Dr. Cemil Tasc\u0131oglu Education and Research Hospital Organization",
+          "limitations_and_caveats": null,
+          "number_of_arms": null,
+          "number_of_groups": 1.0,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 22:53:38.031356",
+          "updated_at": "2026-02-26 22:53:38.031356",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": "f",
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:49:38.618729+00:00",
+        "trial_id": "NCT06403540",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": null,
+        "criteria": "Inclusion Criteria:~* over 18 years,~* major abdominal surgery cases~Exclusion Criteria:~* body mass index (BMI) \\>35 kg/m2~* illiteracy,~* communication issues,~* neuromuscular disorders,~* Advanced chronic respiratory disease,~* Previous abdominal or thoracic surgery",
+        "criteria_length": 269
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:49:39.385342+00:00",
+        "nct_id": "NCT06403540",
+        "query": "NCT06403540[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.5,
+        "risk_reliable": false,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": "risk score unavailable for withdrawn/unknown trials"
+      }
+    }
+  },
+  "demo_scope_name": "Recruiting Oncology Trials"
+}

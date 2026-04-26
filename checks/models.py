@@ -105,12 +105,24 @@ def filter_trial_scope(
     studies: pd.DataFrame,
     trial_id: Optional[str] = None,
     therapeutic_area: Optional[str] = None,
+    phase: Optional[str] = None,
+    overall_status: Optional[str] = None,
     limit: int = 100,
 ) -> pd.DataFrame:
     """Apply the standard scope filters used by every check function.
 
     Order: ``trial_id`` (exact match) → ``therapeutic_area`` (keyword match
-    against ``conditions.downcase_name``) → ``limit`` (head N rows).
+    against ``conditions.downcase_name``) → ``phase`` (exact match against
+    ``studies.phase``) → ``overall_status`` (case-insensitive match against
+    ``studies.overall_status``) → ``limit`` (head N rows).
+
+    Phase and status filters apply *before* ``head()`` — this matters when
+    matches are not balanced in the natural row order (e.g., the first 5k
+    oncology rows in real AACT contain zero Phase 3 trials, so
+    post-filtering would always return empty). The status filter is
+    case-insensitive because AACT raw uses uppercase
+    (``COMPLETED`` / ``RECRUITING``) while ``_normalise_studies_df``
+    title-cases values, so callers may pass either form.
 
     Unknown therapeutic areas or missing tables degrade to a no-op for that
     filter rather than raising.
@@ -141,6 +153,13 @@ def filter_trial_scope(
                     )
                 ]["nct_id"].unique()
                 df = df[df["nct_id"].isin(matched)]
+
+    if phase is not None and "phase" in df.columns:
+        df = df[df["phase"] == phase]
+
+    if overall_status is not None and "overall_status" in df.columns:
+        target = str(overall_status).strip().upper()
+        df = df[df["overall_status"].astype(str).str.strip().str.upper() == target]
 
     if limit and len(df) > limit:
         df = df.head(limit)

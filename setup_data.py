@@ -51,6 +51,11 @@ REQUIRED_TABLES = [
     "conditions",
     "interventions",
     "outcome_counts",
+    # outcomes is loaded only to look up outcome_type per outcome_id;
+    # checks/endpoints.py and checks/status.py filter outcome_counts by
+    # outcome_type ("Primary" / "Secondary"), which AACT stores on the
+    # outcomes table — not on outcome_counts.
+    "outcomes",
 ]
 
 SYNTHETIC_N_STUDIES = 10_000
@@ -340,12 +345,147 @@ def _normalise_studies_df(df: pd.DataFrame) -> pd.DataFrame:
         )
     if "overall_status" in df.columns:
         df["overall_status"] = df["overall_status"].astype(str).str.strip().str.title()
+    # Derive actual_enrollment from enrollment + enrollment_type. Real AACT
+    # exposes only `enrollment` + `enrollment_type` ("Actual" / "Anticipated");
+    # checks/enrollment.py and checks/crossfield.py expect a derived
+    # `actual_enrollment` that is NaN when the figure is anticipated.
+    # Compare case-insensitively because AACT raw uses ``ACTUAL`` while
+    # synthetic / earlier exports use ``Actual``.
+    if "enrollment" in df.columns and "enrollment_type" in df.columns:
+        et = df["enrollment_type"].astype(str).str.strip().str.upper()
+        df["actual_enrollment"] = df["enrollment"].where(et == "ACTUAL")
     return df
 
 
 # ---------------------------------------------------------------------------
 # Load raw TXT → parquet
 # ---------------------------------------------------------------------------
+
+
+def _attach_outcome_type(
+    outcome_counts: pd.DataFrame, outcomes: pd.DataFrame,
+) -> pd.DataFrame:
+    """Join ``outcomes.outcome_type`` onto ``outcome_counts`` via outcome_id.
+
+    AACT's ``outcome_counts`` table doesn't carry ``outcome_type`` — it
+    lives on the parent ``outcomes`` table. The v2 checks filter by
+    ``"Primary"`` / ``"Secondary"`` (title-case), so we also normalise
+    AACT's uppercase values (``PRIMARY``, ``SECONDARY``,
+    ``OTHER_PRE_SPECIFIED``) here.
+    """
+    if "outcome_id" not in outcome_counts.columns:
+        log.warning(
+            "outcome_counts has no outcome_id column — skipping outcome_type join.",
+        )
+        outcome_counts["outcome_type"] = None
+        return outcome_counts
+    if not {"id", "outcome_type"}.issubset(outcomes.columns):
+        log.warning(
+            "outcomes table missing id/outcome_type — skipping outcome_type join.",
+        )
+        outcome_counts["outcome_type"] = None
+        return outcome_counts
+
+    type_map = outcomes.set_index("id")["outcome_type"]
+    raw = outcome_counts["outcome_id"].map(type_map)
+    # Title-case ``PRIMARY`` → ``Primary`` etc., preserving NaN for unmatched ids.
+    outcome_counts["outcome_type"] = raw.where(
+        raw.isna(), raw.astype(str).str.title()
+    )
+    matched = int(outcome_counts["outcome_type"].notna().sum())
+    log.info(
+        "  Joined outcome_type onto %d / %d outcome_counts rows.",
+        matched, len(outcome_counts),
+    )
+    return outcome_counts
+
+
+def _outcomes_from_zip(raw_dir: Path) -> pd.DataFrame | None:
+    """Read outcomes.txt directly from an AACT zip without extracting it.
+
+    Used by ``_finalise_tables`` when a Priority 1/2 path supplied
+    parquets that don't already include outcome_type — the join can be
+    completed on-the-fly from the zip's outcomes.txt entry.
+    """
+    zip_path = find_local_zip(raw_dir)
+    if zip_path is None:
+        return None
+    try:
+        with zipfile.ZipFile(zip_path) as zf:
+            entries = {Path(n).stem.lower(): n for n in zf.namelist()
+                       if n.lower().endswith(".txt")}
+            archive = entries.get("outcomes")
+            if archive is None:
+                return None
+            with zf.open(archive) as fh:
+                return pd.read_csv(fh, sep="|", low_memory=False)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Could not read outcomes.txt from %s: %s", zip_path.name, exc)
+        return None
+
+
+def _finalise_tables(
+    tables: dict[str, pd.DataFrame],
+    raw_dir: Path,
+    processed_dir: Path,
+) -> dict[str, pd.DataFrame]:
+    """Apply post-load fixes regardless of which priority path supplied tables.
+
+    1. Re-run ``_normalise_studies_df`` on studies (idempotent — title-cases
+       overall_status, derives ``actual_enrollment`` if missing).
+    2. If ``outcome_counts`` lacks ``outcome_type``, source the outcomes
+       lookup from ``tables["outcomes"]`` if present, otherwise from
+       outcomes.parquet on disk, otherwise from the AACT zip.
+
+    Any tables that change are re-written to ``processed_dir`` so the
+    on-disk parquets match the in-memory state.
+    """
+    changed: set[str] = set()
+
+    if "studies" in tables:
+        before = tables["studies"].columns.tolist()
+        tables["studies"] = _normalise_studies_df(tables["studies"])
+        if tables["studies"].columns.tolist() != before:
+            changed.add("studies")
+
+    oc = tables.get("outcome_counts")
+    if oc is not None and "outcome_type" not in oc.columns:
+        outcomes_df = tables.get("outcomes")
+        if outcomes_df is None:
+            disk = processed_dir / "outcomes.parquet"
+            if disk.exists():
+                try:
+                    outcomes_df = pd.read_parquet(disk)
+                except Exception as exc:  # noqa: BLE001
+                    log.warning("Could not read %s: %s", disk, exc)
+        if outcomes_df is None:
+            outcomes_df = _outcomes_from_zip(raw_dir)
+            if outcomes_df is not None:
+                tables["outcomes"] = outcomes_df
+                changed.add("outcomes")
+        if outcomes_df is not None:
+            tables["outcome_counts"] = _attach_outcome_type(oc, outcomes_df)
+            changed.add("outcome_counts")
+        else:
+            log.warning(
+                "outcomes table unavailable (not loaded, no parquet, no zip). "
+                "outcome_counts.outcome_type will be set to None — endpoint "
+                "and status checks that filter Primary/Secondary will return "
+                "empty results.",
+            )
+            oc["outcome_type"] = None
+            tables["outcome_counts"] = oc
+            changed.add("outcome_counts")
+
+    for name in changed:
+        pq_path = processed_dir / f"{name}.parquet"
+        try:
+            tables[name].to_parquet(pq_path, index=False)
+            log.info("  finalised %-22s → %s", name, pq_path.name)
+        except Exception as exc:  # noqa: BLE001
+            log.error("Failed to write %s: %s", pq_path.name, exc)
+
+    return tables
 
 
 def load_raw_tables(raw_dir: Path, processed_dir: Path) -> dict[str, pd.DataFrame]:
@@ -366,11 +506,32 @@ def load_raw_tables(raw_dir: Path, processed_dir: Path) -> dict[str, pd.DataFram
             if table == "studies":
                 df = _normalise_studies_df(df)
             tables[table] = df
-            pq_path = processed_dir / f"{table}.parquet"
+        except Exception as exc:
+            log.error("Failed to load %s: %s", table, exc)
+
+    # Two-phase: load all tables first, then perform any cross-table
+    # enrichment (here: stamp outcome_type onto outcome_counts) before
+    # writing to parquet so the persisted files match what the checks
+    # expect to see.
+    if "outcome_counts" in tables and "outcomes" in tables:
+        tables["outcome_counts"] = _attach_outcome_type(
+            tables["outcome_counts"], tables["outcomes"],
+        )
+    elif "outcome_counts" in tables:
+        log.warning(
+            "outcomes.txt missing — outcome_counts will have outcome_type=None. "
+            "Endpoint and status checks that filter on Primary/Secondary will "
+            "return empty results until outcomes.txt is provided.",
+        )
+        tables["outcome_counts"]["outcome_type"] = None
+
+    for name, df in tables.items():
+        pq_path = processed_dir / f"{name}.parquet"
+        try:
             df.to_parquet(pq_path, index=False)
             log.info("  %d rows → %s", len(df), pq_path.name)
         except Exception as exc:
-            log.error("Failed to load %s: %s", table, exc)
+            log.error("Failed to write %s: %s", pq_path.name, exc)
     return tables
 
 
@@ -710,6 +871,12 @@ def main() -> None:
             log.warning("All data sources exhausted — generating synthetic data.")
         tables = generate_synthetic_data(processed_dir)
         source = "synthetic (fallback)"
+
+    # Apply schema finalisation regardless of source. Each priority path
+    # (existing parquets / deployment / HF / zip / synthetic) lands data
+    # in slightly different shape; this step makes the persisted parquets
+    # uniform — actual_enrollment derived, outcome_type joined.
+    tables = _finalise_tables(tables, raw_dir, processed_dir)
 
     print_summary(tables)
     log.info("Setup complete. Source: %s  |  Files in: %s", source, processed_dir)

@@ -1,83 +1,132 @@
-# DecisionLENS
+# DecisionLENS v2 — Agentic Data Quality for Clinical Trials
 
-**AI-augmented clinical trial enrollment forecasting and decision support.**
+**LangGraph agent that proactively detects, prioritises, and clusters data quality issues across clinical trial registries — with multi-source cross-validation, LLMOps tracing, and structured provenance for regulated environments.**
 
-DecisionLENS is an end-to-end data science portfolio project that applies predictive modeling, survival analysis, and large-language-model reasoning to the problem of clinical trial enrollment planning — one of the costliest and most schedule-critical challenges in drug development.
+> Built with: Python · LangGraph · GPT-4o-mini · XGBoost · 3 MCP servers (AACT, PubMed, OpenFDA) · Streamlit · 100K real AACT trials
 
-> Built with: Python · XGBoost · Lifelines · Groq (Llama 3.3-70B) · Streamlit · Plotly · AACT / ClinicalTrials.gov data
+**Live demo:** [decisionlens-demo.streamlit.app](https://decisionlens-demo.streamlit.app/) (pre-computed interactive report viewer)
 
-## Demo: https://decisionlens-yuan.streamlit.app/
+**v1 analytics platform:** [decisionlens-yuan.streamlit.app](https://decisionlens-yuan.streamlit.app/) (enrollment forecasting, competitive intelligence, survival analysis)
 
 ---
 
 ## What it does
 
-| Module | Question answered |
-|--------|-------------------|
-| **Enrollment Forecast** | What is the probability this trial will complete enrollment? When? |
-| **Competitive Intelligence** | How saturated is the patient pool for this condition? Who are the competing sponsors? |
-| **Investigator Insights** | Which sites and countries have the strongest historical completion records? |
-| **Eligibility Analyzer** | Which inclusion/exclusion criteria most restrict the eligible population, and how can they be relaxed? |
+DecisionLENS v2 is an agentic data quality system for clinical trial data. Given a scope (e.g. "Recruiting Phase III trials"), the agent:
 
----
+1. **Plans** which checks to run across 7 categories
+2. **Scans** trial records from AACT (100K real ClinicalTrials.gov trials)
+3. **Cross-validates** findings against PubMed publications and OpenFDA adverse event reports
+4. **Prioritises** findings using a rule engine + XGBoost risk model (AUC=0.799) + LLM severity assessment
+5. **Clusters** related issues into root cause hypotheses
+6. **Logs** every LLM call with token counts, cost, and latency for LLMOps monitoring
 
-## Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Data | [AACT / ClinicalTrials.gov](https://aact.ctti-clinicaltrials.org/) (public) |
-| Data wrangling | pyarrow, polars |
-| Modeling | Cox PH (lifelines), XGBoost, scikit-learn |
-| Explainability | SHAP (TreeExplainer) |
-| Generative AI | `llama-3.3-70b-versatile` - [Groq API](https://console.groq.com/) |
-| Visualization | Plotly Express / Graph Objects |
-| Dashboard | Streamlit |
-| Testing | pytest |
+The output is a structured scan report with full provenance — every finding traces back to which data sources were queried, what the rule engine found, what the risk model predicted, and why the LLM assigned that severity.
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Data Layer                                  │
-│  AACT (ClinicalTrials.gov) flat-file parquets                   │
-│  setup_data.py ──► data/processed/*.parquet                     │
-│  (falls back to 10,000-study synthetic dataset if unavailable)  │
-└────────────┬────────────────────────────────────────────────────┘
-             │
-┌────────────▼────────────────────────────────────────────────────┐
-│                   src/ — Core Modules                            │
-│                                                                  │
-│  data_pipeline.py      TrialDataPipeline                        │
-│    load_raw_data()  ──►  clean_studies()  ──►  engineer_features│
-│                                                                  │
-│  models.py             EnrollmentForecaster                      │
-│    XGBClassifier (P_completed)                                   │
-│    XGBRegressor  (duration_days)                                 │
-│    CoxPHFitter   (survival curve S(t))                           │
-│    TreeExplainer (SHAP waterfall)                                │
-│                                                                  │
-│  competitive_intel.py  CompetitiveAnalyzer                       │
-│    get_landscape()  plot_competition_map()  plot_timeline()      │
-│                                                                  │
-│  investigator_insights.py  InvestigatorAnalyzer                  │
-│    get_top_sites()  get_country_performance()  recommend_sites() │
-│                                                                  │
-│  genai_utils.py        EligibilityAnalyzer (Groq / Llama 3.3)   │
-│    analyze_criteria()  compare_criteria()  exec_briefing()       │
-└────────────┬────────────────────────────────────────────────────┘
-             │
-┌────────────▼────────────────────────────────────────────────────┐
-│                  app/ — Streamlit Dashboard                      │
-│                                                                  │
-│  streamlit_app.py         Home / KPI overview                   │
-│  pages/1_Enrollment_Forecast.py    Risk gauge, survival curve   │
-│  pages/2_Competitive_Intelligence.py  Choropleth, Gantt, treemap│
-│  pages/3_Investigator_Insights.py  Site ranking, country heatmap│
-│  pages/4_Eligibility_Analyzer.py   LLM risk analysis, briefing  │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                    LangGraph Agent (5 nodes)                  │
+│                                                               │
+│  Planning ──► Scan ──► Review ──► Context Enrichment ──►     │
+│                         ▲              │ (loop max 3)         │
+│                         └──────────────┘                      │
+│                                    ──► Prioritisation         │
+│                                    ──► Root Cause Clustering  │
+└───────────┬──────────────────────┬────────────────────────────┘
+            │                      │
+┌───────────▼──────┐  ┌───────────▼──────────────────────────┐
+│   3 MCP Servers   │  │        Models & Evaluation            │
+│                   │  │                                       │
+│  AACT (parquet)   │  │  XGBoost classifier (AUC=0.799)      │
+│  PubMed (API)     │  │  Cox PH survival (46,897 obs)        │
+│  OpenFDA (API)    │  │  Risk escalation logic                │
+│                   │  │  18-sample gold set (κ=0.596)         │
+│  Cache layer      │  │  Drug name sanitiser                  │
+└──────────────────┘  └───────────────────────────────────────┘
+            │
+┌───────────▼──────────────────────────────────────────────────┐
+│                    Streamlit Dashboard                         │
+│                                                               │
+│  Page 1: Scan Overview — metrics, LLMOps, cluster preview    │
+│  Page 2: Prioritised Issues — two-layer display, filters     │
+│  Page 3: Trial Deep Dive — metadata, PubMed, OpenFDA        │
+│  Page 4: Audit Log & Evaluation — per-call trace, gold set   │
+│                                                               │
+│  app_v2.py    — live mode (runs agent, requires OpenAI key)  │
+│  app_demo.py  — demo mode (pre-computed reports, zero deps)  │
+└──────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Check Categories
+
+The agent runs checks across 7 categories (A–G):
+
+| Category | Check | Example finding |
+|----------|-------|----------------|
+| A. Temporal | Recruiting past completion date | "Status is Recruiting but completion date was 287 days ago" |
+| B. Enrollment | Phase 3 underpowered | "Planned enrollment is 38 (< 50 threshold)" |
+| C. Status | Completed with future end date | "Completion date is 2027-06-01 but status is Completed" |
+| D. Endpoints | Missing primary outcome | "No primary outcome registered for Phase 3 trial" |
+| E. Cross-field | Missing design fields | "Late-phase trial missing allocation field" |
+| F. Publication | No publications for completed trial | Cross-validated against PubMed API |
+| G. Safety | Incomplete AE profile vs FDA | Cross-validated against OpenFDA adverse events |
+
+Categories A–E use AACT data only. Categories F and G cross-validate against external sources (PubMed, OpenFDA) — these are the "multi-source" findings that demonstrate the agent's ability to synthesise across data silos.
+
+---
+
+## Severity & Risk Model
+
+Findings are assigned severity through a three-stage process:
+
+1. **Rule engine** assigns initial severity (HIGH/MEDIUM/LOW) based on check logic
+2. **XGBoost risk model** (v2, AUC=0.799, trained on 22K real AACT trials) predicts trial completion risk
+3. **Escalation**: HIGH findings on trials with reliable risk score ≥ 0.6 are escalated to CRITICAL
+
+The dashboard translates these into human-readable conclusions:
+
+- **Layer 1** (visible immediately): severity badge + finding + suggested action
+- **Layer 2** (click to expand): "Why this severity?" explanation, sources checked, assessment confidence
+
+---
+
+## Evaluation
+
+Severity classification evaluated on an 18-sample gold set (single annotator):
+
+| Metric | Value |
+|--------|-------|
+| Accuracy | 0.722 (13/18) |
+| Cohen's κ | 0.596 (moderate agreement) |
+| CRITICAL precision | 1.000 (zero false escalations) |
+| Match rate | 100% (18/18 gold issues found) |
+
+The system over-classifies moderate recruiting delays as HIGH (should be MEDIUM). It never false-escalates to CRITICAL — 100% precision on the highest-priority class.
+
+> This gold set evaluates severity classification accuracy only. Detection recall evaluation would require an independently annotated trial dataset — out of scope for this demo but a natural next step in production validation. Gold set labelled by single annotator — in production, 2–3 clinical data managers with adjudication would be used.
+
+---
+
+## LLMOps
+
+Every scan logs:
+
+| Field | Example |
+|-------|---------|
+| LLM calls | 6 |
+| Total tokens | 5,484 |
+| Cost | $0.0017 |
+| Latency | 43.8 s |
+| Model | gpt-4o-mini |
+| Purposes | planning, review, prioritisation, clustering |
+
+Per-call tracing is visible in the Audit Log (Page 4) with call_id, purpose, tokens, cost, latency, and status for each invocation.
 
 ---
 
@@ -85,254 +134,152 @@ DecisionLENS is an end-to-end data science portfolio project that applies predic
 
 ```
 decisionlens/
-├── app/
-│   ├── streamlit_app.py              # Home page
-│   ├── components/
-│   │   ├── charts.py                 # Reusable Plotly chart functions
-│   │   ├── sidebar.py                # Global filter sidebar
-│   │   └── _theme.py                 # Shared CSS theme
-│   └── pages/
-│       ├── 1_Enrollment_Forecast.py
-│       ├── 2_Competitive_Intelligence.py
-│       ├── 3_Investigator_Insights.py
-│       └── 4_Eligibility_Analyzer.py
-├── src/
-│   ├── data_pipeline.py              # TrialDataPipeline
-│   ├── models.py                     # EnrollmentForecaster
-│   ├── competitive_intel.py          # CompetitiveAnalyzer
-│   ├── investigator_insights.py      # InvestigatorAnalyzer
-│   └── genai_utils.py                # EligibilityAnalyzer (Groq API)
-├── notebooks/
-│   ├── 01_eda_trial_landscape.ipynb  # Exploratory data analysis
-│   ├── 02_feature_engineering.ipynb  # Feature construction & validation
-│   ├── 03_enrollment_model.ipynb     # Model training & tuning
-│   ├── 04_competitive_intelligence.ipynb
-│   └── 05_model_evaluation.ipynb     # Threshold tuning, SHAP analysis
-├── sql/
-│   ├── enrollment_extract.sql        # Main modeling query
-│   ├── competitor_landscape.sql      # Competing-trial query
-│   └── investigator_sites.sql        # Site-performance query
-├── tests/
-│   ├── conftest.py                   # Shared fixtures
-│   ├── test_pipeline.py
-│   ├── test_models.py
-│   └── test_genai.py
-├── docs/
-│   └── methodology.md               # Full technical methodology
+├── agents/
+│   ├── orchestrator.py           # LangGraph 5-node agent
+│   └── test_agent.py             # E2E agent tests
+├── checks/
+│   ├── models.py                 # Issue dataclass, filter_trial_scope
+│   ├── temporal.py               # Check A: temporal consistency
+│   ├── enrollment.py             # Check B: enrollment adequacy
+│   ├── status.py                 # Check C: status consistency
+│   ├── endpoints.py              # Check D: endpoint completeness
+│   ├── crossfield.py             # Check E: cross-field validation
+│   ├── publication.py            # Check F: publication cross-validation
+│   └── safety.py                 # Check G: FDA safety cross-validation
+├── mcp_servers/
+│   ├── aact_server.py            # AACT MCP server (local parquet)
+│   ├── pubmed_server.py          # PubMed MCP server (API + cache)
+│   ├── openfda_server.py         # OpenFDA MCP server (API + cache)
+│   └── cache/                    # Persistent API response cache
 ├── models/
-│   └── forecaster.joblib            # Saved EnrollmentForecaster
-├── setup_data.py                    # One-time data download & preprocessing
-├── requirements.txt
-└── .env.example
+│   ├── risk_scorer.py            # XGBoost risk scoring + escalation
+│   ├── xgb_classifier.pkl        # Trained classifier (AUC=0.799)
+│   ├── cox_ph.pkl                # Cox PH survival model
+│   └── test_risk_scorer.py       # Risk scorer tests
+├── llmops/
+│   ├── tracker.py                # Per-call LLM usage tracking
+│   └── test_tracker.py           # Tracker unit tests
+├── evaluation/
+│   ├── gold_set.json             # 18-sample labelled gold set
+│   ├── metrics.py                # Evaluation pipeline
+│   └── metrics_results.json      # Latest evaluation results
+├── output/
+│   ├── report.py                 # ScanReport with to_dict/from_dict
+│   ├── reports/                  # Saved scan reports (JSON)
+│   ├── demo/                     # Pre-computed demo scope reports
+│   └── test_report.py            # Report roundtrip tests
+├── tests/
+│   ├── test_checks_edge.py       # Edge case tests (20 assertions)
+│   └── test_agent_resilience.py  # LLM failure graceful degradation
+├── src/
+│   ├── data_pipeline.py          # TrialDataPipeline
+│   └── models.py                 # EnrollmentForecaster (v1 model training)
+├── notebooks/
+│   ├── 01_eda_trial_landscape.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   └── 03_enrollment_model.ipynb
+├── data/
+│   ├── processed/                # 100K real AACT trial parquets
+│   └── deployment/               # Deployment sample
+├── app_v2.py                     # Live agent dashboard
+├── app_demo.py                   # Pre-computed demo viewer
+├── app_lib.py                    # Shared dashboard components
+├── pre_warm_demo.py              # Generate demo scope reports
+├── setup_data.py                 # AACT data setup
+└── requirements.txt
 ```
 
 ---
 
 ## Quickstart
 
-### 1 — Clone and install
+### Live mode (full agent)
 
 ```bash
-git clone https://github.com/yourhandle/decisionlens.git
+git clone https://github.com/yuan-phd/decisionlens.git
 cd decisionlens
 
 python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
-```
 
-### 2 — Configure environment
+# Set OpenAI API key for the LLM agent
+export OPENAI_API_KEY=your_key_here
 
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and set:
-
-```
-# Required for the Eligibility Analyzer (Page 4).
-# Free key: https://console.groq.com/keys
-# If not set, the app runs in demo mode with realistic mock responses.
-GROQ_API_KEY=your_groq_key_here
-
-# Path to your AACT data directory (created by setup_data.py).
-# Defaults to ./data if not set.
-AACT_DATA_DIR=./data
-```
-
-### 3 — Set up data
-
-`setup_data.py` downloads the latest AACT flat-file snapshot (~2 GB) and converts it to parquets. If the download fails, it generates a 10,000-study synthetic dataset automatically.
-
-```bash
+# Set up data (downloads AACT flat files → parquet)
 python setup_data.py
-```
 
-Expected output:
-```
-Trying 2026-03-01 … OK
-Downloaded: data/raw/20260301_clinical_trials.zip
-Extracting … done
-Converting to parquet … 10 tables
-Preprocessing … done
-Saved to data/processed/ (10 tables)
-```
-
-### 4 — Train the model
-
-Run notebook **03** to train and save the `EnrollmentForecaster`:
-
-```bash
+# Train the risk model (or use the included pre-trained model)
 jupyter notebook notebooks/03_enrollment_model.ipynb
-# Or: jupyter nbconvert --to notebook --execute notebooks/03_enrollment_model.ipynb
+
+# Launch live dashboard
+streamlit run app_v2.py
 ```
 
-This writes `models/forecaster.joblib`. A pre-trained model is included for convenience.
+Select Phase 3 + Recruiting + limit 50 → click Run Scan → ~60 seconds → results.
 
-### 5 — Launch the dashboard
+### Demo mode (no API key needed)
 
 ```bash
-streamlit run app/streamlit_app.py
+# Launch pre-computed report viewer
+streamlit run app_demo.py
 ```
 
-Opens at `http://localhost:8501`. All four pages are available from the sidebar.
-
----
-
-## Model Performance
-
-Performance was evaluated on a 10,000-study synthetic AACT snapshot using 5-fold stratified cross-validation (March 2026).
-
-### XGBoost Classifier — P(Enrollment Completes)
-
-| Metric | Default threshold (0.50) | Tuned threshold (0.93) |
-|--------|--------------------------|------------------------|
-| ROC-AUC | 0.787 ± 0.004 | 0.787 ± 0.004 |
-| F1-macro | 0.564 | **0.660** |
-| F1 (Completed) | 0.956 | 0.869 |
-| F1 (Terminated) | 0.170 | **0.368** |
-
-The threshold was raised from 0.50 to **0.93** to improve sensitivity to the Terminated (minority) class while preserving ROC-AUC. At the 0.50 threshold, the model nearly always predicted "Completed" — clinically useless. At 0.93, it surfaces roughly twice as many true termination risks.
-
-**Why F1-Terminated is still modest:** AACT captures structural attributes (phase, sponsor, facility count) but lacks the operational signals that most reliably predict termination — site activation delays, protocol amendments, funding discontinuation, and regulatory holds. ROC-AUC = 0.787 confirms that a real signal exists; F1-Terminated will improve as site-level features are added.
-
-### XGBoost Regressor — Enrollment Duration
-
-| Metric | Value |
-|--------|-------|
-| R² | ~0.04 |
-| Interpretation | Duration is driven by operational factors absent from AACT structural data. |
-| Use | Rank-ordering and rough planning; prefer Cox PH intervals for uncertainty. |
-
-### Cox Proportional Hazards — Survival Curve S(t)
-
-Fits a parametric time-to-completion model on labeled trials with right-censoring for active/recruiting studies. Used to generate the enrollment-completion probability curve `P(completed by day t) = 1 − S(t)` shown on Page 1.
-
----
-
-## Key Features
-
-### Enrollment Forecast (Page 1)
-
-- Configure a hypothetical trial (phase, sites, countries, sponsor type, masking)
-- Outputs: completion probability gauge, predicted duration in months, risk label
-- Survival curve: P(enrollment completed by day t) with predicted median marker
-- SHAP waterfall: top 12 risk drivers with signed feature contributions
-- Benchmark: box plot of historical duration for same phase + 10 nearest-neighbor trials
-
-### Competitive Intelligence (Page 2)
-
-- KPI cards: total/active/competing/terminated trials, competition intensity index
-- Choropleth world map: trial site density by country
-- Gantt timeline: concurrent trial start/end dates coloured by phase
-- Sponsor treemap: market share by active-trial count
-
-### Investigator Insights (Page 3)
-
-- Sortable site ranking table: trials, completion rate, avg enrollment, city/country
-- Country heatmap: z-score normalised performance across 5 metrics
-- Site co-participation network: nodes = sites, edges = shared trials
-- Site allocation recommender: distributes a patient target across countries by performance score
-
-### Eligibility Analyzer (Page 4) — AI-Powered
-
-- Pastes eligibility criteria text (or loads an NSCLC example)
-- LLM (Llama 3.3-70B via Groq) identifies risk factors, assigns severity (high/medium/low), and suggests relaxations with estimated population impact
-- Streaming executive briefing: 1-page VP-level summary (~300 words)
-- Side-by-side protocol comparison: which criteria differ, which protocol is more enrollment-friendly
-- **Demo mode**: runs with realistic mock responses when `GROQ_API_KEY` is not set
-
----
-
-## Notebooks
-
-| Notebook | Purpose |
-|----------|---------|
-| [01_eda_trial_landscape.ipynb](notebooks/01_eda_trial_landscape.ipynb) | Distribution of trial statuses, phases, enrollment figures; temporal trends |
-| [02_feature_engineering.ipynb](notebooks/02_feature_engineering.ipynb) | Feature construction, correlation analysis, missing-value audit |
-| [03_enrollment_model.ipynb](notebooks/03_enrollment_model.ipynb) | XGBoost training, cross-validation, SHAP importances, model serialisation |
-| [04_competitive_intelligence.ipynb](notebooks/04_competitive_intelligence.ipynb) | Competitive landscape deep-dive, sponsor analysis, site co-participation network |
-| [05_model_evaluation.ipynb](notebooks/05_model_evaluation.ipynb) | Threshold sweep (F1 vs threshold curve), ROC/PR curves, calibration, confusion matrices |
+Select a demo scope from the sidebar → browse pre-computed results across all 4 pages.
 
 ---
 
 ## Tests
 
 ```bash
-pytest tests/ -v
-# 89 passed, 7 skipped (live-mode Groq tests require GROQ_API_KEY) in ~5 s
+# Run all test suites
+python -m pytest tests/test_checks_edge.py -v        # 20 edge case assertions
+python models/test_risk_scorer.py                      # Risk scorer + escalation
+python -m pytest tests/test_agent_resilience.py -v     # LLM failure degradation
+python agents/test_agent.py                            # E2E agent scan
+python llmops/test_tracker.py                          # LLMOps tracker
+python output/test_report.py                           # Report roundtrip
+
+# All 6 test files pass on real AACT data
 ```
 
-| Test file | What's tested |
-|-----------|---------------|
-| `test_pipeline.py` | `TrialDataPipeline` — init, clean_studies, engineer_features, load_raw_data |
-| `test_models.py` | `EnrollmentForecaster` — fit, predict, survival, save/load, pre-fit guards |
-| `test_genai.py` | `EligibilityAnalyzer` — demo mode, all three methods, caching, live mocks |
+---
+
+## Data
+
+- **Source**: [AACT / ClinicalTrials.gov](https://aact.ctti-clinicaltrials.org/) flat-file snapshot
+- **Scale**: 100K real clinical trials (deployment sample from 573K full database)
+- **Tables**: studies, calculated_values, eligibilities, designs, facilities, countries, sponsors, conditions, interventions, outcome_counts, outcomes
+- **Labels**: COMPLETED → 1, TERMINATED → 0; RECRUITING/ACTIVE/etc. → unlabeled (used for Cox PH censoring)
 
 ---
 
-## SQL Scripts
+## v1 → v2 Evolution
 
-The `sql/` directory contains equivalent PostgreSQL queries for teams with live AACT access:
+| | v1 | v2 |
+|---|---|---|
+| **Purpose** | Enrollment forecasting & analytics | Proactive data quality monitoring |
+| **Architecture** | Monolithic (src/ modules) | Agentic (LangGraph + MCP servers) |
+| **Data sources** | AACT only | AACT + PubMed + OpenFDA |
+| **Model** | XGBoost (AUC=0.787, synthetic) | XGBoost (AUC=0.799, real AACT) |
+| **LLM usage** | Eligibility analysis (Llama 3.3) | Planning, prioritisation, clustering (GPT-4o-mini) |
+| **Output** | Dashboard with charts | Structured scan report with provenance |
+| **Evaluation** | AUC/F1 only | Gold set + Cohen's κ + per-severity P/R/F1 |
+| **Audit** | None | Per-call LLMOps tracing |
 
-| Script | Purpose |
-|--------|---------|
-| `enrollment_extract.sql` | Full modeling dataset — joins 8 AACT tables, engineers all features |
-| `competitor_landscape.sql` | Active competing trials, sponsor market share, site distribution |
-| `investigator_sites.sql` | Site completion rates, enrollment performance by country |
-
----
-
-## Configuration Reference
-
-All settings are loaded from `.env` at startup (see `.env.example`):
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `GROQ_API_KEY` | _(none)_ | Groq API key for the Eligibility Analyzer. Get free at [console.groq.com/keys](https://console.groq.com/keys). App runs in demo mode without it. |
-| `AACT_DATA_DIR` | `./data` | Root directory for AACT flat files. `setup_data.py` creates `raw/` and `processed/` subdirectories inside it. |
-| `AACT_USERNAME` | _(none)_ | AACT PostgreSQL credentials — needed only for live database queries, not for flat-file mode. |
-| `AACT_PASSWORD` | _(none)_ | See above. |
+v1 remains live at [decisionlens-yuan.streamlit.app](https://decisionlens-yuan.streamlit.app/) — enrollment forecasting, competitive intelligence, investigator insights, and LLM eligibility analysis.
 
 ---
 
-## Methodology
+## Design Decisions
 
-See [docs/methodology.md](docs/methodology.md) for a detailed walkthrough of:
-- AACT data schema and preprocessing decisions
-- Feature engineering rationale (all 14 features)
-- Classifier threshold selection and imbalanced-class handling
-- Survival model right-censoring and interpretation
-- LLM prompt design and structured output schema
+**Why MCP servers instead of direct API calls?** MCP provides a standardised tool interface that the LangGraph agent can discover and invoke dynamically. Each server handles its own caching, rate limiting, and error handling — the agent doesn't need to know the implementation details of PubMed vs OpenFDA.
 
----
+**Why rule engine + risk model + LLM (three-stage severity)?** Rules catch deterministic patterns (missing fields, date inconsistencies). The risk model adds probabilistic context from 22K historical trials. The LLM synthesises both signals with domain reasoning. No single approach covers all cases — the combination is more robust than any one alone.
 
-## Data Notes
+**Why root cause clustering?** Individual findings are actionable but don't reveal systemic patterns. Clustering groups related issues (e.g. "5 trials from the same sponsor all missing primary outcomes") into hypotheses that suggest process-level fixes rather than per-trial patches. This is LLM-assisted hypothesis generation, not statistical causal inference.
 
-- **Source**: [AACT flat-file downloads](https://aact.ctti-clinicaltrials.org/pipe_files) — pipe-delimited (`|`), UTF-8, ~2.2 GB compressed
-- **Scope**: Interventional trials started ≥ 2008 with target enrollment ≥ 10
-- **Labels**: COMPLETED → 1, TERMINATED → 0; RECRUITING/ACTIVE/etc. → unlabeled
-- **Synthetic fallback**: `setup_data.py` generates 10,000 seeded synthetic studies when the download is unavailable; all structural patterns are preserved
+**Why two-layer display?** Clinical operations managers need conclusions ("this trial has a critical issue, take this action"). Engineers need provenance ("which rule fired, what was the risk score, which sources were checked"). The two-layer design serves both audiences from the same interface.
 
 ---
 

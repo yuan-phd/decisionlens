@@ -1,0 +1,227 @@
+{
+  "scope": "Phase III Recruiting trials",
+  "scope_filters": {
+    "phase": "Phase 3",
+    "overall_status": "Recruiting",
+    "limit": 50
+  },
+  "gold_total": 18,
+  "scan_total": 18,
+  "matched": 18,
+  "match_rate": 1.0,
+  "accuracy": 0.7222,
+  "cohens_kappa": 0.5964,
+  "per_severity": {
+    "CRITICAL": {
+      "precision": 1.0,
+      "recall": 0.8,
+      "f1": 0.8889,
+      "support": 5,
+      "tp": 4,
+      "fp": 0,
+      "fn": 1
+    },
+    "HIGH": {
+      "precision": 0.4444,
+      "recall": 1.0,
+      "f1": 0.6154,
+      "support": 4,
+      "tp": 4,
+      "fp": 5,
+      "fn": 0
+    },
+    "MEDIUM": {
+      "precision": 1.0,
+      "recall": 0.5556,
+      "f1": 0.7143,
+      "support": 9,
+      "tp": 5,
+      "fp": 0,
+      "fn": 4
+    },
+    "LOW": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  "confusion_matrix": {
+    "CRITICAL": {
+      "CRITICAL": 4,
+      "HIGH": 1,
+      "MEDIUM": 0,
+      "LOW": 0
+    },
+    "HIGH": {
+      "CRITICAL": 0,
+      "HIGH": 4,
+      "MEDIUM": 0,
+      "LOW": 0
+    },
+    "MEDIUM": {
+      "CRITICAL": 0,
+      "HIGH": 4,
+      "MEDIUM": 5,
+      "LOW": 0
+    },
+    "LOW": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "matched_pairs": [
+    {
+      "rank": 1,
+      "trial_id": "NCT06079788",
+      "check_name": "missing_primary_outcome",
+      "gold_severity": "CRITICAL",
+      "predicted_severity": "CRITICAL",
+      "agree": true
+    },
+    {
+      "rank": 2,
+      "trial_id": "NCT02423395",
+      "check_name": "missing_primary_outcome",
+      "gold_severity": "CRITICAL",
+      "predicted_severity": "CRITICAL",
+      "agree": true
+    },
+    {
+      "rank": 3,
+      "trial_id": "NCT06626503",
+      "check_name": "missing_primary_outcome",
+      "gold_severity": "CRITICAL",
+      "predicted_severity": "CRITICAL",
+      "agree": true
+    },
+    {
+      "rank": 4,
+      "trial_id": "NCT07371611",
+      "check_name": "missing_primary_outcome",
+      "gold_severity": "CRITICAL",
+      "predicted_severity": "CRITICAL",
+      "agree": true
+    },
+    {
+      "rank": 5,
+      "trial_id": "NCT06875427",
+      "check_name": "missing_primary_outcome",
+      "gold_severity": "CRITICAL",
+      "predicted_severity": "HIGH",
+      "agree": false
+    },
+    {
+      "rank": 6,
+      "trial_id": "NCT06202755",
+      "check_name": "recruiting_past_completion",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "HIGH",
+      "agree": false
+    },
+    {
+      "rank": 7,
+      "trial_id": "NCT04450953",
+      "check_name": "recruiting_past_completion",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "HIGH",
+      "agree": false
+    },
+    {
+      "rank": 8,
+      "trial_id": "NCT06392438",
+      "check_name": "recruiting_past_completion",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "HIGH",
+      "agree": false
+    },
+    {
+      "rank": 9,
+      "trial_id": "NCT04062565",
+      "check_name": "recruiting_past_completion",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "HIGH",
+      "agree": false
+    },
+    {
+      "rank": 10,
+      "trial_id": "NCT04062565",
+      "check_name": "latephase_missing_design_field",
+      "gold_severity": "HIGH",
+      "predicted_severity": "HIGH",
+      "agree": true
+    },
+    {
+      "rank": 11,
+      "trial_id": "NCT05304442",
+      "check_name": "recruiting_past_completion",
+      "gold_severity": "HIGH",
+      "predicted_severity": "HIGH",
+      "agree": true
+    },
+    {
+      "rank": 12,
+      "trial_id": "NCT07016126",
+      "check_name": "latephase_missing_design_field",
+      "gold_severity": "HIGH",
+      "predicted_severity": "HIGH",
+      "agree": true
+    },
+    {
+      "rank": 13,
+      "trial_id": "NCT04999215",
+      "check_name": "latephase_missing_design_field",
+      "gold_severity": "HIGH",
+      "predicted_severity": "HIGH",
+      "agree": true
+    },
+    {
+      "rank": 14,
+      "trial_id": "NCT06875427",
+      "check_name": "phase3_underpowered",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "MEDIUM",
+      "agree": true
+    },
+    {
+      "rank": 15,
+      "trial_id": "NCT04450953",
+      "check_name": "phase3_underpowered",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "MEDIUM",
+      "agree": true
+    },
+    {
+      "rank": 16,
+      "trial_id": "NCT06392438",
+      "check_name": "phase3_underpowered",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "MEDIUM",
+      "agree": true
+    },
+    {
+      "rank": 17,
+      "trial_id": "NCT04062565",
+      "check_name": "phase3_underpowered",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "MEDIUM",
+      "agree": true
+    },
+    {
+      "rank": 18,
+      "trial_id": "NCT05304442",
+      "check_name": "phase3_underpowered",
+      "gold_severity": "MEDIUM",
+      "predicted_severity": "MEDIUM",
+      "agree": true
+    }
+  ],
+  "missing_gold": [],
+  "evaluation_note": "This gold set evaluates severity classification\naccuracy only. Detection recall evaluation would\nrequire an independently annotated trial dataset\n— out of scope for this demo but a natural next\nstep in production validation. Gold set labelled\nby single annotator — in production, 2-3 clinical\ndata managers with adjudication would be used.",
+  "scan_id": "2cafad21bdde"
+}

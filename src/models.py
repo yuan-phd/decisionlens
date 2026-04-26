@@ -752,6 +752,12 @@ class EnrollmentForecaster:
             log.error(
                 "Cox PH fitting failed: %s. Survival predictions unavailable.", exc
             )
+            # Surface the failure in stdout too — log.error is invisible in
+            # notebooks with default logging config; the traceback is what
+            # actually pinpoints what went wrong (collinearity, NaN cols, etc.).
+            import traceback
+            print(f"Cox fit failed: {exc}")
+            traceback.print_exc()
             self._cox_fitter = None
 
     def _prepare_cox_df(self, df: pd.DataFrame) -> pd.DataFrame:

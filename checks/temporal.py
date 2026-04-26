@@ -33,6 +33,8 @@ MAX_PHASE1_DURATION_DAYS = 15 * 365  # 15 years for a Phase 1 is suspicious
 def check_temporal_consistency(
     trial_id: Optional[str] = None,
     therapeutic_area: Optional[str] = None,
+    phase: Optional[str] = None,
+    overall_status: Optional[str] = None,
     limit: int = 100,
 ) -> list[Issue]:
     """Run all temporal consistency rules over the scoped trial set.
@@ -56,7 +58,8 @@ def check_temporal_consistency(
 
         scoped = filter_trial_scope(
             studies, trial_id=trial_id,
-            therapeutic_area=therapeutic_area, limit=limit,
+            therapeutic_area=therapeutic_area, phase=phase,
+            overall_status=overall_status, limit=limit,
         )
         if scoped.empty:
             return issues

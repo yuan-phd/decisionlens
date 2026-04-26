@@ -23,6 +23,8 @@ LATE_PHASES = {"Phase 3", "Phase 2/Phase 3", "Phase 4"}
 def check_endpoints_gaps(
     trial_id: Optional[str] = None,
     therapeutic_area: Optional[str] = None,
+    phase: Optional[str] = None,
+    overall_status: Optional[str] = None,
     limit: int = 100,
 ) -> list[Issue]:
     """Run all endpoint and design-gap rules over the scoped trial set.
@@ -43,7 +45,8 @@ def check_endpoints_gaps(
 
         scoped = filter_trial_scope(
             studies, trial_id=trial_id,
-            therapeutic_area=therapeutic_area, limit=limit,
+            therapeutic_area=therapeutic_area, phase=phase,
+            overall_status=overall_status, limit=limit,
         )
         if scoped.empty:
             return issues
@@ -86,18 +89,25 @@ def check_endpoints_gaps(
                 design_row = design_row.iloc[0]
 
             # Rule 1 — no primary outcome registered
+            # Observational / registry studies (phase N/A or null) are not
+            # required to declare a primary outcome — downgrade to LOW.
             if nct not in primary_trials:
+                is_non_phased = phase_str in ("", "N/A")
+                severity = "LOW" if is_non_phased else "HIGH"
                 issues.append(Issue(
                     trial_id=nct,
                     check_name="missing_primary_outcome",
                     check_category=CATEGORY,
-                    severity_rule="HIGH",
+                    severity_rule=severity,
                     finding=(
                         "No Primary outcome row registered in outcome_counts."
                     ),
-                    data_points={"primary_outcome_rows": 0},
+                    data_points={
+                        "primary_outcome_rows": 0,
+                        "phase": phase_str or None,
+                    },
                     source_tables=["studies", "outcome_counts"],
-                    source_columns=["nct_id", "outcome_type"],
+                    source_columns=["nct_id", "phase", "outcome_type"],
                 ))
 
             # Rule 2 — late-phase missing structural design fields

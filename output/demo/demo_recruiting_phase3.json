@@ -1,0 +1,3646 @@
+{
+  "scan_id": "fc390ac7bcc9",
+  "timestamp": "2026-04-26T20:48:28.727337+00:00",
+  "scope": "Recruiting Phase III trials",
+  "scope_filters": {
+    "phase": "Phase 3",
+    "overall_status": "Recruiting",
+    "limit": 200
+  },
+  "data_source_note": "AACT registry + PubMed + OpenFDA (proxies for EDC/CTMS)",
+  "trials_scanned": 17,
+  "checks_executed": [
+    "temporal",
+    "enrollment",
+    "status",
+    "endpoint"
+  ],
+  "agent_iterations": 2,
+  "issues": {
+    "critical": 10,
+    "high": 5,
+    "medium": 5,
+    "low": 0
+  },
+  "llmops_summary": {
+    "total_llm_calls": 7,
+    "total_prompt_tokens": 6487,
+    "total_completion_tokens": 3367,
+    "total_tokens": 9854,
+    "total_latency_ms": 69477.7,
+    "total_estimated_cost_usd": 0.002993,
+    "calls": [
+      {
+        "call_id": "80512675-c9dd-455e-b6f7-878d2adaaf16",
+        "model": "gpt-4o-mini",
+        "purpose": "planning",
+        "prompt_tokens": 128,
+        "completion_tokens": 145,
+        "latency_ms": 3136.1,
+        "estimated_cost_usd": 0.000106,
+        "status": "ok"
+      },
+      {
+        "call_id": "3ddf572d-454d-4a40-b242-07a870d2c001",
+        "model": "gpt-4o-mini",
+        "purpose": "review",
+        "prompt_tokens": 516,
+        "completion_tokens": 152,
+        "latency_ms": 3260.7,
+        "estimated_cost_usd": 0.000169,
+        "status": "ok"
+      },
+      {
+        "call_id": "353aa80a-33f7-40e6-a212-1351a23c7688",
+        "model": "gpt-4o-mini",
+        "purpose": "review",
+        "prompt_tokens": 516,
+        "completion_tokens": 138,
+        "latency_ms": 3528.1,
+        "estimated_cost_usd": 0.00016,
+        "status": "ok"
+      },
+      {
+        "call_id": "3d858686-2484-403e-bd0b-4793d43d49f1",
+        "model": "gpt-4o-mini",
+        "purpose": "prioritisation",
+        "prompt_tokens": 389,
+        "completion_tokens": 148,
+        "latency_ms": 2745.9,
+        "estimated_cost_usd": 0.000147,
+        "status": "ok"
+      },
+      {
+        "call_id": "699c8373-8793-4bea-952d-e6cc97aeccf8",
+        "model": "gpt-4o-mini",
+        "purpose": "prioritisation",
+        "prompt_tokens": 1241,
+        "completion_tokens": 885,
+        "latency_ms": 15138.5,
+        "estimated_cost_usd": 0.000717,
+        "status": "ok"
+      },
+      {
+        "call_id": "9d1d5db9-5a15-44de-8e2f-497a489a52fa",
+        "model": "gpt-4o-mini",
+        "purpose": "prioritisation",
+        "prompt_tokens": 1330,
+        "completion_tokens": 1170,
+        "latency_ms": 28457.8,
+        "estimated_cost_usd": 0.000902,
+        "status": "ok"
+      },
+      {
+        "call_id": "9b333621-5a68-4713-b0b3-4d1c5250ce94",
+        "model": "gpt-4o-mini",
+        "purpose": "clustering",
+        "prompt_tokens": 2367,
+        "completion_tokens": 729,
+        "latency_ms": 13210.6,
+        "estimated_cost_usd": 0.000792,
+        "status": "ok"
+      }
+    ]
+  },
+  "prioritised_issues": [
+    {
+      "trial_id": "NCT06125405",
+      "check_name": "phase3_underpowered",
+      "check_category": "enrollment",
+      "finding": "Phase 3 trial planned enrollment is 20 (< 50 threshold).",
+      "data_points": {
+        "phase": "Phase 3",
+        "enrollment": 20.0,
+        "threshold": 50
+      },
+      "completion_risk_score": 0.9902395457029343,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "The planned enrollment for this Phase 3 trial is only 20 participants, which is below the acceptable threshold of 50. This underpowering may affect the trial's ability to detect significant treatment effects.",
+      "potential_impact": "Results may not be statistically significant, leading to inconclusive findings.",
+      "suggested_action": "Consider increasing the planned enrollment to meet or exceed the threshold of 50 participants.",
+      "confidence": 0.7,
+      "related_trials": [
+        "NCT05588830",
+        "NCT03786263",
+        "NCT07049172",
+        "NCT06979271",
+        "NCT06079788"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "enrollment"
+          ],
+          "check_rule": "phase3_underpowered"
+        },
+        "pubmed": {
+          "query": "NCT06125405[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Telitacicept",
+          "total_adverse_events": 30,
+          "serious_events": 21
+        },
+        "data_accessed_at": "2026-04-26T20:47:13.874312+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06125405",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "Phase 3"
+      },
+      "completion_risk_score": 0.9902395457029343,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "HIGH",
+      "explanation": "There is no primary outcome registered for this trial, which is critical for understanding the main objectives and effectiveness of the intervention being tested.",
+      "potential_impact": "Without a primary outcome, the trial results may lack clarity and relevance, making it difficult to assess the intervention's efficacy.",
+      "suggested_action": "Register a primary outcome to provide clear objectives for the trial.",
+      "confidence": 0.7,
+      "related_trials": [
+        "NCT05588830",
+        "NCT03786263",
+        "NCT07049172",
+        "NCT06979271",
+        "NCT06079788"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "NCT06125405[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Telitacicept",
+          "total_adverse_events": 30,
+          "serious_events": 21
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.321277+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06125405",
+      "check_name": "latephase_missing_design_field",
+      "check_category": "endpoint",
+      "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+      "data_points": {
+        "phase": "Phase 3",
+        "missing_fields": [
+          "allocation"
+        ]
+      },
+      "completion_risk_score": 0.9902395457029343,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "HIGH",
+      "explanation": "This Phase 3 trial is missing the allocation design field, which is essential for understanding how participants are assigned to different treatment groups.",
+      "potential_impact": "The absence of this information may lead to questions about the trial's design integrity and potential biases in treatment assignment.",
+      "suggested_action": "Update the trial registration to include the allocation design field.",
+      "confidence": 0.7,
+      "related_trials": [
+        "NCT05588830",
+        "NCT03786263",
+        "NCT07049172",
+        "NCT06979271",
+        "NCT06079788"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "designs"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "masking",
+            "allocation",
+            "intervention_model"
+          ],
+          "check_rule": "latephase_missing_design_field"
+        },
+        "pubmed": {
+          "query": "NCT06125405[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Telitacicept",
+          "total_adverse_events": 30,
+          "serious_events": 21
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.321283+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT04216186",
+      "check_name": "phase3_underpowered",
+      "check_category": "enrollment",
+      "finding": "Phase 3 trial planned enrollment is 40 (< 50 threshold).",
+      "data_points": {
+        "phase": "Phase 3",
+        "enrollment": 40.0,
+        "threshold": 50
+      },
+      "completion_risk_score": 0.9860746776685119,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "The planned enrollment for this Phase 3 trial is 40 participants, which is below the acceptable threshold of 50. This raises concerns about the trial's ability to provide reliable results.",
+      "potential_impact": "The trial may not have enough power to detect meaningful differences between treatment groups, potentially leading to inconclusive results.",
+      "suggested_action": "Increase the planned enrollment to meet or exceed the threshold of 50 participants.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "enrollment"
+          ],
+          "check_rule": "phase3_underpowered"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:13.873684+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT07336368",
+      "check_name": "phase3_underpowered",
+      "check_category": "enrollment",
+      "finding": "Phase 3 trial planned enrollment is 30 (< 50 threshold).",
+      "data_points": {
+        "phase": "Phase 3",
+        "enrollment": 30.0,
+        "threshold": 50
+      },
+      "completion_risk_score": 0.9843776747584343,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "This Phase 3 trial has a planned enrollment of 30 participants, which is below the recommended threshold of 50. Such low enrollment can compromise the trial's statistical power.",
+      "potential_impact": "Inadequate sample size may result in an inability to draw valid conclusions from the trial data.",
+      "suggested_action": "Consider revising the enrollment target to ensure it meets the minimum threshold.",
+      "confidence": 0.7,
+      "related_trials": [
+        "NCT07269093",
+        "NCT02546076",
+        "NCT02487212"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "enrollment"
+          ],
+          "check_rule": "phase3_underpowered"
+        },
+        "pubmed": {
+          "query": "NCT07336368[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Intralesional Triamcinolone /ml",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:13.874331+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT07336368",
+      "check_name": "latephase_missing_design_field",
+      "check_category": "endpoint",
+      "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+      "data_points": {
+        "phase": "Phase 3",
+        "missing_fields": [
+          "allocation"
+        ]
+      },
+      "completion_risk_score": 0.9843776747584343,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "HIGH",
+      "explanation": "The trial is missing the allocation design field, which is crucial for understanding how participants are assigned to treatment groups in a Phase 3 trial.",
+      "potential_impact": "Lack of this information can lead to questions about the trial's design and potential biases in the results.",
+      "suggested_action": "Update the trial registration to include the allocation design field.",
+      "confidence": 0.7,
+      "related_trials": [
+        "NCT07269093",
+        "NCT02546076",
+        "NCT02487212"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "designs"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "masking",
+            "allocation",
+            "intervention_model"
+          ],
+          "check_rule": "latephase_missing_design_field"
+        },
+        "pubmed": {
+          "query": "NCT07336368[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Intralesional Triamcinolone /ml",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.321322+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06875427",
+      "check_name": "phase3_underpowered",
+      "check_category": "enrollment",
+      "finding": "Phase 3 trial planned enrollment is 38 (< 50 threshold).",
+      "data_points": {
+        "phase": "Phase 3",
+        "enrollment": 38.0,
+        "threshold": 50
+      },
+      "completion_risk_score": 0.9813266228884459,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "With a planned enrollment of 38 participants, this Phase 3 trial falls short of the 50-participant threshold, raising concerns about its statistical power.",
+      "potential_impact": "The trial may not be able to adequately assess the treatment's effectiveness due to insufficient sample size.",
+      "suggested_action": "Increase the planned enrollment to meet or exceed the threshold of 50 participants.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "enrollment"
+          ],
+          "check_rule": "phase3_underpowered"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:13.871435+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT03770702",
+      "check_name": "phase3_underpowered",
+      "check_category": "enrollment",
+      "finding": "Phase 3 trial planned enrollment is 45 (< 50 threshold).",
+      "data_points": {
+        "phase": "Phase 3",
+        "enrollment": 45.0,
+        "threshold": 50
+      },
+      "completion_risk_score": 0.9810081142932177,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "MEDIUM",
+      "explanation": "The planned enrollment for this Phase 3 trial is 45 participants, which is below the acceptable threshold of 50. This could hinder the trial's ability to detect significant treatment effects.",
+      "potential_impact": "Results may lack statistical significance, leading to inconclusive findings regarding the treatment's efficacy.",
+      "suggested_action": "Consider increasing the planned enrollment to meet or exceed the threshold of 50 participants.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "enrollment"
+          ],
+          "check_rule": "phase3_underpowered"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:13.873454+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT05957887",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-04-15 was 376 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-04-15",
+        "days_past_completion": 376
+      },
+      "completion_risk_score": 0.9859727378934622,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The trial is still marked as 'Recruiting' despite the completion date being over a year ago. This discrepancy raises serious concerns about the trial's management and integrity.",
+      "potential_impact": "Continued recruitment past the completion date may mislead stakeholders and affect the credibility of the trial.",
+      "suggested_action": "Update the trial status to reflect the actual recruitment status and address any underlying issues.",
+      "confidence": 0.85,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.106498+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06119867",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-12-01 was 146 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-12-01",
+        "days_past_completion": 146
+      },
+      "completion_risk_score": 0.9857688276097178,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "This trial is listed as 'Recruiting' even though the completion date was 146 days ago. This inconsistency raises significant concerns about the trial's operational status.",
+      "potential_impact": "Such discrepancies can undermine trust in the trial's validity and may affect participant safety and data integrity.",
+      "suggested_action": "Revise the trial status to accurately reflect its current state and investigate the reasons for the delay.",
+      "confidence": 0.85,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.104904+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06734260",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2026-01-10 was 106 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2026-01-10",
+        "days_past_completion": 106
+      },
+      "completion_risk_score": 0.9751621466130018,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The trial is still labeled as 'Recruiting' despite the completion date being 106 days ago, indicating a serious issue with trial management.",
+      "potential_impact": "This situation can mislead stakeholders and participants, potentially compromising the trial's integrity and safety.",
+      "suggested_action": "Update the trial status to accurately reflect its current recruitment status and address any management issues.",
+      "confidence": 0.85,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.105276+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT03977493",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2025-12-31 was 116 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2025-12-31",
+        "days_past_completion": 116
+      },
+      "completion_risk_score": 0.9728578254580498,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The trial is currently listed as 'Recruiting', but the completion date has already passed. This discrepancy raises concerns about the trial's management and participant recruitment efforts.",
+      "potential_impact": "Participants may be misled about the trial's status, potentially affecting their willingness to enroll or continue participation.",
+      "suggested_action": "Review the trial's status and update the completion date or change the status to reflect current recruitment activities.",
+      "confidence": 0.9,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.104533+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06223269",
+      "check_name": "recruiting_past_completion",
+      "check_category": "status",
+      "finding": "Status is 'Recruiting' but completion date 2026-01-31 was 85 days ago.",
+      "data_points": {
+        "overall_status": "Recruiting",
+        "completion_date": "2026-01-31",
+        "days_past_completion": 85
+      },
+      "completion_risk_score": 0.9672211557626724,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "Similar to the previous trial, this one is marked as 'Recruiting' despite the completion date being in the past. This indicates a significant oversight in trial management.",
+      "potential_impact": "This could lead to confusion among potential participants and stakeholders regarding the trial's validity and ongoing recruitment efforts.",
+      "suggested_action": "Investigate the trial's current status and make necessary updates to ensure accurate information is provided to the public.",
+      "confidence": 0.9,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies"
+          ],
+          "columns": [
+            "nct_id",
+            "overall_status",
+            "completion_date"
+          ],
+          "check_rule": "recruiting_past_completion"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.104983+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT07340515",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "Phase 3"
+      },
+      "completion_risk_score": 0.9929636502638459,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The trial lacks a registered primary outcome, which is essential for assessing the effectiveness of the intervention being tested. This absence raises questions about the trial's design and objectives.",
+      "potential_impact": "Without a primary outcome, it is difficult to evaluate the trial's success or relevance, potentially undermining its scientific contribution.",
+      "suggested_action": "Ensure that a primary outcome is defined and registered to enhance the trial's credibility and facilitate proper evaluation.",
+      "confidence": 0.9,
+      "related_trials": [
+        "NCT07327216",
+        "NCT07303283",
+        "NCT06987123",
+        "NCT06752473",
+        "NCT06763289"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "NCT07340515[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Cisplatin",
+          "total_adverse_events": 77883,
+          "serious_events": 75429
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.320114+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT04307576",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "Phase 3"
+      },
+      "completion_risk_score": 0.9921388095244765,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "This trial also does not have a primary outcome registered, which is a critical component for understanding the trial's goals and measuring its success.",
+      "potential_impact": "The lack of a primary outcome could lead to challenges in interpreting the results and may affect the trial's acceptance in the scientific community.",
+      "suggested_action": "Register a primary outcome to clarify the trial's objectives and improve its scientific rigor.",
+      "confidence": 0.9,
+      "related_trials": [
+        "NCT02393859",
+        "NCT06101381"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "NCT04307576[All Fields]",
+          "results_found": 2,
+          "pmids": [
+            "40668416",
+            "35501736"
+          ]
+        },
+        "openfda": {
+          "drug_queried": "Omitted Doxorubicin",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.319615+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06490536",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "Phase 3"
+      },
+      "completion_risk_score": 0.9891694970428944,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "The absence of a primary outcome in this trial raises significant concerns about its design and the ability to draw meaningful conclusions from its results.",
+      "potential_impact": "This could hinder the trial's scientific validity and affect its ability to contribute to the body of knowledge in the field.",
+      "suggested_action": "Define and register a primary outcome to ensure the trial's objectives are clear and measurable.",
+      "confidence": 0.9,
+      "related_trials": [
+        "NCT05310565",
+        "NCT05179889",
+        "NCT06434896"
+      ],
+      "provenance": {
+        "sources_queried": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "sources_available": [
+          "aact",
+          "openfda",
+          "pubmed"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "NCT06490536[All Fields]",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "Oxaliplatin",
+          "total_adverse_events": 76299,
+          "serious_events": 73804
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.319365+00:00",
+        "context_enriched": true,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT03949231",
+      "check_name": "missing_primary_outcome",
+      "check_category": "endpoint",
+      "finding": "No Primary outcome row registered in outcome_counts.",
+      "data_points": {
+        "primary_outcome_rows": 0,
+        "phase": "Phase 3"
+      },
+      "completion_risk_score": 0.9887655293568969,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "Like the other trials, this one lacks a primary outcome, which is crucial for evaluating the trial's effectiveness and relevance.",
+      "potential_impact": "The absence of a primary outcome could lead to difficulties in assessing the trial's results and may diminish its impact on clinical practice.",
+      "suggested_action": "Register a primary outcome to enhance the trial's clarity and scientific contribution.",
+      "confidence": 0.9,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "outcome_counts"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "outcome_type"
+          ],
+          "check_rule": "missing_primary_outcome"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.318761+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT06954441",
+      "check_name": "latephase_missing_design_field",
+      "check_category": "endpoint",
+      "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+      "data_points": {
+        "phase": "Phase 3",
+        "missing_fields": [
+          "allocation"
+        ]
+      },
+      "completion_risk_score": 0.9837563671171665,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "CRITICAL",
+      "explanation": "This late-phase trial is missing critical design fields, specifically the allocation method, which is essential for understanding how participants are assigned to interventions.",
+      "potential_impact": "The lack of this information could affect the trial's transparency and the ability to replicate the study, impacting its credibility.",
+      "suggested_action": "Update the trial design to include the allocation method and ensure comprehensive reporting of trial methodology.",
+      "confidence": 0.9,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "designs"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "masking",
+            "allocation",
+            "intervention_model"
+          ],
+          "check_rule": "latephase_missing_design_field"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.316238+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT05552001",
+      "check_name": "latephase_missing_design_field",
+      "check_category": "endpoint",
+      "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+      "data_points": {
+        "phase": "Phase 3",
+        "missing_fields": [
+          "allocation"
+        ]
+      },
+      "completion_risk_score": 0.0343669056892395,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "HIGH",
+      "explanation": "This trial is also missing the allocation field in its design, which is important for understanding the trial's methodology and ensuring proper interpretation of results.",
+      "potential_impact": "While this is a significant oversight, it may not be as critical as in other trials, but it still affects the trial's overall transparency and reliability.",
+      "suggested_action": "Add the allocation information to the trial design to improve clarity and methodological rigor.",
+      "confidence": 0.8,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "designs"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "masking",
+            "allocation",
+            "intervention_model"
+          ],
+          "check_rule": "latephase_missing_design_field"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.317392+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    },
+    {
+      "trial_id": "NCT03819803",
+      "check_name": "latephase_missing_design_field",
+      "check_category": "endpoint",
+      "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+      "data_points": {
+        "phase": "Phase 3",
+        "missing_fields": [
+          "allocation"
+        ]
+      },
+      "completion_risk_score": 0.02057713270187378,
+      "risk_reliable": true,
+      "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+      "severity": "HIGH",
+      "explanation": "The trial is classified as a late-phase study (Phase 3) but lacks critical design information regarding allocation. This omission can hinder the understanding of how participants are assigned to different treatment groups, which is essential for assessing the trial's validity and reliability.",
+      "potential_impact": "The absence of allocation details may lead to questions about the trial's methodology, potentially affecting the credibility of the results and their acceptance in the scientific community.",
+      "suggested_action": "It is recommended to update the trial registry with the missing allocation information to enhance transparency and ensure compliance with regulatory standards.",
+      "confidence": 0.7,
+      "related_trials": [],
+      "provenance": {
+        "sources_queried": [
+          "aact"
+        ],
+        "sources_available": [
+          "aact"
+        ],
+        "aact": {
+          "tables": [
+            "studies",
+            "designs"
+          ],
+          "columns": [
+            "nct_id",
+            "phase",
+            "masking",
+            "allocation",
+            "intervention_model"
+          ],
+          "check_rule": "latephase_missing_design_field"
+        },
+        "pubmed": {
+          "query": "",
+          "results_found": 0,
+          "pmids": []
+        },
+        "openfda": {
+          "drug_queried": "",
+          "total_adverse_events": 0,
+          "serious_events": 0
+        },
+        "data_accessed_at": "2026-04-26T20:47:14.318124+00:00",
+        "context_enriched": false,
+        "agent_iteration": 2,
+        "llm_call_ids": [
+          "3d858686-2484-403e-bd0b-4793d43d49f1",
+          "699c8373-8793-4bea-952d-e6cc97aeccf8",
+          "9d1d5db9-5a15-44de-8e2f-497a489a52fa"
+        ],
+        "risk_model_used": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "risk_reliable": true
+      }
+    }
+  ],
+  "root_cause_clusters": [
+    {
+      "cluster_id": "RC001",
+      "root_cause": "Systematic failure in trial design leading to underpowered studies.",
+      "pattern": "All trials have planned enrollment below the 50 participant threshold, indicating a potential issue with recruitment strategies.",
+      "affected_trials": [
+        "NCT06125405",
+        "NCT04216186",
+        "NCT07336368",
+        "NCT06875427",
+        "NCT03770702"
+      ],
+      "issue_indices": [
+        1,
+        4,
+        5,
+        7,
+        8
+      ],
+      "cluster_severity": "MEDIUM",
+      "recommended_action": "Implement standardized enrollment criteria and recruitment strategies across trials."
+    },
+    {
+      "cluster_id": "RC002",
+      "root_cause": "Lack of primary outcome registration in multiple trials indicating a reporting gap.",
+      "pattern": "Multiple trials are missing primary outcome rows in outcome_counts, suggesting a systemic issue with endpoint documentation.",
+      "affected_trials": [
+        "NCT06125405",
+        "NCT07340515",
+        "NCT04307576",
+        "NCT06490536",
+        "NCT03949231"
+      ],
+      "issue_indices": [
+        2,
+        14,
+        15,
+        16,
+        17
+      ],
+      "cluster_severity": "CRITICAL",
+      "recommended_action": "Establish mandatory training for trial teams on outcome registration requirements."
+    },
+    {
+      "cluster_id": "RC003",
+      "root_cause": "Inconsistent trial status reporting leading to discrepancies in recruitment timelines.",
+      "pattern": "Trials are marked as 'Recruiting' despite completion dates being in the past, indicating a failure in status updates.",
+      "affected_trials": [
+        "NCT05957887",
+        "NCT06119867",
+        "NCT06734260",
+        "NCT03977493",
+        "NCT06223269"
+      ],
+      "issue_indices": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "cluster_severity": "CRITICAL",
+      "recommended_action": "Implement a regular audit process for trial status updates to ensure accuracy."
+    },
+    {
+      "cluster_id": "RC004",
+      "root_cause": "Common design field omissions in late-phase trials indicating a lack of adherence to protocol standards.",
+      "pattern": "Multiple trials are missing the allocation design field, suggesting a recurring issue in trial design documentation.",
+      "affected_trials": [
+        "NCT07336368",
+        "NCT06875427",
+        "NCT06954441",
+        "NCT05552001",
+        "NCT03819803"
+      ],
+      "issue_indices": [
+        3,
+        6,
+        18,
+        19,
+        20
+      ],
+      "cluster_severity": "HIGH",
+      "recommended_action": "Reinforce compliance checks for trial design documentation before submission."
+    },
+    {
+      "cluster_id": "RC_UNCLUSTERED",
+      "root_cause": "Individual findings without shared pattern",
+      "pattern": "No commonality among findings.",
+      "affected_trials": [],
+      "issue_indices": [],
+      "cluster_severity": "N/A",
+      "recommended_action": "N/A"
+    }
+  ],
+  "pattern_library_updates": [
+    {
+      "source": "planning",
+      "rationale": "For the scope of recruiting Phase III trials, it is essential to run checks that ensure the data is current and accurate. The temporal check will verify that the trial dates are appropriate and align with the recruiting status. The enrollment check is crucial to assess whether the trial is on track to meet its recruitment goals, which is vital for Phase III trials that often require large sample sizes. The status check will confirm that the trials are indeed marked as recruiting and have not been misclassified. Lastly, the endpoints check will ensure that the trial objectives are clearly defined and relevant, as this is critical for evaluating the trial's success and regulatory approval."
+    },
+    {
+      "source": "scan_cap",
+      "check_name": "phase3_underpowered",
+      "found": 21,
+      "kept": 5,
+      "note": "phase3_underpowered: 21 issues found, kept top 5 by risk score"
+    },
+    {
+      "source": "scan_cap",
+      "check_name": "recruiting_past_completion",
+      "found": 30,
+      "kept": 5,
+      "note": "recruiting_past_completion: 30 issues found, kept top 5 by risk score"
+    },
+    {
+      "source": "scan_cap",
+      "check_name": "missing_primary_outcome",
+      "found": 200,
+      "kept": 5,
+      "note": "missing_primary_outcome: 200 issues found, kept top 5 by risk score"
+    },
+    {
+      "source": "scan_cap",
+      "check_name": "latephase_missing_design_field",
+      "found": 12,
+      "kept": 5,
+      "note": "latephase_missing_design_field: 12 issues found, kept top 5 by risk score"
+    },
+    {
+      "source": "scan_summary",
+      "before_cap": 263,
+      "after_cap": 20,
+      "checks_capped": 4,
+      "issues_dropped": 243
+    },
+    {
+      "source": "prioritisation_wall",
+      "batches": 3,
+      "wall_ms": 28459.7,
+      "note": "Prioritisation ran 3 batch(es) concurrently in 28460 ms wall-clock."
+    }
+  ],
+  "audit_log": [
+    {
+      "call_id": "80512675-c9dd-455e-b6f7-878d2adaaf16",
+      "model": "gpt-4o-mini",
+      "purpose": "planning",
+      "prompt_tokens": 128,
+      "completion_tokens": 145,
+      "latency_ms": 3136.1,
+      "estimated_cost_usd": 0.000106,
+      "status": "ok"
+    },
+    {
+      "call_id": "3ddf572d-454d-4a40-b242-07a870d2c001",
+      "model": "gpt-4o-mini",
+      "purpose": "review",
+      "prompt_tokens": 516,
+      "completion_tokens": 152,
+      "latency_ms": 3260.7,
+      "estimated_cost_usd": 0.000169,
+      "status": "ok"
+    },
+    {
+      "call_id": "353aa80a-33f7-40e6-a212-1351a23c7688",
+      "model": "gpt-4o-mini",
+      "purpose": "review",
+      "prompt_tokens": 516,
+      "completion_tokens": 138,
+      "latency_ms": 3528.1,
+      "estimated_cost_usd": 0.00016,
+      "status": "ok"
+    },
+    {
+      "call_id": "3d858686-2484-403e-bd0b-4793d43d49f1",
+      "model": "gpt-4o-mini",
+      "purpose": "prioritisation",
+      "prompt_tokens": 389,
+      "completion_tokens": 148,
+      "latency_ms": 2745.9,
+      "estimated_cost_usd": 0.000147,
+      "status": "ok"
+    },
+    {
+      "call_id": "699c8373-8793-4bea-952d-e6cc97aeccf8",
+      "model": "gpt-4o-mini",
+      "purpose": "prioritisation",
+      "prompt_tokens": 1241,
+      "completion_tokens": 885,
+      "latency_ms": 15138.5,
+      "estimated_cost_usd": 0.000717,
+      "status": "ok"
+    },
+    {
+      "call_id": "9d1d5db9-5a15-44de-8e2f-497a489a52fa",
+      "model": "gpt-4o-mini",
+      "purpose": "prioritisation",
+      "prompt_tokens": 1330,
+      "completion_tokens": 1170,
+      "latency_ms": 28457.8,
+      "estimated_cost_usd": 0.000902,
+      "status": "ok"
+    },
+    {
+      "call_id": "9b333621-5a68-4713-b0b3-4d1c5250ce94",
+      "model": "gpt-4o-mini",
+      "purpose": "clustering",
+      "prompt_tokens": 2367,
+      "completion_tokens": 729,
+      "latency_ms": 13210.6,
+      "estimated_cost_usd": 0.000792,
+      "status": "ok"
+    }
+  ],
+  "trial_cache": {
+    "NCT06125405": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:28.849995+00:00",
+        "trial_id": "NCT06125405",
+        "details": {
+          "nct_id": "NCT06125405",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-10-24",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-08-20",
+          "study_first_submitted_qc_date": "2023-11-08",
+          "study_first_posted_date": "2023-11-09",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-08-20",
+          "last_update_posted_date": "2024-08-21",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2023-11-28",
+          "start_date_type": "ACTUAL",
+          "start_date": "2023-11-28",
+          "verification_month_year": "2024-08",
+          "verification_date": "2024-08-31",
+          "completion_month_year": "2027-10-24",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2027-10-24",
+          "primary_completion_month_year": "2026-10-24",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-10-24",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "STERN",
+          "baseline_population": null,
+          "brief_title": "Study of the Telitacicept in Pediatric Patients With Frequently Relapsing or Steroid Dependent Nephrotic Syndrome",
+          "official_title": "Study of the Telitacicept in Pediatric Patients With Frequently Relapsing or Steroid Dependent Nephrotic Syndrome",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 20.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "The Children's Hospital of Zhejiang University School of Medicine",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": null,
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-28 03:06:23.024243",
+          "updated_at": "2026-02-28 03:06:23.024243",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:29.032046+00:00",
+        "trial_id": "NCT06125405",
+        "gender": "ALL",
+        "minimum_age": "2 Years",
+        "maximum_age": "18 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Sensitive but frequent relapses or steroids dependence nephrotic syndrome~* Age: 2 to 18 years old~* Normal renal function: estimated glomerular filtration rate \u226590ml/ min/1.73m2~* Morning urine protein \\<1+ or urine protein-creatinine ratio \\<0.2g/g (\\<20 mg/ mmol) for 3 consecutive days and above when in enroll~* No rituximab was used within 6 months, no tacrolimus, mycophenolate mofetil, cyclosporine A, or cyclophosphamide was used within 3 months, no ACTH was used within 3 months prior to the enrollment~Exclusion Criteria:~* Family history of nephrotic syndrome, chronic glomerulonephritis or uremia~* Leukopenia (White Blood Cells \u2264 3.0 \\* 10\\^9 / L)~* Moderate to severe anemia (hemoglobin \\<9.0 g/dL)~* Thrombocytopenia (platelet count \\<100\\*10\\^12/L)~* Positive Hepatitis B virus serological indicators (Hepatitis B surface antigen or / and Hepatitis B virus e antigen or / and Hepatitis B core antibody), Hepatitis C virus-positive or patients with abnormal liver function (2 or more times of alamine aminotransferase or total bilirubin was exceeded the normal value, and continued to rise for 2 weeks)~* There are chronic active infections such as Epstein-Barrvirus, cytomegalovirus or Mycobacterium tuberculosis, and the usage of steroids and immunosuppressive agents may aggravate the state of an illness~* Secondary nephrotic syndrome (such as purpuric nephritis, lupus nephritis, etc.)~* Those who with hematological or endocrine system diseases as well as serious organs illness such as heart, liver or kidney~* Those who with other autoimmune diseases or primary immunodeficiencies or tumors~* Those who have participated in other clinical trials within three months prior to the enrollment~* Those who was not suitable for participating this study judged by investigator",
+        "criteria_length": 1816
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:29.051771+00:00",
+        "nct_id": "NCT06125405",
+        "query": "NCT06125405[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9902395457029343,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT04216186": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:29.163776+00:00",
+        "trial_id": "NCT04216186",
+        "details": {
+          "nct_id": "NCT04216186",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2019-12-29",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2019-12-29",
+          "study_first_submitted_qc_date": "2019-12-29",
+          "study_first_posted_date": "2020-01-02",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2019-12-29",
+          "last_update_posted_date": "2020-01-02",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2018-11-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2018-11-01",
+          "verification_month_year": "2019-12",
+          "verification_date": "2019-12-31",
+          "completion_month_year": "2030-12-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2030-12-01",
+          "primary_completion_month_year": "2030-12-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2030-12-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Role of Coenzyme Q in ADHD in Children",
+          "official_title": "Role of Coenzyme Q in Treatment of Attention Deficit Hyperactivity Disorder in Children",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 40.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Tanta University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 04:48:19.907834",
+          "updated_at": "2026-02-27 04:48:19.907834",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:29.347293+00:00",
+        "trial_id": "NCT04216186",
+        "gender": "ALL",
+        "minimum_age": "2 Years",
+        "maximum_age": "18 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Patients with ADHD~Exclusion Criteria:~* Comorbidities like Autism, Anxiety, Obsessive compulsive disorder.",
+        "criteria_length": 129
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:31.577431+00:00",
+        "nct_id": "NCT04216186",
+        "query": "NCT04216186[All Fields]",
+        "total_found": 1,
+        "results_returned": 1,
+        "max_results": 5,
+        "publications": [
+          {
+            "pmid": "34819012",
+            "title": "Coenzyme Q10 in the Treatment of Attention Deficit Hyperactivity Disorder in Children: A Randomized Controlled Trial.",
+            "authors": [
+              "Gamal F",
+              "El Agami O",
+              "Salamah A"
+            ],
+            "journal": "CNS & neurological disorders drug targets",
+            "date": "2022",
+            "abstract_snippet": "BACKGROUND: Attention Deficit Hyperactivity Disorder is a common child neurobehavioral disorder whose pathogenesis is not completely understood. However, some evidence indicates a crucial link between this disorder and the degree of oxidative stress. Coenzyme Q10 (ubiquinol) is an antioxidant that m\u2026"
+          }
+        ]
+      },
+      "risk": {
+        "risk_score": 0.9860746776685119,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT07336368": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:31.714433+00:00",
+        "trial_id": "NCT07336368",
+        "details": {
+          "nct_id": "NCT07336368",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2026-01-10",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2026-02-02",
+          "study_first_submitted_qc_date": "2026-01-10",
+          "study_first_posted_date": "2026-01-13",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2026-02-02",
+          "last_update_posted_date": "2026-02-04",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2026-02",
+          "start_date_type": "ESTIMATED",
+          "start_date": "2026-02-28",
+          "verification_month_year": "2026-01",
+          "verification_date": "2026-01-31",
+          "completion_month_year": "2026-08",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-08-31",
+          "primary_completion_month_year": "2026-06",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-06-30",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Topical Cryotherapy and Keloid/Hypertrophic Scars",
+          "official_title": "Topical Cryotherapy to Reduce Pain During Steroid Injections for Keloid and Hypertrophic Scars: A Pilot Study",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 30.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "University of Pittsburgh",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "t",
+          "is_fda_regulated_device": "t",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": "De-identified individual participant data will not be shared to protect participants' privacy; only aggregate results will be reported.",
+          "created_at": "2026-02-26 11:03:45.344653",
+          "updated_at": "2026-02-26 11:03:45.344653",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:31.903410+00:00",
+        "trial_id": "NCT07336368",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Adults (\u226518 years) with keloids or hypertrophic scars already scheduled to receive intralesional triamcinolone (TAC) as part of routine care.~* At least one keloid or hypertrophic scar with two comparable regions (\u22652 cm each) suitable for split-treatment.~* Able to provide informed consent and complete pain assessments in English.~Exclusion Criteria:~* Keloid or hypertrophic scar located on the face (except earlobes), excluded for cosmetic reasons.~* Prior treatment to the study-selected keloid/hypertrophic scar based on self-report.~* Inability to complete study assessments due to cognitive or language barriers.",
+        "criteria_length": 642
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:31.920706+00:00",
+        "nct_id": "NCT07336368",
+        "query": "NCT07336368[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9843776747584343,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06875427": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:32.032591+00:00",
+        "trial_id": "NCT06875427",
+        "details": {
+          "nct_id": "NCT06875427",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2024-11-27",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-09-23",
+          "study_first_submitted_qc_date": "2025-03-12",
+          "study_first_posted_date": "2025-03-13",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-09-23",
+          "last_update_posted_date": "2025-09-26",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2025-07-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2025-07-01",
+          "verification_month_year": "2025-09",
+          "verification_date": "2025-09-30",
+          "completion_month_year": "2027-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2027-01-31",
+          "primary_completion_month_year": "2027-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2027-01-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "ACB vs no Block for Pediatric ACL Reconstruction",
+          "official_title": "Comparing Preoperative Adductor Canal vs. No Block for Quality of Recovery After Anterior Cruciate Ligament Reconstruction in Patients Younger Than 18 Years of Age: A Randomized Controlled Feasibility Trial",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 38.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "McMaster University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": "The investigators plan to publish the protocol in a peer-reviewed journal",
+          "ipd_access_criteria": "The IPD may be requested from the PI.",
+          "ipd_url": null,
+          "plan_to_share_ipd": "YES",
+          "plan_to_share_ipd_description": "Deidentified data will be provided by PI on reasonable request once the data have been analyzed and published in a peer-reviewed journal",
+          "created_at": "2026-02-27 03:22:46.890286",
+          "updated_at": "2026-02-27 03:22:46.890286",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:32.214566+00:00",
+        "trial_id": "NCT06875427",
+        "gender": "ALL",
+        "minimum_age": "10 Years",
+        "maximum_age": "18 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Patients ASA I, II and III~* 10-18 years of age~* scheduled for ACL reconstruction~* agreeable to regional block and follow-ups~Exclusion Criteria:~* Contraindications to adductor canal block.~* Patients with coagulopathies, preexisting neurologic deficit~* Significant comorbidities that may impact recovery or interfere with the study.~* Refusal to regional techniques.~* Moderate to severe cognitive deficit (patients who are unable to complete the questionnaire)~* Patients with history of malignant hyperthermia",
+        "criteria_length": 538
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:32.233475+00:00",
+        "nct_id": "NCT06875427",
+        "query": "NCT06875427[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9813266228884459,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT03770702": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:32.350118+00:00",
+        "trial_id": "NCT03770702",
+        "details": {
+          "nct_id": "NCT03770702",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2018-12-07",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2018-12-07",
+          "study_first_submitted_qc_date": "2018-12-07",
+          "study_first_posted_date": "2018-12-10",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2018-12-07",
+          "last_update_posted_date": "2018-12-10",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2018-10-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2018-10-01",
+          "verification_month_year": "2018-12",
+          "verification_date": "2018-12-31",
+          "completion_month_year": "2026-12-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-12-01",
+          "primary_completion_month_year": "2025-12-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-12-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Statins and ARBs on Rheumatoid Activity",
+          "official_title": "Investigational and Comparative Study Between the Anti-inflammatory Effectof Both Angiotensin Reeptor Blockers and Statins on Rheumatoid Arthritis Disease Activity on Egyptian Patients",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 45.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Tanta University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 3.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "UNDECIDED",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-28 02:49:15.362175",
+          "updated_at": "2026-02-28 02:49:15.362175",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:32.525146+00:00",
+        "trial_id": "NCT03770702",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "65 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Rheumatoid arthritis.~Exclusion Criteria:~* Pregnant or lactating~* Hepatic or renal impairment.",
+        "criteria_length": 118
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:33.309000+00:00",
+        "nct_id": "NCT03770702",
+        "query": "NCT03770702[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9810081142932177,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT05957887": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:33.431715+00:00",
+        "trial_id": "NCT05957887",
+        "details": {
+          "nct_id": "NCT05957887",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-02-27",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-04-13",
+          "study_first_submitted_qc_date": "2023-07-16",
+          "study_first_posted_date": "2023-07-24",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-04-13",
+          "last_update_posted_date": "2024-04-16",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2022-04-15",
+          "start_date_type": "ACTUAL",
+          "start_date": "2022-04-15",
+          "verification_month_year": "2024-04",
+          "verification_date": "2024-04-30",
+          "completion_month_year": "2025-04-15",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-04-15",
+          "primary_completion_month_year": "2025-03-15",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-03-15",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Short and Intermediate Term Effect of Dapagliflozin on Left Ventricular Remodeling in Anterior STEMI Patients",
+          "official_title": "Short and Intermediate Term Effect of Dapagliflozin on Left Ventricular Remodeling in Anterior STEMI Patients",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 120.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Helwan University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 4.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": null,
+          "is_fda_regulated_drug": "t",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 08:12:43.777886",
+          "updated_at": "2026-02-27 08:12:43.777886",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:33.626403+00:00",
+        "trial_id": "NCT05957887",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "75 Years",
+        "healthy_volunteers": "t",
+        "criteria": "Inclusion Criteria:~* STEMI with time from symptom onset of \\<48 hours duration.~* Capable of giving signed informed consent.~Exclusion Criteria:~* Patients with a history of old myocardial infarction.~* Patients with a history of previous coronary artery bypass surgery (CABG).~* Hemodynamically unstable patients.~* Patients with suboptimal echocardiographic images~* Patients with any cardiac rhythm other than sinus rhythm.~* Unsuccessful angiographic reperfusion (Thrombolysis In Myocardial Infarction \\[TIMI\\] flow grade \\<2).~* Patients with renal dysfunction. (GFR\\<30mmol/L).~* Patients who have recently undergone immunosuppressive therapy.~* Patients with a history of recurrent urinary tract infections.~* Patients who are known to be allergic to SGLT-2 inhibitors.~* Chronic symptomatic heart failure within the last year and known reduced ejection fraction (LVEF\u226440 %), documented before the current MI hospitalization.~* Severe hepatic impairment (Child-Pugh class C) at the time of inclusion into the trial.~* Any other non cardiovascular diseases, such as active malignancy requiring treatment at the time of screening or with a life expectancy of fewer than two years based on the investigator\u00b4s clinical judgment.~* Currently on treatment with a sodium-glucose co-transporter 2 inhibitor (SGLT2-inhibitors).",
+        "criteria_length": 1326
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:34.424358+00:00",
+        "nct_id": "NCT05957887",
+        "query": "NCT05957887[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9859727378934622,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06119867": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:34.560768+00:00",
+        "trial_id": "NCT06119867",
+        "details": {
+          "nct_id": "NCT06119867",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-10-12",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-04-08",
+          "study_first_submitted_qc_date": "2023-11-01",
+          "study_first_posted_date": "2023-11-07",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-04-08",
+          "last_update_posted_date": "2024-04-09",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2023-11-14",
+          "start_date_type": "ACTUAL",
+          "start_date": "2023-11-14",
+          "verification_month_year": "2024-04",
+          "verification_date": "2024-04-30",
+          "completion_month_year": "2025-12-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-12-01",
+          "primary_completion_month_year": "2025-10-12",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-10-12",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "SPACE",
+          "baseline_population": null,
+          "brief_title": "CompariSon Between the EuroPeAn and Japanese pathologiCal InvEstigation for Colon Cancer (SPACE)",
+          "official_title": "Comparison Between the European and Japanese Pathological Investigation for Colon Cancer (SPACE)",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 430.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Russian Society of Colorectal Surgeons",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 05:00:21.958172",
+          "updated_at": "2026-02-27 05:00:21.958172",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:34.748768+00:00",
+        "trial_id": "NCT06119867",
+        "gender": "ALL",
+        "minimum_age": null,
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Patients diagnosed with colon cancer who underwent colectomy;~* Patients with pathological confirmed adenocarcinoma;~* Patients agreed to participate in the study.~Exclusion Criteria:~* Patients suffered from rectal cancer;~* Patients diagnosed with colon cancer but did not undergo colectomy;~* Patients refused participation.",
+        "criteria_length": 349
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:34.765070+00:00",
+        "nct_id": "NCT06119867",
+        "query": "NCT06119867[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9857688276097178,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06734260": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:34.875110+00:00",
+        "trial_id": "NCT06734260",
+        "details": {
+          "nct_id": "NCT06734260",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2024-12-12",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-11-30",
+          "study_first_submitted_qc_date": "2024-12-12",
+          "study_first_posted_date": "2024-12-16",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-11-30",
+          "last_update_posted_date": "2025-12-05",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2024-09-10",
+          "start_date_type": "ACTUAL",
+          "start_date": "2024-09-10",
+          "verification_month_year": "2025-11",
+          "verification_date": "2025-11-30",
+          "completion_month_year": "2026-01-10",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-01-10",
+          "primary_completion_month_year": "2025-11-10",
+          "primary_completion_date_type": "ACTUAL",
+          "primary_completion_date": "2025-11-10",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Optimization of Keverprazan-amoxicillin Dual Therapy for Eradicating Helicobacter Pylori Infection",
+          "official_title": "Optimization of Keverprazan-amoxicillin Dual Therapy for Eradicating Helicobacter Pylori Infection\uff1aa Multicenter, Prospective, Randomized Controlled Study",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 477.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Eighth Affiliated Hospital, Sun Yat-sen University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 3.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": "The datasets used and analysed during the current study available from the corresponding author on reasonable request.",
+          "created_at": "2026-02-27 02:07:44.057656",
+          "updated_at": "2026-02-27 02:07:44.057656",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:35.052868+00:00",
+        "trial_id": "NCT06734260",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "75 Years",
+        "healthy_volunteers": "t",
+        "criteria": "Inclusion Criteria:~1. Aged 18 to 75 years;~2. Adult subjects who voluntarily signed written informed consent approved by the ethics committee to consent to participate in this study before the start of any study procedure;~3. Subjects who can understand and comply with the protocol requirements and agree to attend all study visits;~4. During the screening phase, patients who were Hp positive and required Hp eradication therapy as judged by the investigator, and patients who had failed Hp eradication for the first time;~5. Participants agreed to use appropriate medical methods of contraception (except medically sterilized status) during the study.~Exclusion Criteria:~* 1\\. Participated in other clinical studies within 4 weeks before screening; 2. Pregnant or lactating women; 3. Known allergy to keverprazan, esomeprazole, penicillins or other beta-lactams, macrolide antibiotics, nitrofuran antibiotics, or bismuth (including any relevant adjuvants). If skin sensitivity testing (skin testing) was required, it was performed at visit 1 according to routine medical practice; 4. Participants had a history of drug (including but not limited to opioids) abuse or alcohol abuse (\\> 14 units of alcohol per week, 1 unit of alcohol \u2248360mL of approximately 5% beer or 45 ml of approximately 40% spirits or 150 ml of approximately 12% wine) in the year before the screening visit; 5. The subjects had Zolie-Ellison syndrome, gastric acid hypersecretion, or a history of gastric acid hypersecretion; 6. The subject has undergone previous surgery or operation that may affect gastric acid secretion or drug absorption, such as subtotal gastrectomy, total gastrectomy, vagotomy, intestinal resection, etc. Simple surgery for perforation, appendectomy, cholecystectomy, and endoscopic resection of benign tumors are acceptable; 7. Warning symptoms such as odynophagia, severe dysphagia, bleeding, weight loss, anemia, or hematochezia that might indicate the presence of a malignant GI lesion, unless a malignant lesion was ruled out by endoscopy; 8. A history of malignancy within 5 years before screening (participants were allowed to participate if they had been cured of skin basal cell carcinoma or cervical carcinoma in situ); 9.. Upper gastrointestinal endoscopy showed acute upper gastrointestinal bleeding, active gastric or duodenal ulcer, acute gastric or duodenal mucosal injury; 10. According to the investigator's judgment, the subject has uncontrolled and unstable liver, kidney, cardiovascular, respiratory, gastrointestinal, endocrine, hematological, central nervous system or mental diseases, etc., and participating in the study may affect the safety of the subject or the interpretation of the study results; 11. Subjects who plan to be hospitalized for surgical treatment during the study; 12. H2-receptor antagonist or PPI use within 14 days prior to screening 13C-urea breath test; During the screening period, antibiotics, bismuth and some traditional Chinese medicine with antibacterial effect were taken within 28 days before 13C-urea breath test; 13. Abnormal laboratory test results at screening in any of the following: AST \\> upper limit of normal (ULN); ALT \\> Upper limit of normal (ULN); Total bilirubin \\> ULN; creatinine \\> 1.5 times ULN; 14. The subjects had clinically significant abnormal electrocardiogram (ECG), including severe arrhythmia, multifocal premature ventricular contractions (PVC), second degree or above atrioventricula",
+        "criteria_length": 3471
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:35.787724+00:00",
+        "nct_id": "NCT06734260",
+        "query": "NCT06734260[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9751621466130018,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT03977493": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:35.918788+00:00",
+        "trial_id": "NCT03977493",
+        "details": {
+          "nct_id": "NCT03977493",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2019-04-19",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-07-24",
+          "study_first_submitted_qc_date": "2019-06-05",
+          "study_first_posted_date": "2019-06-06",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-07-24",
+          "last_update_posted_date": "2025-07-28",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2018-02-21",
+          "start_date_type": "ACTUAL",
+          "start_date": "2018-02-21",
+          "verification_month_year": "2025-07",
+          "verification_date": "2025-07-31",
+          "completion_month_year": "2025-12-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2025-12-31",
+          "primary_completion_month_year": "2025-12-31",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-12-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "IncobotulinumtoxinA (Xeomin) to Treat Focal Hand Dystonia",
+          "official_title": "IncobotulinumtoxinA (Xeomin) to Treat Focal Hand Dystonia: a Double-blind Placebo-controlled Randomized Multicenter Study: The SwissHandSpasm Study",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 48.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Ente Ospedaliero Cantonale, Bellinzona",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "f",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "UNDECIDED",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 08:07:41.666817",
+          "updated_at": "2026-02-26 08:07:41.666817",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:36.107491+00:00",
+        "trial_id": "NCT03977493",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Informed Consent as documented by signature~* Age \u2265 18 years~* Focal hand dystonia (FHD). Diagnosis must be made by a neurologist specialized in movement disorder (at least 2 years specific training, all partners listed have at least 2 years training)~* Both idiopathic and secondary FHD are allowed~* Both drug naive subjects and subjects previously treated with other BoNT-A will be included~* Patients must be willing and able to comply with the study procedures~* Female patients of childbearing potential must agree to use an effective method of contraception during the treatment period~Exclusion Criteria:~* Presence of spasticity, or other central sensorimotor lesion of motor system other than dystonia in the affected limb~* Peripheral nerve lesion (diagnosis either clinical or electrophysiological) in the affected limb, for example with a muscle weakness at baseline~* Contraindications to the class of drugs under study, e.g. known hypersensitivity or allergy to BoNT-A toxins including IncobotulinumtoxinA~* Doses and schedules of any ongoing treatment with potential confounding drugs such as muscle relaxants (for example Tolperison, Tizinadid, Baclofen, Mestinon, Dantrolen), benzodiazepine, neuroleptics or antidepressants have to be kept unchanged throughout the study and no changes should be made between the first trial injection and the end of study visit at week 12.~* Previous treatment with other BoNT-A less than 3 months before the inclusion in this study~* Women who are pregnant or breast feeding,~* Inability to follow the procedures of the study, e.g. due to language problems, psychological disorders, dementia, etc. of the participant~* Participation in another study with investigational drug within the 30 days preceding and during the present study~* Previous enrolment into the current study~* Enrolment of the investigator, his/her family members, employees and other dependent persons~* Severe depression (\\>29 as measured with the Beck Depression Inventory, see Appendix 8) or other relevant psychiatric disorder~* INR \\> 2 on the day of injection if the patient is anticoagulated. If INR \\> 2, the study injection will be delayed until the return to a safer INR.",
+        "criteria_length": 2227
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:36.859092+00:00",
+        "nct_id": "NCT03977493",
+        "query": "NCT03977493[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9728578254580498,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06223269": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:36.987200+00:00",
+        "trial_id": "NCT06223269",
+        "details": {
+          "nct_id": "NCT06223269",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2023-06-15",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-04-01",
+          "study_first_submitted_qc_date": "2024-01-22",
+          "study_first_posted_date": "2024-01-25",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-04-01",
+          "last_update_posted_date": "2025-04-02",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2024-05-09",
+          "start_date_type": "ACTUAL",
+          "start_date": "2024-05-09",
+          "verification_month_year": "2025-04",
+          "verification_date": "2025-04-30",
+          "completion_month_year": "2026-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-01-31",
+          "primary_completion_month_year": "2025-12",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2025-12-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Safety and Efficacy of realSKIN\u00ae to Provide Complete Wound Closure of Burn Wounds as an Alternative to Autografting",
+          "official_title": "A Phase III Open-Label, Multicenter, Randomized, Controlled Clinical Trial to Evaluate the Safety and Efficacy of realSKIN\u00ae to Provide Complete Wound Closure of Mixed-Depth, Full-Thickness Burn Wounds as an Alternative to Autografting",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 50.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "XenoTherapeutics, Inc.",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": null,
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "t",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 02:57:27.218288",
+          "updated_at": "2026-02-27 02:57:27.218288",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:37.175670+00:00",
+        "trial_id": "NCT06223269",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~1. The subject, or the subject's legally authorized representative (LAR), provides written informed consent to participate in this study~2. Males or females age greater than or equal to 18 years old~3. Total Burn Surface Area (TBSA) \\<50% to include mixed depth and full-thickness burn wounds as defined as primarily full-thickness (FT) and deep-partial (DPT) thermal burns (e.g. \\>60% of the total burn area should be FT and DPT) before debridement, and full-thickness burns for which surgical intervention is clinically indicated~4. Having a mixed depth thermal burn wound including full thickness requiring skin grafting~5. Biological females must have a negative serum pregnancy test at Screening and must not be nursing~6. All subjects must agree to use a protocol-approved method of contraception for a minimum of 3 months following realSKIN placement, which includes a barrier method plus one or more of the following:~   * Hormonal contraceptives (e.g., birth control pills, skin patches, vaginal rings, and the Depo-Provera shot)~  * Intrauterine device (IUD)~  * Male or female condoms with spermicide~  * Diaphragm with spermicide~  * Permanent tubal occlusive birth control system~7. Sufficient area of burn wound for realSKIN and comparator autograft placement to not be located on face or hands or having a target graft site centered on high-impact areas such as joints, weight-bearing areas (e.g. soles of feet), or the inguinal region, per Investigator's judgment~Exclusion Criteria:~1. Pregnant or lactating women~2. Documented history of infection with human immunodeficiency virus (HIV) or other condition(s) that in the opinion of the Investigator may compromise patient safety or study objectives~3. Immunosuppressive medication regimens e.g. antineoplastics, high dose steroids (\\>10 mg prednisone/day), TNF alpha inhibitors, calcineurin inhibitors (cyclosporine, tacrolimus), anti- proliferative agents, and other immunomodulators~4. Active malignancy, including those requiring surgery, chemotherapy, and/or radiation in the past 5 years; non-metastatic basal or squamous cell carcinoma of the skin and cervical carcinoma in situ are allowed~5. Use of any experimental or investigational drugs within 30 days prior to placement of realSKIN~6. Previously received a porcine or other xenogeneic tissue product, including but not limited to: glutaraldehyde fixed porcine or bovine bioprosthetic heart valve replacements and glutaraldehyde fixed porcine dermal matrix (e.g., EZ Derm)~7. Patients with advanced or unstable/uncontrolled comorbid conditions, such as advanced renal disease, diabetes mellitus and liver disease~8. Patients with HbA1c \u2265 10.0%; specimen must be obtained for screening purposes if current (within past 3 months) value is not available~9. Patients with a history of chronic end stage renal disease defined as MDRD CrCL \\< 15mL/min or receiving chronic dialysis~10. Patients with a history of chronic liver disease or cirrhosis (Child-Pugh Score C); evidence of acute or chronic hepatitis B infection based on documented HBV serology testing~11. Known documented history of Hepatitis B, Hepatitis C, Treponema pallidum, Cytomegalovirus, herpes or varicella zoster; note: Successfully treated hepatitis C patients without evidence of end stage liver disease is allowed; if HCV antibody reactive, then HCV RNA must be undetectable~12. Recent (within 3 months prior to study enrollment) MI, unstable angina leading to hospitalization, uncontrolled, CABG, PCI, carotid surgery or stenting, cerebrovascular accident, transient ischemic attack, endovascular procedure, or surgical intervention for peripheral vascular disease or plans to undergo a major surgical or interventional procedure (e.g., PCI, CABG, carotid or peripheral revascularization)~13. Presence of venous or arterial vascular disorder directly affecting the area of burn wound~14. Pre-existing haemolytic anemia~15. Chronic malnourishment as determined by Investigator~16. Inhalation injury as determined by bronchoscopic exam if available, or diagnosis at the time of screening~17. Systemic anticoagulation at the time of treatment or INR \\> 2~18. Documented evidence of wound infection at Screening~19. Evidence of sepsis at Screening",
+        "criteria_length": 4263
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:39.475989+00:00",
+        "nct_id": "NCT06223269",
+        "query": "NCT06223269[All Fields]",
+        "total_found": 1,
+        "results_returned": 1,
+        "max_results": 5,
+        "publications": [
+          {
+            "pmid": "40407357",
+            "title": "New Hope for the Treatment of Severe Skin Injury: Genetically Engineered Porcine Skin Xenotransplantation.",
+            "authors": [
+              "Wu D",
+              "Zhao XS",
+              "Zhao HF",
+              "Xie JH",
+              "Wei HJ",
+              "Zhu NW"
+            ],
+            "journal": "Xenotransplantation",
+            "date": "2025 May-Jun",
+            "abstract_snippet": "Treatments of severe skin injuries have long been a clinical challenge. Early excision of necrotic tissue and skin grafting are essential, yet their effectiveness is hampered by several issues. Autologous and allogeneic skin shortages, the high cost of tissue-engineered skin, and its failure to full\u2026"
+          }
+        ]
+      },
+      "risk": {
+        "risk_score": 0.9672211557626724,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT07340515": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:39.607870+00:00",
+        "trial_id": "NCT07340515",
+        "details": {
+          "nct_id": "NCT07340515",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2025-12-09",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2026-01-13",
+          "study_first_submitted_qc_date": "2026-01-13",
+          "study_first_posted_date": "2026-01-14",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2026-01-13",
+          "last_update_posted_date": "2026-01-14",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2025-12-15",
+          "start_date_type": "ESTIMATED",
+          "start_date": "2025-12-15",
+          "verification_month_year": "2025-11",
+          "verification_date": "2025-11-30",
+          "completion_month_year": "2031-12-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2031-12-31",
+          "primary_completion_month_year": "2031-12-31",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2031-12-31",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Proton vs Photon IMRT in Locally Advanced Nasopharyngeal Carcinoma: A Phase III Trial",
+          "official_title": "A Prospective, Randomized, Open-Label, Multicenter Phase III Clinical Study Comparing Intensity-Modulated Proton Therapy and Intensity-Modulated Photon Radiotherapy in Locally Advanced Nasopharyngeal Carcinoma",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 300.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Shandong Cancer Hospital and Institute",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 07:30:35.946947",
+          "updated_at": "2026-02-26 07:30:35.946947",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:39.803602+00:00",
+        "trial_id": "NCT07340515",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "70 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Age 18 to 70 years~* Histologically confirmed nasopharyngeal carcinoma (WHO type II or III)~* High-risk locoregionally advanced disease defined as clinical stage T4 or N3, M0, according to the AJCC staging system~* No prior anti-tumor therapy for nasopharyngeal carcinoma, including radiotherapy, chemotherapy, targeted therapy, or immunotherapy~* Eastern Cooperative Oncology Group (ECOG) performance status of 0-1~* Adequate organ function as defined in the study protocol~* Eligible to receive induction chemotherapy followed by concurrent chemoradiotherapy combined with immunotherapy as specified in the protocol~* Ability to understand and willingness to sign written informed consent~Exclusion Criteria:~* Evidence of distant metastasis (M1 disease)~* Prior radiotherapy, chemotherapy, targeted therapy, or immunotherapy for nasopharyngeal carcinoma~* Active autoimmune disease requiring systemic therapy~* Uncontrolled infection or severe comorbidities that may affect treatment tolerance~* Pregnancy or breastfeeding~* Known allergy, hypersensitivity, or contraindication to study medications as defined in the protocol~* Any other condition that, in the investigator's judgment, makes the patient unsuitable for participation",
+        "criteria_length": 1257
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:39.821800+00:00",
+        "nct_id": "NCT07340515",
+        "query": "NCT07340515[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9929636502638459,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT04307576": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:39.934250+00:00",
+        "trial_id": "NCT04307576",
+        "details": {
+          "nct_id": "NCT04307576",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2020-03-05",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-08-21",
+          "study_first_submitted_qc_date": "2020-03-12",
+          "study_first_posted_date": "2020-03-13",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-08-21",
+          "last_update_posted_date": "2025-08-28",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2020-07-13",
+          "start_date_type": "ACTUAL",
+          "start_date": "2020-07-13",
+          "verification_month_year": "2025-08",
+          "verification_date": "2025-08-31",
+          "completion_month_year": "2033-06",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2033-06-30",
+          "primary_completion_month_year": "2033-06",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2033-06-30",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "A Treatment Study Protocol for Participants 0-45 Years With Acute Lymphoblastic Leukaemia",
+          "official_title": "ALLTogether1 - A Treatment Study Protocol of the ALLTogether Consortium for Children and Young Adults (0-45 Years of Age) With Newly Diagnosed Acute Lymphoblastic Leukaemia (ALL)",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 6430.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Karolinska University Hospital",
+          "limitations_and_caveats": null,
+          "number_of_arms": 10.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "t",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "t",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": "The ALLTogether Consortium will consider requests for individual participant data (IPD) that underlie published results after deidentification. Requests for access for unpublished data will also be considered on a case-by-case basis.",
+          "ipd_access_criteria": "Data access requests will be reviewed by The ALLTogether Board and, when applicable the ALLTogether Scientific committee.~IPD will only be released if all personalised identifiers can be removed and for the sole use of the approved request (tertiary dissemination will not be permitted).~Requestors will be required to sign a Data Access Agreement.",
+          "ipd_url": null,
+          "plan_to_share_ipd": "YES",
+          "plan_to_share_ipd_description": "ALLTogether Data Sharing Policy FINAL VERSION 1.0 DATED 12APRIL2022 applies (full details available from Trial Central Office):~Policy~1. The ALLTogether Consortium aims to maximise the availability of research data to the academic community for academic non-commercial research purposes with as few restrictions as possible.~2. All research papers should be open access whenever possible.~3. Clinical data: The ALLTogether Consortium will consider requests for individual participant data (IPD) that underlie published results after deidentification. Requests for access for unpublished data will also be considered on a case-by-case basis.~4. ALLTogether scientific data underpinning basic science/translational research papers should be made available to other researchers in the ALLTogether consortium and requests from academic researchers outside the consortium for access to scientific datasets should be addressed to the lead investigator of the ALLTogether study.",
+          "created_at": "2026-02-26 11:11:28.534628",
+          "updated_at": "2026-02-26 11:11:28.534628",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:40.112348+00:00",
+        "trial_id": "NCT04307576",
+        "gender": "ALL",
+        "minimum_age": "0 Years",
+        "maximum_age": "45 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Patients newly diagnosed with T-lymphoblastic (T-cell) or B-lymphoblastic precursor (BCP) leukaemia (ALL) according to the WHO-classification of Tumours of Haematopoetic and Lymphoid Tissues (Revised 4th edition 2017) and with a diagnosis confirmed by an accredited laboratory at a participating paediatric oncology or adult haematology centre.~* Age 0 - \\< 46 years (one day before 46th birthday) at the time of diagnosis with the exception of infants with KMT2A-rearranged (KMT2A-r) BCP ALL.~* Patients with surface immunoglobulin negative (sIG-) BCP-ALL and an IG::MYC rearrangement, unless they have a concurrent BCL2/6 rearrangement. T-ALL patients with MYC translocations.~* Informed consent signed by the patient and/or parents/legal guardians according to country-specific age-related guidelines.~* The ALL diagnosis should be confirmed by an accredited laboratory at a participating paediatric oncology or adult haematology centre.~* The patient should be diagnosed and treated at a participating paediatric oncology or adult haematology centre in the participating countries.~* The patient should be a resident in one of the participating countries on a permanent basis or should intend to settle in a participating country, for instance by an application for asylum. Patients who are visiting the country as tourists should not be included. However, returning expatriots with primary diagnosis abroad may be included if no treatment has been administered and the diagnostic procedures are repeated at a participating centre.~* All women of childbearing potential (WOCBP) have to have a negative pregnancy test within 2 weeks prior to the start of treatment.~* For each intervention/randomisation an additional set of inclusion-criteria is provided.~Exclusion Criteria:~* Age \\< 365 days and KMT2A-rearranged (KMT2A-r) BCP-ALL (documented presence of a KMT2A-split by FISH and/or a KMT2A fusion transcript).~* Age \\>45 years at diagnosis.~* Patients with a previous malignant diagnosis (ALL as a second malignant neoplasm - SMN).~* Relapse of ALL.~* Patients with mature B-ALL (as defined by surface IG positivity) or any patients with IG::MYC and a concurrent BCL2/6 rearrangement.~* Patients with Ph-positive ALL (documented presence of t(9;22)(q34;q11) and/or of the BCR::ABL fusion transcript). These patients will be transferred to an appropriate trial for t(9;22) if available.~* Previously known ALL prone syndromes (e.g. Li-Fraumeni syndrome, germline ETV6 mutation), except for Down syndrome. Exploration for such ALL prone syndromes is not mandatory and patients in whom genetic work-up reveals a new germ-line mutation (index-cases) will remain in the study.~* Treatment with systemic corticosteroids corresponding to (\\>10mg prednisolone/m2/day) for more than one week and/or other chemotherapeutic agents in a 4-week interval prior to diagnosis (pre-treatment).~* Pre-existing contraindications to any treatment according to the ALLTogether protocol (constitutional or acquired disease prior to the diagnosis of ALL preventing adequate treatment).~* Any other disease or condition, as determined by the investigator, which could interfere with the participation in the study according to the study protocol, or with the ability of the patients to cooperate and comply with the study procedures.~* Women of childbearing potential who are pregnant at the time of diagnosis.~* Women of childbearing potential and fertile men who are sexually active and are unwilling to use adequate contraception during therapy. Efficient birth control is required.~* Female patients, who are breast-feeding.~* Essential data missing from the registration of characteristics at diagnosis (in consultation with the protocol chair).~* For each intervention/randomisation an additional set of exclusion-criteria is provided.",
+        "criteria_length": 3847
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:40.131876+00:00",
+        "nct_id": "NCT04307576",
+        "query": "NCT04307576[All Fields]",
+        "total_found": 2,
+        "results_returned": 2,
+        "max_results": 5,
+        "publications": [
+          {
+            "pmid": "40668416",
+            "title": "DNA-incorporated thioguanine to detect potential non-adherence to maintenance therapy in acute lymphoblastic leukemia.",
+            "authors": [
+              "Koch MR",
+              "Buhl Rasmussen AS",
+              "Als-Nielsen B",
+              "Duarte X",
+              "Escherich G",
+              "Heyman M",
+              "Lepik K",
+              "Malmros J",
+              "Nersting J",
+              "Johannsdottir I",
+              "Niinim\u00e4ki R",
+              "Petersen MJ",
+              "Segers H",
+              "van der Sluis IM",
+              "Thastrup M",
+              "Vaitkeviciene G",
+              "Schmiegelow K",
+              "Toksvang LN"
+            ],
+            "journal": "Cancer chemotherapy and pharmacology",
+            "date": "2025 Jul 16",
+            "abstract_snippet": "PURPOSE: Adherence to 6-mercaptopurine (6-MP)/methotrexate maintenance treatment for acute lymphoblastic leukemia (ALL) is pivotal to preventing relapse, and the 6-MP metabolite DNA-incorporated thioguanine (DNA-TG) is associated with relapse risk. In the ALLTogether-1 (A2G1) Maintenance sub-study (\u2026"
+          },
+          {
+            "pmid": "35501736",
+            "title": "Thiopurine Enhanced ALL Maintenance (TEAM): study protocol for a randomized study to evaluate the improvement in disease-free survival by adding very low dose 6-thioguanine to 6-mercaptopurine/methotrexate-based maintenance therapy in pediatric and adult patients (0-45\u2009years) with newly diagnosed B-cell precursor or T-cell acute lymphoblastic leukemia treated according to the intermediate risk-high group of the ALLTogether1 protocol.",
+            "authors": [
+              "Toksvang LN",
+              "Als-Nielsen B",
+              "Bacon C",
+              "Bertasiute R",
+              "Duarte X",
+              "Escherich G",
+              "Helgadottir EA",
+              "Johannsdottir IR",
+              "J\u00f3nsson \u00d3G",
+              "Kozlowski P",
+              "Langenskj\u00f6ld C",
+              "Lepik K",
+              "Niinim\u00e4ki R",
+              "Overgaard UM",
+              "Punab M",
+              "R\u00e4ty R",
+              "Segers H",
+              "van der Sluis I",
+              "Smith OP",
+              "Strullu M",
+              "Vaitkevi\u010dien\u0117 G",
+              "Wik HS",
+              "Heyman M",
+              "Schmiegelow K"
+            ],
+            "journal": "BMC cancer",
+            "date": "2022 May 2",
+            "abstract_snippet": "BACKGROUND: A critical challenge in current acute lymphoblastic leukemia (ALL) therapy is treatment intensification in order to reduce the relapse rate in the subset of patients at the highest risk of relapse. The year-long maintenance phase is essential in relapse prevention. The Thiopurine Enhance\u2026"
+          }
+        ]
+      },
+      "risk": {
+        "risk_score": 0.9921388095244765,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06490536": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:40.241310+00:00",
+        "trial_id": "NCT06490536",
+        "details": {
+          "nct_id": "NCT06490536",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2024-06-11",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-08-22",
+          "study_first_submitted_qc_date": "2024-06-28",
+          "study_first_posted_date": "2024-07-08",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-08-22",
+          "last_update_posted_date": "2025-08-29",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2024-10-22",
+          "start_date_type": "ACTUAL",
+          "start_date": "2024-10-22",
+          "verification_month_year": "2025-08",
+          "verification_date": "2025-08-31",
+          "completion_month_year": "2028-09-01",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2028-09-01",
+          "primary_completion_month_year": "2026-03-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-03-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "The Sagittarius Trial",
+          "official_title": "A Precision Medicine Trial Leveraging Blood-Based Tumor Genomics to Optimize Treatment in Operable Stage III and High-Risk Stage II Colon Cancer Patients",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 700.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "IFOM ETS - The AIRC Institute of Molecular Oncology",
+          "limitations_and_caveats": null,
+          "number_of_arms": 6.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": "t",
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "UNDECIDED",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-27 11:46:39.450399",
+          "updated_at": "2026-02-27 11:46:39.450399",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:40.423708+00:00",
+        "trial_id": "NCT06490536",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* SAGITTARIUS trial written informed consent.~* Age \u2265 18 years.~* Histologically confirmed diagnosis of operable stage III and High-Risk stage II CC located at least 12 cm from the anal verge by endoscopy and above the peritoneal reflection at surgery.~* Availability of the original FFPE tumor tissue.~* ECOG performance status 0-1.~* Normal organ functions (as defined in section 9.3).~* Women with childbearing potential (WOCBP) should complete a pregnancy test and be willing to use highly effective contraceptive methods.~Exclusion Criteria:~* History of another neoplastic disease, unless in remission for \u2265 5 years. Participants with basal cell carcinoma of the skin, squamous cell carcinoma of the skin, or carcinoma in situ (e.g., breast carcinoma, cervical cancer in situ) that have undergone potentially curative therapy are not excluded.~* Macroscopic or microscopic evidence of residual tumor (R1 or R2 resections). Patients should never have had any evidence of metastatic disease (including presence of tumor cells in the peritoneal lavage).~* Current or recent treatment with another investigational drug or participation in another investigational study.~* Patient unable to comply with the study protocol owing to psychological, social or geographical reasons.~* Is pregnant or breastfeeding, or expecting to conceive or father children within the projected duration of the study.~* Inadequate contraception (male or female patients) if of childbearing or procreational potential.~* Clinically relevant cardiovascular disease.~* Acute or subacute intestinal occlusion or history of inflammatory bowel disease or any other autoimmune disease.~* Pre-existing neuropathy \\> grade 1. Known grade 3 or 4 allergic reaction to any of the components of the treatment.~* Has a known history of Human Immunodeficiency Virus (HIV).~* Has a known history of Hepatitis B (defined as Hepatitis B surface antigen \\[HBsAg\\] reactive) or known active Hepatitis C virus infection.~* Has a known history of active TB (Bacillus Tuberculosis).~* Has a medical condition that contraindicate the use of the investigational medicinal product (IMP) according to product indications.~* Prior neoadjuvant treatment administered before surgery.",
+        "criteria_length": 2254
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:40.441207+00:00",
+        "nct_id": "NCT06490536",
+        "query": "NCT06490536[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9891694970428944,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT03949231": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:40.557277+00:00",
+        "trial_id": "NCT03949231",
+        "details": {
+          "nct_id": "NCT03949231",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2019-05-13",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2024-06-22",
+          "study_first_submitted_qc_date": "2019-05-13",
+          "study_first_posted_date": "2019-05-14",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2024-06-22",
+          "last_update_posted_date": "2024-06-26",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2019-01-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2019-01-01",
+          "verification_month_year": "2024-06",
+          "verification_date": "2024-06-30",
+          "completion_month_year": "2038-01-02",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2038-01-02",
+          "primary_completion_month_year": "2029-01-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2029-01-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Infusion of PD1/PDL1/CTLA4 Inhibitors Via Hepatic Arterial for Immunotherapy of Hepatocellular Carcinoma",
+          "official_title": "A Phase II/III Randomized Trial of Comparison of Survival Benefit of Administration of PD1/PDL1/CTLA4 Inhibitor or Their Combinations Via Hepatic Arterial Infusion Versus Vein for Immunotherapy of Advanced Liver Cancer",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 200.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Second Affiliated Hospital of Guangzhou Medical University",
+          "limitations_and_caveats": null,
+          "number_of_arms": 2.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-28 01:51:43.862721",
+          "updated_at": "2026-02-28 01:51:43.862721",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:40.738085+00:00",
+        "trial_id": "NCT03949231",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "80 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~1. Cytohistological confirmation is required for diagnosis of HCC.\u3001~2. Signed informed consent before recruiting~3. Age between 18 to 80 years with estimated survival over 3 months.~4. Child-Pugh class A or B/Child score \\> 7; ECOG score \\< 2~5. Tolerable coagulation function or reversible coagulation disorders~6. Laboratory examination test within 7 days prior to procedure: WBC\u22653.0\u00d710E9/L; Hb\u226590g/L\uff1b PLT \u226550\u00d710E9/L\uff1bINR \\< 2.3 or PT \\< 6 seconds above control\uff1bCr \u2264 145.5 umul/L\uff1bAlbumin \\> 28 g/L\uff1bTotal bilirubin \\< 51 \u03bcmol/L~7. At least one tumor lesion meeting measurable disease criteria as determined by RECIST v1.1.~8. Patients with advanced (unresectable and/or metastatic, stage C based on Barcelona-Clinic Liver Cancer \\[BCLC\\] staging classification) hepatocellular carcinoma which would not be suitable for treatment with loco-regional therapies or have progressed following locoregional therapy such as surgical resection, percutaneous hepatic arterial embolization, radiofrequency ablation, and percutaneous interventional therapy.~9. Birth control.~10. Willing and able to comply with scheduled visits, treatment plan and laboratory tests.~Exclusion Criteria:~1. Patients participated in clinical trials of equipment or drugs (signed informed consent) within 4 weeks;~2. Patients accompany by ascites, hepatic encephalopathy and esophageal and gastric varices bleeding;~3. Any serious accompanying disease, which is expected to have an unknown, impact on the prognosis, include heart disease, inadequately controlled diabetes and psychiatric disorders;~4. Patients accompanied with other tumors or past medical history of malignancy;~5. Pregnant or lactating patients, all patients participating in this trial must adopt appropriate birth control measures during treatment;~6. Patients have poor compliance.~   Any contraindications for hepatic arterial infusion procedure:~   A.Impaired clotting test (platelet count \\< 60000/mm3, prothrombin activity \\< 50%).~   B.Renal failure / insufficiency requiring hemo-or peritoneal dialysis. C.Known severe atheromatosis. D.Known uncontrolled blood hypertension (\\> 160/100 mm/Hg).~7. Patients have the past history of liver cancer treatment, such as transplantation, resection, radiotherapy, chemotherapy and so on;~8. Allergic to adriamycin chemotherapy drugs\uff0ccontrast agent and lipiodol;~9. Any agents which could affect the absorption or pharmacokinetics of the study drugs~10. Subjects unable to suffer the discomfort of the HAI procedure",
+        "criteria_length": 2522
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:40.754765+00:00",
+        "nct_id": "NCT03949231",
+        "query": "NCT03949231[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9887655293568969,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT06954441": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:40.876571+00:00",
+        "trial_id": "NCT06954441",
+        "details": {
+          "nct_id": "NCT06954441",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2025-04-15",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2026-01-15",
+          "study_first_submitted_qc_date": "2025-04-24",
+          "study_first_posted_date": "2025-05-01",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2026-01-15",
+          "last_update_posted_date": "2026-01-20",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2025-08-15",
+          "start_date_type": "ACTUAL",
+          "start_date": "2025-08-15",
+          "verification_month_year": "2025-04",
+          "verification_date": "2025-04-30",
+          "completion_month_year": "2027-02-27",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2027-02-27",
+          "primary_completion_month_year": "2026-09-27",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-09-27",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "VIP",
+          "baseline_population": null,
+          "brief_title": "V-IMMUNE: A Novel Immunoglobulin Therapy for Immunodeficiency",
+          "official_title": "V-IMMUNE\u00ae for Primary Immunodeficiency: A Phase III Clinical Trial (VIP Study)",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 50.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "On Pharma Importadora, Exportadora e Distribuidora de Medicamentos LTDA.",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": "Due to the regulatory nature of this clinical trial-specifically aimed at obtaining market authorization for V-IMMUNE\u00ae in Brazil for patients with immune thrombocytopenia-we will not be able to share individual participant data (IPD) outside of the study team. All participant information is considered proprietary and confidential as part of the registration dossier being submitted to the Brazilian health authority. The study protocol, data collection, and analyses must remain under restricted access to fulfill legal, regulatory, and institutional requirements, which include protecting patient privacy and maintaining data integrity for the product's approval process. Consequently, no external IPD sharing is planned at this time.",
+          "created_at": "2026-02-26 16:34:30.937311",
+          "updated_at": "2026-02-26 16:34:30.937311",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:41.072686+00:00",
+        "trial_id": "NCT06954441",
+        "gender": "ALL",
+        "minimum_age": "2 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* Patients aged 2 years or older;~* Primary immunoglobulin G deficiency, already receiving another intravenous immunoglobulin (IVIG). Primary IgG deficiency may be secondary (non-exhaustive list) to one of the following diagnoses:~* Agammaglobulinemia due to absence of B cells~* Hypogammaglobulinemia with reduced antibody function - variable common immunodeficiency complex~* Quantitative and functional deficiencies of immunoglobulin G~* Normal immunoglobulin with reduced capacity for antibody production after immunization (e.g., Wiskott-Aldrich syndrome, IgG subclass deficiency, antipolysaccharide antibody deficiency against Haemophilus or pneumococcus)~* Severe combined immunodeficiencies: DiGeorge syndrome presenting with immunoglobulin G deficiency~* Isotype-switching defects: hyperimmunoglobulinemia M syndromes~* Two trough IgG measurements \u2265500 mg/dL within the past 90 days.~* Participants with through IgG measurements \u2265700 mg/dL within the last 30 days before the first visit~Exclusion Criteria:~* Acute infection under treatment within 2 weeks prior to screening~* Pregnancy~* History of hypersensitivity reaction to blood or blood products~* Previous anaphylactic reaction to IgG~* Intolerance to any component of V-Immune~* IgA deficiency, history of reactions to products containing IgA, or history of anti-IgA antibodies~* Selective Deficiency of IgA, IgM, IgD, or IgE~* Participation in any other study involving an investigational product~* Exposure to blood or any blood-derived products in the last 3 months~* Known HIV, HCV, or HBV infection~* ALT \\>3\u00d7 the upper limit of normal or 3x baseline value~* Serum creatinine \\>2\u00d7 the upper limit of normal or 2x baselline value~* BUN \\>2.5\u00d7 the upper limit of normal or 2.5x baseline value~* History of NYHA class III/IV heart failure~* Uncontrolled hypertension with systolic BP \\>160 mmHg or diastolic BP \\>100 mmHg~* History of thrombotic events such as DVT, MI, stroke, or PE within the last 6 months~* Neoplasia under treatment~* Severe hepatic, renal, or cardiac insufficiency~* Child-Pugh class B/C hepatic insufficiency~* Alcohol, opioid, or psychotropic drug abuse within the last 12 months~* Use of immunosuppressive agents~* Long-term use of prednisone \\>10 mg/day or equivalent~* Protein-losing enteropathies (Crohn's disease, ulcerative colitis, M\u00e9n\u00e9trier's disease, celiac disease)~Observation:~If Research participant becomes pregnant during study participation - we will Discontinue any further administration of the IMP; The principal investigator must refer the research participant for follow-up through routine healthcare services; The research participant will continue to be monitored by the study; Obtain informed consent from the pregnant participant to request authorization to follow her pregnancy; If authorized by a specific informed consent form, even after the participant's involvement in the study has ended, the investigator must contact the pregnant participant quarterly to monitor the pregnancy. The results of this follow-up must be entered into the CRF. The frequency will be maintained as long as no abnormalities are identified in the participant, the pregnancy, or the fetus.~Female partner of a male research participant becomes pregnant during the study = No action is required regarding the research participant's participation; Obtain informed consent from the research participant's partner to request authorization to monitor her pregnancy. If authorized by a specific informed consent form, the investigator must contact the pregnant woman quarterly to monitor the pregnancy. The results of this follow-up must be entered into the CRF. The frequency will be maintained as long as no abnormalities are identified in the pregnant woman, the pregnancy, or the fetus.~Data Confidentiality:~The confidentiality of data from all patients will be ensured and preserved. Patient identification will be performed exclusively through the study-assigned identification number, the patient's initials, and date of birth. An exception to this procedure applies to participants included in the pharmacokinetic analyses, who, after providing consent themselves or through their legal representative, will also have their personal identifying data (full name, CPF \\[Brazilian individual taxpayer registry number\\], date of birth, and sex), as well as information regarding their participation (date of study enrollment), collected and transferred to the ICF laboratory for registration in the SINEB system (Sistema de Informa\u00e7\u00f5es de Estudos de Equival\u00eancia Farmac\u00eautica e Bioequival\u00eancia), an ANVISA database used for the registration of participants in studies of this nature.~Data obtained from medical records and other documents will be maintained in a confidential manner by the research centers and stored in locations with restricted access limited to the study team. Sensitive data, such as patient contact information collected for scheduling and follow-up purposes, will be accessed exclusively by personnel involved in the conduct of the study. The principal investigator shall allow direct access to participants' records and source documents for the purposes of monitoring, auditing, or inspection by the Sponsor and Regulatory Authorities, if required.~With regard to participants included in the pharmacokinetic analyses, the collection of personal identifying data (full name, CPF \\[Brazilian individual taxpayer registry number\\], date of birth, and sex) and participation-related information (date of study enrollment) is planned for transfer to the ICF laboratory for registration in the SINEB database. This procedure aims to mitigate risks to research participants by ensuring that they are not concurrently enrolled in another study within an interval shorter than six (6) months.",
+        "criteria_length": 5828
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:41.823060+00:00",
+        "nct_id": "NCT06954441",
+        "query": "NCT06954441[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.9837563671171665,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT05552001": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:41.947281+00:00",
+        "trial_id": "NCT05552001",
+        "details": {
+          "nct_id": "NCT05552001",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2022-09-20",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-06-06",
+          "study_first_submitted_qc_date": "2022-09-20",
+          "study_first_posted_date": "2022-09-23",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-06-06",
+          "last_update_posted_date": "2025-06-11",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2023-10-05",
+          "start_date_type": "ACTUAL",
+          "start_date": "2023-10-05",
+          "verification_month_year": "2025-06",
+          "verification_date": "2025-06-30",
+          "completion_month_year": "2028-05-06",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2028-05-06",
+          "primary_completion_month_year": "2026-05-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-05-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": "ISIdE",
+          "baseline_population": null,
+          "brief_title": "Safety and Efficacy Analysis of an Antibody Associated With a Chemotherapy for Patients With a Triple Negative Metastatic Breast Cancer",
+          "official_title": "ISIdE: Open Label, Multicentric, Single-arm Phase IIIB Trial to Evaluate the Safety and Efficacy of Sacituzumab Govitecan in Triple Negative Metastatic Breast Cancer Patients With a Biomarker Analysis",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 96.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "UNICANCER",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "t",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": null,
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-26 12:54:52.602531",
+          "updated_at": "2026-02-26 12:54:52.602531",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:42.137676+00:00",
+        "trial_id": "NCT05552001",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": null,
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~1. Patient must have signed a written informed consent prior to any trial specific procedures;~   Note: When the patient is unable to write to give his written consent, a trusted person of their choice, independent from the investigator or the sponsor, can confirm in writing the patient's consent~2. Male or female \u2265 18 years of age;~3. Patients with pathologically documented locally advanced inoperable or metastatic triple negative breast cancer (mTNBC) whose disease has progressed on (neo)adjuvant chemotherapy+/-immunotherapy for early TNBC or within 6 months after the end of any systemic therapy, surgery or radiotherapy with curative intent, whatever comes last.~   Note: TNBC is defined as the absence of HER2 overexpression by immunohistochemistry (IHC) defined as IHC 0, 1+, or 2+ and fluorescence in situ hybridization \\[FISH\\] non-amplified and estrogen receptor (ER) expression \\<10% and progesterone receptor (PR) expression \\<10% by local pathological assessment on the most recent tissue sample collected~4. Prior exposure to a taxane~   Note: If indicated, prior therapy with ICI for patients with PD1 positive tumor and prior treatment with PARP inhibitor for patients with gBRCAm is required~5. Measurable disease, as defined by RECIST v1.1~6. Patient must have accepted to perform on-treatment biopsies. If the physician considers doing the biopsy on the primary tumor site because accessibility, it can be performed only if the primary tumor site has not been previously irradiated;~7. Have metastatic site easily accessible to biopsy (with exception of bone metastasis)~   Note 1: Patients with only bone metastasis will be eligible if the primary tumor is accessible for biopsy at inclusion~   Note 2: If the patient has a single measurable lesion and it is the only one that can be biopsied, the patient cannot be included because the disease is no longer measurable according to RECIST v1.1~8. Eastern Cooperative Oncology Group (ECOG) performance status \u22642;~9. Life expectancy \u226512 weeks;~10. Adequate haematologic and organ function~11. Negative hepatitis B surface antigen (HBsAg) test at screening (patients with a negative HBsAg test and a positive total hepatitis B core antibody (HBcAb) test at screening are eligible), negative hepatitis C virus (HCV) antibody test at screening, or positive HCV antibody test followed by a negative HCV RNA test at screening;~12. Evidence of post-menopausal status or negative pregnancy urinary test within 72 hours or serum pregnancy test within 14 days before study treatment and confirmed prior to treatment on Cycle 1 Day 1 for female pre-menopausal patients;~13. Woman of childbearing potential and male patient must agree to use adequate contraception for the duration of trial participation and up to 6 months after completing treatment for women and up to 3 months for men;~14. Patient affiliated to a social security system (or equivalent);~15. Patient is willing and able to comply with the protocol for the duration of the trial including undergoing treatment and scheduled visits, and examinations including follow-up;~Exclusion Criteria:~1. Participation in another therapeutic trial within the 30 days prior to C1D1;~2. Symptomatic, untreated, or actively progressing central nervous system (CNS) metastases or evidence of leptomeningeal disease or clinically active spinal cord compression. Patients with stable and asymptomatic brain metastases will be eligible, yet the number will be capped to 15% of the overall population;~3. Previous history of cancer other than mTNBC within 5 years prior to C1D1, except of those with a negligible risk of metastasis or death (e.g., 5-year OS rate \\>90%) and treated with curative intent (e.g. carcinoma in situ of the cervix, non-melanoma skin carcinoma, localized prostate cancer, ductal carcinoma in situ, or stage I uterine cancer);~4. Prior treatment with topoisomerase-1 inhibitor or with ADC containing topoisomerase-1 inhibitor~5. Met any of the following criteria for cardiac disease:~   1. Myocardial infarction or unstable angina pectoris within 6 months of enrolment.~  2. History of serious ventricular arrhythmia (ie, ventricular tachycardia or ventricular fibrillation), high-grade atrioventricular block, or other cardiac arrhythmias requiring antiarrhythmic medications (except for atrial fibrillation that is well controlled with antiarrhythmic medication); history of QT interval prolongation.~  3. New York Heart Association (NYHA) Class III or greater congestive heart failure or left ventricular ejection fraction of \\<40%.~6. Severe uncontrolled infection requiring oral or IV antibiotics within 4 weeks prior to C1D1;~7. Major surgical procedure within 4 weeks prior to C1D1;~8. History of severe allergic, anaphylactic, or other hypersensitivity reactions to humanized antibodies;~9. Known hypersensitivity to the study drug, its metabolites, or formulation excipient.~10. Patients receiving concomitant anti-cancer treatments such as chemotherapy, immunotherapy, endocrine therapy and radiotherapy;~11. Patients with unresolved toxicities from previous anticancer therapy, defined as toxicities (other than alopecia) not yet resolved according to the common terminology criteria for adverse events of the National Cancer Institute (NCI-CTCAE) v5.0 grade \\>2~12. Treatment with systemic corticosteroids dosed at \\>20 mg prednisone or equivalent or other systemic immunosuppressive medications within 2 weeks prior to C1D1;~13. Known history of testing positive for HIV or known acquired immunodeficiency syndrome if not controlled;~14. Evidence of significant uncontrolled concomitant disease;~15. Requirement for ongoing therapy with medications that are prohibited or to be used with caution~16. Individuals with physical or psychological conditions considered not to be compatible with the trial;~17. Persons deprived of their liberty or under protective custody or guardianship;~18. Pregnant or breastfeeding women;~19. Patients unwilling or unable to comply with the medical follow-up required by the trial because of geographic, familial, social, or psychological reasons.",
+        "criteria_length": 6148
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:42.880964+00:00",
+        "nct_id": "NCT05552001",
+        "query": "NCT05552001[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.0343669056892395,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    },
+    "NCT03819803": {
+      "details": {
+        "status": "ok",
+        "tool": "get_trial_details",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:43.007798+00:00",
+        "trial_id": "NCT03819803",
+        "details": {
+          "nct_id": "NCT03819803",
+          "nlm_download_date_description": null,
+          "study_first_submitted_date": "2018-09-14",
+          "results_first_submitted_date": null,
+          "disposition_first_submitted_date": null,
+          "last_update_submitted_date": "2025-11-24",
+          "study_first_submitted_qc_date": "2019-01-24",
+          "study_first_posted_date": "2019-01-29",
+          "study_first_posted_date_type": "ACTUAL",
+          "results_first_submitted_qc_date": null,
+          "results_first_posted_date": null,
+          "results_first_posted_date_type": null,
+          "disposition_first_submitted_qc_date": null,
+          "disposition_first_posted_date": null,
+          "disposition_first_posted_date_type": null,
+          "last_update_submitted_qc_date": "2025-11-24",
+          "last_update_posted_date": "2025-12-02",
+          "last_update_posted_date_type": "ACTUAL",
+          "start_month_year": "2017-03-01",
+          "start_date_type": "ACTUAL",
+          "start_date": "2017-03-01",
+          "verification_month_year": "2025-11",
+          "verification_date": "2025-11-30",
+          "completion_month_year": "2026-12-31",
+          "completion_date_type": "ESTIMATED",
+          "completion_date": "2026-12-31",
+          "primary_completion_month_year": "2026-03-01",
+          "primary_completion_date_type": "ESTIMATED",
+          "primary_completion_date": "2026-03-01",
+          "target_duration": null,
+          "study_type": "INTERVENTIONAL",
+          "acronym": null,
+          "baseline_population": null,
+          "brief_title": "Fecal Microbiota Transplantation in aGvHD After ASCT",
+          "official_title": "Fecal Microbiota Transplantation in Patients With Acute Gastrointestinal Graft-versus-host-disease After Allogeneic Stem Cell Transplantation",
+          "overall_status": "Recruiting",
+          "last_known_status": null,
+          "phase": "Phase 3",
+          "enrollment": 15.0,
+          "enrollment_type": "ESTIMATED",
+          "source": "Medical University of Graz",
+          "limitations_and_caveats": null,
+          "number_of_arms": 1.0,
+          "number_of_groups": null,
+          "why_stopped": null,
+          "has_expanded_access": "f",
+          "expanded_access_type_individual": null,
+          "expanded_access_type_intermediate": null,
+          "expanded_access_type_treatment": null,
+          "has_dmc": "f",
+          "is_fda_regulated_drug": "f",
+          "is_fda_regulated_device": "f",
+          "is_unapproved_device": null,
+          "is_ppsd": null,
+          "is_us_export": null,
+          "biospec_retention": null,
+          "biospec_description": null,
+          "ipd_time_frame": null,
+          "ipd_access_criteria": null,
+          "ipd_url": null,
+          "plan_to_share_ipd": "NO",
+          "plan_to_share_ipd_description": null,
+          "created_at": "2026-02-28 00:36:42.095288",
+          "updated_at": "2026-02-28 00:36:42.095288",
+          "source_class": "OTHER",
+          "delayed_posting": null,
+          "expanded_access_nctid": null,
+          "expanded_access_status_for_nctid": null,
+          "fdaaa801_violation": null,
+          "baseline_type_units_analyzed": null,
+          "patient_registry": null,
+          "actual_enrollment": null
+        }
+      },
+      "eligibility": {
+        "status": "ok",
+        "tool": "get_eligibility_criteria",
+        "source": "aact",
+        "timestamp": "2026-04-26T20:48:43.195048+00:00",
+        "trial_id": "NCT03819803",
+        "gender": "ALL",
+        "minimum_age": "18 Years",
+        "maximum_age": "70 Years",
+        "healthy_volunteers": "f",
+        "criteria": "Inclusion Criteria:~* first episode of histologically confirmed, steroid-refractory GI-aGvHD~* reduced bacterial diversity in the patient\u00b4s stool microbiota evidenced by 16s-rDNA measurement~* eligibility for repeated colonoscopic procedures~* informed consent~Exclusion Criteria:~* complications during a previous colonoscopy~* recurrent episode of GI-aGvHD~* lacking cardiopulmonary fitness for repeated colonoscopic procedures~* septic infection~* acute extraintestinal organ failure (excluding bone marrow)~* mechanical ileus",
+        "criteria_length": 529
+      },
+      "publications": {
+        "status": "ok",
+        "tool": "search_trial_publications",
+        "source": "pubmed",
+        "timestamp": "2026-04-26T20:48:43.959200+00:00",
+        "nct_id": "NCT03819803",
+        "query": "NCT03819803[All Fields]",
+        "total_found": 0,
+        "results_returned": 0,
+        "max_results": 5,
+        "publications": []
+      },
+      "risk": {
+        "risk_score": 0.02057713270187378,
+        "risk_reliable": true,
+        "risk_model_version": "xgboost_v2_auc0799_22k_trials_realAACT",
+        "note": ""
+      }
+    }
+  },
+  "demo_scope_name": "Recruiting Phase III Trials"
+}

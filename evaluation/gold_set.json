@@ -1,0 +1,306 @@
+[
+  {
+    "rank": 1,
+    "trial_id": "NCT06079788",
+    "check_name": "missing_primary_outcome",
+    "check_category": "endpoint",
+    "finding": "No Primary outcome row registered in outcome_counts.",
+    "data_points": {
+      "primary_outcome_rows": 0,
+      "phase": "Phase 3"
+    },
+    "completion_risk_score": 0.9877362297847867,
+    "risk_reliable": true,
+    "system_severity": "CRITICAL",
+    "gold_severity": "CRITICAL",
+    "gold_rationale": "Phase 3 Recruiting trial missing primary outcome with risk 0.988 — highest priority finding combining regulatory gap with model-confirmed high failure risk."
+  },
+  {
+    "rank": 2,
+    "trial_id": "NCT02423395",
+    "check_name": "missing_primary_outcome",
+    "check_category": "endpoint",
+    "finding": "No Primary outcome row registered in outcome_counts.",
+    "data_points": {
+      "primary_outcome_rows": 0,
+      "phase": "Phase 3"
+    },
+    "completion_risk_score": 0.9868184458464384,
+    "risk_reliable": true,
+    "system_severity": "CRITICAL",
+    "gold_severity": "CRITICAL",
+    "gold_rationale": "Phase 3 Recruiting trial missing primary outcome with risk 0.987 — regulatory compliance gap on actively recruiting trial requires immediate action."
+  },
+  {
+    "rank": 3,
+    "trial_id": "NCT06626503",
+    "check_name": "missing_primary_outcome",
+    "check_category": "endpoint",
+    "finding": "No Primary outcome row registered in outcome_counts.",
+    "data_points": {
+      "primary_outcome_rows": 0,
+      "phase": "Phase 3"
+    },
+    "completion_risk_score": 0.9859201060608029,
+    "risk_reliable": true,
+    "system_severity": "CRITICAL",
+    "gold_severity": "CRITICAL",
+    "gold_rationale": "Phase 3 Recruiting trial missing primary outcome with risk 0.986 — missing outcome registration undermines trial validity on high-risk actively recruiting study."
+  },
+  {
+    "rank": 4,
+    "trial_id": "NCT07371611",
+    "check_name": "missing_primary_outcome",
+    "check_category": "endpoint",
+    "finding": "No Primary outcome row registered in outcome_counts.",
+    "data_points": {
+      "primary_outcome_rows": 0,
+      "phase": "Phase 3"
+    },
+    "completion_risk_score": 0.9850568668916821,
+    "risk_reliable": true,
+    "system_severity": "CRITICAL",
+    "gold_severity": "CRITICAL",
+    "gold_rationale": "Phase 3 Recruiting trial missing primary outcome with risk 0.985 — regulatory gap combined with high completion risk warrants immediate registry correction."
+  },
+  {
+    "rank": 5,
+    "trial_id": "NCT06875427",
+    "check_name": "missing_primary_outcome",
+    "check_category": "endpoint",
+    "finding": "No Primary outcome row registered in outcome_counts.",
+    "data_points": {
+      "primary_outcome_rows": 0,
+      "phase": "Phase 3"
+    },
+    "completion_risk_score": 0.9813266228884459,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "CRITICAL",
+    "gold_rationale": "Risk 0.981 with missing primary outcome warrants CRITICAL — system under-escalated, but risk score and regulatory gap together justify highest severity."
+  },
+  {
+    "rank": 6,
+    "trial_id": "NCT06202755",
+    "check_name": "recruiting_past_completion",
+    "check_category": "status",
+    "finding": "Status is 'Recruiting' but completion date 2025-07-12 was 287 days ago.",
+    "data_points": {
+      "overall_status": "Recruiting",
+      "completion_date": "2025-07-12",
+      "days_past_completion": 287
+    },
+    "completion_risk_score": 0.02628922462463379,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Trial recruiting 287 days past completion — could be administrative update delay, warrants follow-up but not urgent escalation."
+  },
+  {
+    "rank": 7,
+    "trial_id": "NCT04450953",
+    "check_name": "recruiting_past_completion",
+    "check_category": "status",
+    "finding": "Status is 'Recruiting' but completion date 2025-11-30 was 146 days ago.",
+    "data_points": {
+      "overall_status": "Recruiting",
+      "completion_date": "2025-11-30",
+      "days_past_completion": 146
+    },
+    "completion_risk_score": 0.02107292413711548,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Trial recruiting 146 days past completion — borderline timing, likely administrative lag rather than active recruiting failure."
+  },
+  {
+    "rank": 8,
+    "trial_id": "NCT06392438",
+    "check_name": "recruiting_past_completion",
+    "check_category": "status",
+    "finding": "Status is 'Recruiting' but completion date 2025-09-30 was 207 days ago.",
+    "data_points": {
+      "overall_status": "Recruiting",
+      "completion_date": "2025-09-30",
+      "days_past_completion": 207
+    },
+    "completion_risk_score": 0.017883479595184326,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Trial recruiting 207 days past completion — moderate delay suggesting registry not maintained but not yet severe enough for HIGH."
+  },
+  {
+    "rank": 9,
+    "trial_id": "NCT04062565",
+    "check_name": "recruiting_past_completion",
+    "check_category": "status",
+    "finding": "Status is 'Recruiting' but completion date 2025-12-31 was 115 days ago.",
+    "data_points": {
+      "overall_status": "Recruiting",
+      "completion_date": "2025-12-31",
+      "days_past_completion": 115
+    },
+    "completion_risk_score": 0.01783055067062378,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Trial recruiting 115 days past completion — recently passed date, most likely an administrative update delay."
+  },
+  {
+    "rank": 10,
+    "trial_id": "NCT04062565",
+    "check_name": "latephase_missing_design_field",
+    "check_category": "endpoint",
+    "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+    "data_points": {
+      "phase": "Phase 3",
+      "missing_fields": [
+        "allocation"
+      ]
+    },
+    "completion_risk_score": 0.01783055067062378,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "HIGH",
+    "gold_rationale": "Trial still recruiting significantly past completion date — registry maintenance failure requiring sponsor notification."
+  },
+  {
+    "rank": 11,
+    "trial_id": "NCT05304442",
+    "check_name": "recruiting_past_completion",
+    "check_category": "status",
+    "finding": "Status is 'Recruiting' but completion date 2025-04-30 was 360 days ago.",
+    "data_points": {
+      "overall_status": "Recruiting",
+      "completion_date": "2025-04-30",
+      "days_past_completion": 360
+    },
+    "completion_risk_score": 0.01638627052307129,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "HIGH",
+    "gold_rationale": "Trial recruiting 360 days past completion — one full year without status update is a serious registry maintenance failure."
+  },
+  {
+    "rank": 12,
+    "trial_id": "NCT07016126",
+    "check_name": "latephase_missing_design_field",
+    "check_category": "endpoint",
+    "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+    "data_points": {
+      "phase": "Phase 3",
+      "missing_fields": [
+        "allocation"
+      ]
+    },
+    "completion_risk_score": 0.014400005340576172,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "HIGH",
+    "gold_rationale": "Phase 3 trial missing key design field is a significant registry gap that undermines trial validity assessment and regulatory review."
+  },
+  {
+    "rank": 13,
+    "trial_id": "NCT04999215",
+    "check_name": "latephase_missing_design_field",
+    "check_category": "endpoint",
+    "finding": "Late-phase trial (Phase 3) missing design field(s): allocation.",
+    "data_points": {
+      "phase": "Phase 3",
+      "missing_fields": [
+        "allocation"
+      ]
+    },
+    "completion_risk_score": 0.01198720932006836,
+    "risk_reliable": true,
+    "system_severity": "HIGH",
+    "gold_severity": "HIGH",
+    "gold_rationale": "Phase 3 trial missing key design field is a significant registry gap that undermines trial validity assessment and regulatory review."
+  },
+  {
+    "rank": 14,
+    "trial_id": "NCT06875427",
+    "check_name": "phase3_underpowered",
+    "check_category": "enrollment",
+    "finding": "Phase 3 trial planned enrollment is 38 (< 50 threshold).",
+    "data_points": {
+      "phase": "Phase 3",
+      "enrollment": 38.0,
+      "threshold": 50
+    },
+    "completion_risk_score": 0.9813266228884459,
+    "risk_reliable": true,
+    "system_severity": "MEDIUM",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Planned enrollment below Phase 3 threshold on trial already flagged for missing primary outcome — underpowering alone is MEDIUM but compounds existing CRITICAL concern."
+  },
+  {
+    "rank": 15,
+    "trial_id": "NCT04450953",
+    "check_name": "phase3_underpowered",
+    "check_category": "enrollment",
+    "finding": "Phase 3 trial planned enrollment is 36 (< 50 threshold).",
+    "data_points": {
+      "phase": "Phase 3",
+      "enrollment": 36.0,
+      "threshold": 50
+    },
+    "completion_risk_score": 0.02107292413711548,
+    "risk_reliable": true,
+    "system_severity": "MEDIUM",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Phase 3 trial planned enrollment below minimum threshold for adequate statistical power — methodology concern warranting protocol review."
+  },
+  {
+    "rank": 16,
+    "trial_id": "NCT06392438",
+    "check_name": "phase3_underpowered",
+    "check_category": "enrollment",
+    "finding": "Phase 3 trial planned enrollment is 44 (< 50 threshold).",
+    "data_points": {
+      "phase": "Phase 3",
+      "enrollment": 44.0,
+      "threshold": 50
+    },
+    "completion_risk_score": 0.017883479595184326,
+    "risk_reliable": true,
+    "system_severity": "MEDIUM",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Phase 3 trial planned enrollment below minimum threshold for adequate statistical power — methodology concern warranting protocol review."
+  },
+  {
+    "rank": 17,
+    "trial_id": "NCT04062565",
+    "check_name": "phase3_underpowered",
+    "check_category": "enrollment",
+    "finding": "Phase 3 trial planned enrollment is 20 (< 50 threshold).",
+    "data_points": {
+      "phase": "Phase 3",
+      "enrollment": 20.0,
+      "threshold": 50
+    },
+    "completion_risk_score": 0.01783055067062378,
+    "risk_reliable": true,
+    "system_severity": "MEDIUM",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Phase 3 trial planned enrollment below minimum threshold for adequate statistical power — methodology concern warranting protocol review."
+  },
+  {
+    "rank": 18,
+    "trial_id": "NCT05304442",
+    "check_name": "phase3_underpowered",
+    "check_category": "enrollment",
+    "finding": "Phase 3 trial planned enrollment is 40 (< 50 threshold).",
+    "data_points": {
+      "phase": "Phase 3",
+      "enrollment": 40.0,
+      "threshold": 50
+    },
+    "completion_risk_score": 0.01638627052307129,
+    "risk_reliable": true,
+    "system_severity": "MEDIUM",
+    "gold_severity": "MEDIUM",
+    "gold_rationale": "Phase 3 trial planned enrollment below minimum threshold for adequate statistical power — methodology concern warranting protocol review."
+  }
+]

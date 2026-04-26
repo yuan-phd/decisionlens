@@ -33,6 +33,8 @@ CRITERIA_MIN_LENGTH = 100  # < 100 chars suggests insufficient detail
 def check_crossfield_validation(
     trial_id: Optional[str] = None,
     therapeutic_area: Optional[str] = None,
+    phase: Optional[str] = None,
+    overall_status: Optional[str] = None,
     limit: int = 100,
 ) -> list[Issue]:
     """Run all cross-field validation rules over the scoped trial set.
@@ -54,7 +56,8 @@ def check_crossfield_validation(
 
         scoped = filter_trial_scope(
             studies, trial_id=trial_id,
-            therapeutic_area=therapeutic_area, limit=limit,
+            therapeutic_area=therapeutic_area, phase=phase,
+            overall_status=overall_status, limit=limit,
         )
         if scoped.empty:
             return issues
