@@ -21,33 +21,50 @@ This framing must appear as a persistent banner on every Streamlit page.
 ```
 /Users/ye/work/portfolio/decisionlens/
 ├── mcp_servers/
-│   ├── aact_server.py          # MCP 1: AACT database tools
-│   ├── pubmed_server.py        # MCP 2: PubMed E-utilities tools
-│   ├── openfda_server.py       # MCP 3: OpenFDA API tools
-│   └── cache/                  # API response cache (JSON files)
+│   ├── aact_server.py          # MCP 1: AACT parquet tools (5 tools, see spec below)
+│   ├── pubmed_server.py        # MCP 2: PubMed E-utilities (4 tools)
+│   ├── openfda_server.py       # MCP 3: OpenFDA API (3 tools)
+│   └── cache/                  # API response cache (gitignored)
 ├── agents/
-│   ├── orchestrator.py         # LangGraph agent — 5 nodes + loop
-│   └── state.py                # DataQualityState TypedDict
+│   ├── orchestrator.py         # LangGraph agent — 6 nodes + review loop
+│   ├── state.py                # DataQualityState TypedDict + caps
+│   └── test_agent.py
 ├── checks/
-│   ├── models.py               # Issue dataclass — shared return type
+│   ├── models.py               # Issue dataclass + filter_trial_scope
 │   ├── temporal.py             # Check A: date consistency
 │   ├── enrollment.py           # Check B: enrollment anomalies
 │   ├── status.py               # Check C: status inconsistencies
 │   ├── endpoints.py            # Check D: endpoint & design gaps
 │   ├── crossfield.py           # Check E: cross-field validation
 │   ├── publication.py          # Check F: publication vs registry (cross-source)
-│   └── safety.py               # Check G: trial safety vs FDA (cross-source)
+│   ├── safety.py               # Check G: trial safety vs FDA (cross-source)
+│   ├── demo_overrides.py       # Determinism shims for demo mode
+│   ├── LIMITATIONS.md          # AACT parquet schema gaps documented
+│   ├── test_checks.py
+│   └── test_cross_source.py
 ├── models/
-│   ├── xgb_classifier.pkl      # v1 XGBoost model (AUC=0.787, 573k trials)
-│   └── risk_scorer.py          # Wrapper: loads v1 model, returns risk score
+│   ├── xgb_classifier.pkl      # v2 XGBoost (AUC=0.799, 22K real AACT) — gitignored
+│   ├── xgb_regressor.pkl       # v2 enrollment regressor — gitignored
+│   ├── cox_ph.pkl              # Cox PH survival (46,897 obs) — gitignored
+│   ├── forecaster.joblib       # v1 EnrollmentForecaster — gitignored
+│   ├── risk_scorer.py          # Returns {risk_score, risk_reliable, risk_model_version}
+│   └── test_risk_scorer.py
 ├── llmops/
-│   └── tracker.py              # LLMTracker: logs every LLM call
+│   ├── tracker.py              # LLMTracker — logs every LLM call
+│   └── test_tracker.py
 ├── evaluation/
-│   ├── gold_set.py             # 20 manually labelled issues
-│   └── metrics.py              # Precision/recall/F1/Cohen's kappa
+│   ├── gold_set.py             # Loader for gold_set.json
+│   ├── gold_set.json           # 18 manually labelled issues (single annotator)
+│   ├── metrics.py              # Precision/recall/F1/Cohen's kappa
+│   └── metrics_results.json    # Last evaluation run output
 ├── output/
-│   ├── report.py               # Structured JSON output + provenance
-│   └── patterns.json           # Pattern library (persists across scans)
+│   ├── report.py               # ScanReport / PrioritisedIssue dataclasses
+│   ├── demo/                   # Pre-computed scans for app_demo.py (3 scopes)
+│   ├── reports/                # Live-scan outputs (gitignored)
+│   └── test_report.py
+├── tests/
+│   ├── test_agent_resilience.py
+│   └── test_checks_edge.py
 ├── src/                        # v1 modules — DO NOT MODIFY
 │   ├── data_pipeline.py
 │   ├── models.py
@@ -55,9 +72,12 @@ This framing must appear as a persistent banner on every Streamlit page.
 │   ├── investigator_insights.py
 │   └── genai_utils.py
 ├── data/
-│   └── processed/              # AACT parquet files (10 tables, 3.4M records)
-├── app_v2.py                   # Streamlit dashboard — 4 pages
-└── README_v2.md
+│   └── processed/              # AACT parquet (11 tables, 100K trials, 265 MB) — gitignored
+├── app_v2.py                   # Streamlit live mode — runs the agent (needs OpenAI key)
+├── app_demo.py                 # Streamlit demo mode — loads pre-computed reports, zero deps
+├── app_lib.py                  # Shared UI helpers (severity badges, scan-state guards)
+├── pre_warm_demo.py            # Regenerates output/demo/*.json
+└── README.md
 ```
 
 ---
@@ -65,13 +85,15 @@ This framing must appear as a persistent banner on every Streamlit page.
 ## Technology Stack
 
 - **Python 3.14** (M1 Max Mac)
-- **LangGraph** — agent orchestration (if incompatible, use raw ReAct loop)
+- **LangGraph** — 6-node StateGraph orchestration
 - **MCP (Model Context Protocol)** — 3 servers exposing tools to the agent
-- **XGBoost** — v1 completion risk model already trained
-- **OpenAI GPT-4o-mini** — LLM prioritisation (Groq as fallback)
+- **XGBoost** — v2 completion risk model (AUC=0.799 on 22K real AACT trials)
+- **OpenAI GPT-4o-mini** — all LLM calls (planning, review, prioritisation, clustering)
 - **Pandas + PyArrow** — AACT data access via parquet files
-- **Streamlit + Plotly** — dashboard
+- **Streamlit + Plotly** — dashboard (live + demo entry points)
 - **python-dotenv** — key management
+
+> v1 modules in `src/` still use Groq for LLM calls (kept for backwards-compat — `groq>=0.4` in `requirements.txt`). All v2 code paths use OpenAI exclusively.
 
 Always run `from dotenv import load_dotenv; load_dotenv()` at the top of every file that needs API keys.
 
@@ -123,30 +145,36 @@ async def call_tool(name: str, arguments: dict):
 
 ### MCP 1: AACT Clinical Trials Registry (mcp_servers/aact_server.py)
 
-**Data source:** AACT parquet files at data/processed/
+**Data source:** AACT parquet files at data/processed/ (11 tables, 100K trials)
 
 ```
-Tools:
+Tools (5):
 
-  search_trials(therapeutic_area, phase, status, date_range, limit)
-    → Returns trial metadata (NCT ID, sponsor, enrollment, dates, status)
+  run_quality_check(check_name, therapeutic_area, phase, limit)
+    → Executes one of the deterministic check functions (A-E)
+    → Returns list of Issue.to_dict() payloads as JSON
+
+  get_risk_score(nct_id)
+    → Wraps risk_scorer.score_trial — returns
+      {risk_score, risk_reliable, risk_model_version}.
+      Surfaced as a tool so the agent can pull risk context
+      mid-flow (used by node_review and node_context).
 
   get_trial_details(nct_id)
-    → Full trial record: design, arms, conditions, interventions, outcomes
+    → Full trial record: design, arms, conditions, interventions
 
   get_eligibility_criteria(nct_id)
     → Raw eligibility text for LLM extraction
 
-  get_trial_results(nct_id)
-    → Reported results, adverse events, outcome measures
-
   get_related_trials(nct_id)
     → Trials with same sponsor, same condition, or same intervention
-
-  run_quality_check(check_name, therapeutic_area, phase, limit)
-    → Executes one of the 5 deterministic check functions (A-E)
-    → Returns list of Issue objects as JSON
 ```
+
+> Plan-vs-built note: the original CLAUDE.md spec'd `search_trials` and
+> `get_trial_results` instead of `get_risk_score`. The agent never needed
+> `search_trials` (scopes are passed to `run_quality_check` directly via
+> filters), and `get_trial_results` collapsed into `get_trial_details`.
+> `get_risk_score` was added to expose the v2 model as a first-class tool.
 
 ---
 
@@ -243,8 +271,13 @@ Agent treats API failure as "data unavailable" — not "no issues found." Audit 
 
 ## Data Sources
 
-### AACT Parquet Files (data/processed/)
-- `studies.parquet` — primary trial table
+### AACT Parquet Files (data/processed/, gitignored, ~265 MB)
+
+11 tables, **100,000 trials in `studies.parquet`** (down-sampled snapshot
+of the full AACT registry — not 3.4M rows). Schema gaps are documented
+in `checks/LIMITATIONS.md`.
+
+- `studies.parquet` — primary trial table (100K rows, 72 cols)
 - `eligibilities.parquet` — eligibility criteria text
 - `facilities.parquet` — investigator sites
 - `conditions.parquet` — trial conditions/indications
@@ -263,20 +296,47 @@ Always load via pandas: `pd.read_parquet('data/processed/studies.parquet')`
 
 ---
 
-## v1 Risk Model
+## v2 Risk Model
 
-The v1 XGBoost classifier is already trained and saved at `models/xgb_classifier.pkl`.
+XGBoost classifier saved at `models/xgb_classifier.pkl`, loaded by
+`models/risk_scorer.py`. Version string: `xgboost_v2_auc0799_22k_trials_realAACT`.
 
-- Trained on 573,000 real AACT trials
-- AUC = 0.787, 5-fold CV stable ±0.004
+- **v2 retrain** on 22K real AACT trials drawn from the local parquet snapshot
+- AUC = 0.799 (held-out test set)
 - **Completion risk score = 1 - completion_probability**
-- Features: enrollment, n_facilities, phase_numeric, sponsor_historical_performance, competing_trials_count, intervention_model, masking, is_multicountry, geographic_concentration, condition_prevalence_proxy
+- Same feature pipeline as v1: `src/data_pipeline.py` → `TrialDataPipeline.engineer_features()`
 
-Feature pipeline: `src/data_pipeline.py` → `TrialDataPipeline.engineer_features()`
+### Reliability gating (NEW vs original spec)
 
-**Escalation logic:** (thresholds inclusive)
-- HIGH issue + risk_score >= 0.6 → upgrade to CRITICAL
-- MEDIUM issue + risk_score >= 0.7 → upgrade to HIGH
+`risk_scorer.score_trial(nct_id)` returns:
+
+```python
+{
+    "risk_score": float,         # 0.0–1.0
+    "risk_reliable": bool,       # False when feature pipeline failed
+    "risk_model_version": str,   # "xgboost_v2_auc0799_22k_trials_realAACT"
+}
+```
+
+When the feature pipeline can't build a vector for a trial (missing
+joins, malformed enrollment, etc.) the scorer returns a **neutral
+fallback**: `risk_score=0.5`, `risk_reliable=False`. Downstream
+escalation logic must check `risk_reliable` before acting.
+
+### Escalation logic (thresholds inclusive)
+
+```python
+HIGH_TO_CRITICAL_THRESHOLD = 0.6
+MEDIUM_TO_HIGH_THRESHOLD   = 0.7
+```
+
+Applied by `escalate_severity(severity_rule, risk)`:
+
+- **Only when `risk["risk_reliable"]` is True** —
+  neutral-fallback scores must not escalate.
+- HIGH    + risk_score >= 0.6 → CRITICAL
+- MEDIUM  + risk_score >= 0.7 → HIGH
+- LOW never escalates.
 
 ---
 
@@ -308,9 +368,10 @@ class PrioritisedIssue:
     finding: str
     data_points: dict
 
-    # From v1 risk model
+    # From v2 risk model
     completion_risk_score: float
-    risk_model_version: str      # "xgboost_v1_auc0787_573k_trials"
+    risk_reliable: bool          # False → neutral fallback, do not escalate
+    risk_model_version: str      # "xgboost_v2_auc0799_22k_trials_realAACT"
 
     # From LLM prioritisation
     severity: str                # CRITICAL/HIGH/MEDIUM/LOW
@@ -322,6 +383,27 @@ class PrioritisedIssue:
 
     # Multi-source provenance — always present, never optional
     provenance: dict             # see provenance spec below
+```
+
+### ScanReport (output/report.py)
+The full scan output written to `output/reports/<scan_id>.json` and
+`output/demo/*.json`:
+
+```python
+@dataclass
+class ScanReport:
+    scan_id: str
+    timestamp: str
+    scope: str
+    scope_filters: dict
+    data_source_note: str        # AACT-as-EDC framing
+    trials_scanned: int
+    checks_executed: list[str]
+    agent_iterations: int
+    issues: dict                 # {critical, high, medium, low} counts
+    llmops_summary: dict         # from LLMTracker.get_summary()
+    prioritised_issues: list[PrioritisedIssue]
+    root_cause_clusters: list[dict]   # produced by node_cluster (see below)
 ```
 
 ### Multi-Source Provenance Spec
@@ -403,36 +485,65 @@ Cross-validate AACT against OpenFDA:
 
 ### State (agents/state.py)
 ```python
+MAX_ISSUES_PER_CHECK: int = 200
+MAX_TOTAL_ISSUES: int = 500
+
 class DataQualityState(TypedDict):
+    # Scope
     scope: str
     scope_filters: dict
+
+    # Planning
     plan: list[str]
     checks_completed: list[str]
-    issues_found: list[Issue]
+
+    # Scan output — Issue.to_dict() payloads, not dataclasses,
+    # so the whole state stays JSON-serialisable
+    issues_found: list[dict]
+    risk_scores: dict[str, dict]   # nct_id -> risk payload from risk_scorer
+
+    # Review + context loop
     needs_deeper_investigation: list[str]
     context_results: list[dict]
-    iteration: int                   # max 3
-    risk_scores: dict[str, float]
+    iteration: int                 # capped at 3
+
+    # LLMOps
     llm_calls: list[dict]
     total_tokens: int
     total_latency_ms: float
     estimated_cost: float
+
+    # Final output
     prioritised_issues: list[dict]
-    pattern_library_updates: list[dict]
-    final_report: dict
+    pattern_library_updates: list[dict]   # not currently populated (cut)
+    final_report: dict             # holds root_cause_clusters, llmops_summary, etc.
 ```
 
-### Agent Flow — 5 Nodes (agents/orchestrator.py)
+`make_initial_state(scope, scope_filters)` returns a fresh state with
+empty collections and zeroed counters.
 
-1. **PLANNING NODE** — LLM decides which checks to run across all 3 MCP servers based on scope. Not hardcoded.
+### Agent Flow — 6 Nodes (agents/orchestrator.py)
 
-2. **SCAN NODE** — Executes planned checks via MCP tool calls. AACT checks A-E + cross-source checks F-G if relevant. Attaches v1 risk score.
+Graph wiring:
 
-3. **REVIEW NODE** — LLM reviews all findings. Decides if any need deeper multi-source investigation.
+```
+START → plan → scan → review ─┬─→ context → review (loop, max 3)
+                              └─→ prioritise → cluster → END
+```
 
-4. **CONTEXT ENRICHMENT NODE** — For flagged trials: AACT (eligibility, related trials) + PubMed (publications) + OpenFDA (adverse events). Loops back to REVIEW max 3x.
+1. **PLANNING NODE** (`node_plan`) — LLM decides which checks to run across all 3 MCP servers based on scope. Not hardcoded. `purpose="planning"`.
 
-5. **PRIORITISATION NODE** — LLM generates final assessment using full multi-source context + risk scores. Updates pattern library.
+2. **SCAN NODE** (`node_scan`) — Executes planned checks via MCP tool calls. AACT checks A-E + cross-source checks F-G if relevant. Attaches v2 risk score (with `risk_reliable` flag). Caps enforced via `MAX_ISSUES_PER_CHECK=200` and `MAX_TOTAL_ISSUES=500` in `agents/state.py`.
+
+3. **REVIEW NODE** (`node_review`) — LLM reviews all findings. Decides if any need deeper multi-source investigation. `purpose="review"`.
+
+4. **CONTEXT ENRICHMENT NODE** (`node_context`) — For flagged trials: AACT (eligibility, related trials) + PubMed (publications) + OpenFDA (adverse events). Loops back to REVIEW max 3x. `purpose="context"` (per-fetch).
+
+5. **PRIORITISATION NODE** (`node_prioritise`) — LLM generates final per-issue assessment (severity, explanation, action) using full multi-source context + risk scores. **Async-batched** via `_call_llm_batch_async` to keep wall-clock latency low for large issue sets. `purpose="prioritisation"`.
+
+6. **CLUSTER NODE** (`node_cluster`) — One LLM call groups prioritised issues into root-cause clusters. Output lands in `state["final_report"]["root_cause_clusters"]` (list of `{cluster_id, root_cause, pattern, affected_trials, issue_indices, cluster_severity, recommended_action}`). Falls back to empty list on LLM failure so the scan still produces a saveable report. `purpose="clustering"`.
+
+> Note: `state` does not have a top-level `clusters` field; clusters live inside `final_report` so they ride along with the report serialisation.
 
 ### Example multi-source reasoning:
 ```
@@ -455,35 +566,54 @@ Every LLM call MUST go through LLMTracker. No exceptions.
 class LLMTracker:
     def track_call(self, model, purpose, prompt_tokens,
                    completion_tokens, latency_ms) -> dict:
-        # purpose: "planning"/"review"/"context"/"prioritisation"
+        # purpose: "planning" | "review" | "context"
+        #        | "prioritisation" | "clustering"
 
     def get_summary(self) -> dict:
         # total_calls, total_tokens, total_latency_ms,
         # total_estimated_cost_usd, calls list
 ```
 
-Cost: GPT-4o-mini = $0.15/1M input, $0.60/1M output tokens.
+Per-model cost table (USD per 1M tokens, input / output):
+
+| Model | Input | Output |
+|---|---|---|
+| `gpt-4o-mini` (default) | $0.15 | $0.60 |
+| `gpt-4o` | $2.50 | $10.00 |
+| `gpt-4.1-mini` | $0.40 | $1.60 |
+
+Unknown models log once and cost as $0 so tracking is never blocked.
 
 ---
 
-## LLM Prioritisation Prompt
+## LLM Prompts
+
+Prompts live as module-level constants in `agents/orchestrator.py`:
+
+| Constant | Used by | Purpose |
+|---|---|---|
+| `PLANNING_SYSTEM` / `PLANNING_USER_TEMPLATE` | `node_plan` | Pick checks for the scope |
+| `REVIEW_SYSTEM` / `REVIEW_USER_TEMPLATE` | `node_review` | Decide if findings need deeper investigation |
+| `PRIORITISATION_SYSTEM` / `BATCH_PRIORITISATION_USER_TEMPLATE` | `node_prioritise` | Per-issue severity, explanation, action — async-batched |
+| `CLUSTER_SYSTEM` / `CLUSTER_USER_TEMPLATE` | `node_cluster` | Group prioritised issues into 3-7 root-cause clusters |
+
+Prioritisation prompt sketch (real version cites the v2 risk model
+version string and respects `risk_reliable` rather than hard-coding
+an AUC):
 
 ```
-You are a clinical trial data quality analyst reviewing automated
-findings from AACT registry, PubMed literature, and FDA adverse
-event database.
-
 Trial: {trial_id}
 Trial metadata: {trial_metadata}
 Findings: {findings}
-Completion risk score: {risk_score}/1.0 (AUC=0.787, 573k trials)
+Completion risk: {risk_score}/1.0  (reliable={risk_reliable},
+                                    model={risk_model_version})
 PubMed context: {pubmed_context}
 OpenFDA context: {openfda_context}
-Related patterns: {related_patterns}
 
-For each finding:
+For each finding emit:
 1. severity: CRITICAL/HIGH/MEDIUM/LOW
-   CRITICAL = HIGH + risk>=0.6 OR cross-source discrepancy 2+ sources
+   (CRITICAL = HIGH + risk_reliable AND risk>=0.6
+              OR cross-source discrepancy across 2+ sources)
 2. explanation: 2-3 sentences, no jargon, cite sources used
 3. potential_impact
 4. suggested_action
@@ -492,11 +622,33 @@ For each finding:
 JSON array. No markdown, no preamble.
 ```
 
+Cluster prompt produces 3-7 clusters, each:
+`{cluster_id, root_cause, pattern, affected_trials, issue_indices,
+cluster_severity, recommended_action}`. Issues without a meaningful
+shared cause go into a single `RC_UNCLUSTERED` group.
+
 ---
 
-## Streamlit Dashboard (app_v2.py)
+## Streamlit Dashboard
 
-Persistent banner ALL pages:
+Two entry points share a single set of helpers:
+
+| File | Mode | Runtime requirements |
+|---|---|---|
+| [app_v2.py](app_v2.py) | **Live** — runs the LangGraph agent | OpenAI key, AACT parquets, model binaries |
+| [app_demo.py](app_demo.py) | **Demo** — reads pre-computed reports | None — boots clean on Streamlit Cloud with no secrets, no parquet, no `.pkl` |
+| [app_lib.py](app_lib.py) | Shared UI helpers (severity badges, scan-state guards) — imported by both |
+
+`app_demo.py` is what's deployed publicly. It loads the three
+pre-computed `output/demo/*.json` reports built by `pre_warm_demo.py`
+(recruiting Phase 3, oncology Phase 3, all Phase 3) and renders them
+through the same page functions as live mode. Streamlit Cloud safety
+is verified: no module-level imports from `agents/`, `checks/`,
+`mcp_servers/`, or `models/`.
+
+Persistent banner ALL pages (rendered by `_render_demo_banner` in demo
+mode and `render_banner` in live mode):
+
 ```
 ⚠️ Data sources: AACT registry + PubMed + OpenFDA (proxies for EDC/CTMS).
 Same agent architecture applies to live trial execution data.
@@ -504,61 +656,81 @@ Same agent architecture applies to live trial execution data.
 
 ### Page 1: Scan Control & Overview
 - Scope selectors + data source availability indicators (AACT ✅ PubMed ✅ OpenFDA ✅)
-- Run Scan button + progress
+- Run Scan button + progress (live mode); pre-computed scope picker (demo mode)
 - Summary cards: trials scanned, CRITICAL/HIGH/MEDIUM/LOW
 - LLMOps card: calls, tokens, cost, latency
+- Cluster preview: top root-cause groups from `final_report["root_cause_clusters"]`
 
 ### Page 2: Prioritised Issues List
 - Table: Rank, Trial ID, Severity, Check, Sources Used, Explanation, Risk Score, Confidence
 - CRITICAL rows: red banner
 - Cross-source badge: "AACT + PubMed" or "AACT + FDA"
-- Expandable: full explanation, data points, action, multi-source provenance
+- **Two-layer display** — Layer 1: severity badge + finding + suggested
+  action (visible immediately). Layer 2 (click to expand): "Why this
+  severity?", sources checked, assessment confidence, full provenance.
+- Filter sidebar (severity, check category, source)
 - Export JSON button
 
 ### Page 3: Trial Deep Dive (NEVER CUT)
 - Trial metadata (AACT)
-- **v1 risk model: score + key risk factors** ← most differentiated
+- **v2 risk model: score + key risk factors + `risk_reliable` flag** ← most differentiated
 - PubMed panel: publications found
 - OpenFDA panel: adverse event summary
 - Eligibility criteria text
 
 ### Page 4: Audit Log & Evaluation
-- Audit tab: every agent action, MCP calls, LLM calls, exportable JSON
+- Audit tab: every agent action, MCP calls, LLM calls per `call_id` with tokens / cost / latency, exportable JSON
 - Data sources tab: MCP server status, response times, cache hits
-- Evaluation tab: gold set metrics summary card
-- Pattern library (if implemented)
+- Evaluation tab: gold-set metrics summary card (loads `evaluation/metrics_results.json`)
+- Pattern library section: gated on `output/patterns.json` existing — silently absent in current build (pattern library was cut)
 
 ---
 
 ## Evaluation
 
-### Gold Set — 20 issues from real agent findings (Saturday evening)
-Include cross-source findings. Distribution: ~5 HIGH, ~8 MEDIUM, ~7 LOW, 2-3 edge cases.
+### Gold Set — 18 issues, single annotator
+Stored as `evaluation/gold_set.json`, loaded by `evaluation/gold_set.py`.
+Built from real agent findings (recruiting Phase 3 scope) and includes
+cross-source findings (Check F / Check G).
 
 ### Metrics
-Precision, Recall, F1 per severity + overall accuracy + Cohen's kappa.
+Precision, recall, F1 per severity + overall accuracy + Cohen's κ.
+Run by `evaluation/metrics.py`; last results pinned at
+`evaluation/metrics_results.json`:
+
+| Metric | Value |
+|---|---|
+| Match rate (detection) | 1.000 (18/18) |
+| Accuracy (severity) | 0.722 |
+| Cohen's κ | 0.596 (moderate agreement) |
+| **CRITICAL precision** | **1.000** (4 TP, 0 FP) — no false escalations |
+| HIGH precision / recall | 0.444 / 1.000 |
+| MEDIUM precision / recall | 1.000 / 0.556 |
+
+Known weakness: system over-classifies moderate recruiting delays as
+HIGH (should be MEDIUM). Production validation would need 2-3 annotators
+with adjudication and an independently-labelled detection-recall set.
 
 ---
 
-## Never Cut List
+## Never Cut List (kept in shipped build)
 
-1. Agent loop (all 5 nodes + max 3 iterations)
+1. Agent loop — all 6 nodes + max 3 review iterations
 2. All 3 MCP servers (AACT + PubMed + OpenFDA)
-3. LLMOps logging on every LLM call
+3. LLMOps logging on every LLM call (5 purposes incl. `clustering`)
 4. Multi-source provenance on every issue
-5. v1 risk score + CRITICAL escalation
+5. v2 risk score + reliability gating + CRITICAL escalation
 6. Page 3 trial deep dive
 7. AACT vs EDC framing on every page
 8. Structured JSON export with audit log
+9. Demo mode (`app_demo.py` + pre-computed `output/demo/*.json`)
 
-## Cut Order If Time Tight
+## Cuts Actually Taken
 
-1. Pattern library
-2. Evaluation tab detail (keep summary card)
-3. Enrollment velocity check (bonus only)
-4. Check G safety cross-validation (keep Check F)
-5. Page 1 real-time streaming (static summary ok)
-6. Page 3 related trials panel
+1. ✂️ **Pattern library** (`output/patterns.json`) — never built. `app_demo.py` reads it defensively (silent absence).
+2. ✂️ **Page 3 related-trials panel** — collapsed into Page 3 Deep Dive proper.
+3. ✂️ **AACT MCP `search_trials` and `get_trial_results`** — agent never needed them; scopes flow directly through `run_quality_check`, results were folded into `get_trial_details`.
+4. ✂️ **Enrollment velocity check** (BONUS) — not built.
 
 ---
 
@@ -582,23 +754,25 @@ Precision, Recall, F1 per severity + overall accuracy + Cohen's kappa.
 
 ---
 
-## Weekend Build Order
+## Build Order — what shipped
 
-| Phase | Files | Priority |
+| Phase | Files | Status |
 |---|---|---|
-| 1 | checks/models.py + checks A-E | MUST |
-| 2 | models/risk_scorer.py | MUST |
-| 3 | mcp_servers/aact_server.py | MUST |
-| 4 | mcp_servers/pubmed_server.py | MUST |
-| 5 | mcp_servers/openfda_server.py | MUST |
-| 6 | checks/publication.py + checks/safety.py | MUST |
-| 7 | agents/state.py + agents/orchestrator.py | MUST |
-| 8 | llmops/tracker.py + LLM prioritisation | MUST |
-| 9 | output/report.py + multi-source provenance | MUST |
-| 10 | output/patterns.json (cuttable) | CUTTABLE |
-| 11 | evaluation/gold_set.py + metrics.py | SHOULD |
-| 12 | app_v2.py (4 pages) | MUST |
-| BONUS | Enrollment velocity check | BONUS |
+| 1 | checks/models.py + checks A-E | ✅ shipped |
+| 2 | models/risk_scorer.py (v2 retrain, AUC=0.799) | ✅ shipped |
+| 3 | mcp_servers/aact_server.py (5 tools — see MCP 1 spec) | ✅ shipped |
+| 4 | mcp_servers/pubmed_server.py | ✅ shipped |
+| 5 | mcp_servers/openfda_server.py | ✅ shipped |
+| 6 | checks/publication.py + checks/safety.py | ✅ shipped |
+| 7 | agents/state.py + agents/orchestrator.py | ✅ shipped (6 nodes incl. cluster) |
+| 8 | llmops/tracker.py + LLM prioritisation | ✅ shipped |
+| 9 | output/report.py + multi-source provenance | ✅ shipped |
+| 10 | output/patterns.json | ✂️ cut |
+| 11 | evaluation/gold_set.json + metrics.py | ✅ shipped (18-sample gold set) |
+| 12 | app_v2.py (4 pages) | ✅ shipped |
+| 13 | app_demo.py + app_lib.py + pre_warm_demo.py | ✅ added (demo deploy path) |
+| 14 | Test suites (agents, checks, llmops, models, output, tests/) | ✅ shipped |
+| BONUS | Enrollment velocity check | ✂️ not built |
 
 ---
 
@@ -621,11 +795,19 @@ fragmented clinical data looks like in practice."
 "Every finding shows which sources were consulted, what each
 returned, which check rule fired, which LLM calls were made."
 
-[LLMOps]
-"7 LLM calls, 47k tokens, $0.08, 12.3s."
+[LLMOps — read live from LLMTracker.get_summary() at demo time]
+"6 LLM calls, ~5.5k tokens, ~$0.0017, 43.8s." (illustrative —
+exact numbers vary per scope; pull from final_report["llmops_summary"])
 
 [EVALUATION]
-"20-sample gold set, precision 0.83, recall 0.79."
+"18-sample gold set: 100% match rate (every gold issue surfaced),
+72% accuracy on severity, Cohen's κ 0.596, and CRITICAL precision
+1.000 — zero false escalations on the highest-priority class."
+
+[ROOT-CAUSE CLUSTERS]
+"Beyond per-issue findings, the agent groups them into 3-7 root-cause
+clusters — so reviewers see 'these 14 trials share the same eligibility
+cliff' instead of 14 disconnected tickets."
 ```
 
 ---
@@ -635,7 +817,10 @@ returned, which check rule fired, which LLM calls were made."
 > "I built a proactive data quality agent that mirrors what your CEO
 > described as Rivia's key product bet. It unifies AACT registry,
 > PubMed, and OpenFDA into coherent findings — surfacing issues
-> no single-source system can detect. It includes a pre-trained
-> completion risk model trained on 573,000 real trials, full
-> LLMOps instrumentation, and auditable multi-source provenance
-> on every finding. Happy to walk through the architecture on a call."
+> no single-source system can detect. It includes a v2 XGBoost
+> completion-risk model (AUC=0.799 on 22K real AACT trials) with
+> reliability-gated escalation, a 6-node LangGraph agent that
+> clusters findings into root causes, full LLMOps instrumentation,
+> and auditable multi-source provenance on every finding. Live demo
+> ships pre-computed reports so the architecture is visible without
+> exposing API keys. Happy to walk through it on a call."
