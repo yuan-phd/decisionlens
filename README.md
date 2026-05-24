@@ -27,9 +27,7 @@ The output is a structured scan report with full provenance — every finding tr
 
 ## Architecture
 
-```
-![Agentic architecture](/figures/architecture.png)
-```
+![Agentic architecture](figures/architecture.png)
 
 ---
 
