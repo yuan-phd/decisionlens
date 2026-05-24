@@ -28,37 +28,7 @@ The output is a structured scan report with full provenance — every finding tr
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                    LangGraph Agent (5 nodes)                  │
-│                                                               │
-│  Planning ──► Scan ──► Review ──► Context Enrichment ──►     │
-│                         ▲              │ (loop max 3)         │
-│                         └──────────────┘                      │
-│                                    ──► Prioritisation         │
-│                                    ──► Root Cause Clustering  │
-└───────────┬──────────────────────┬────────────────────────────┘
-            │                      │
-┌───────────▼──────┐  ┌───────────▼──────────────────────────┐
-│   3 MCP Servers   │  │        Models & Evaluation            │
-│                   │  │                                       │
-│  AACT (parquet)   │  │  XGBoost classifier (AUC=0.799)      │
-│  PubMed (API)     │  │  Cox PH survival (46,897 obs)        │
-│  OpenFDA (API)    │  │  Risk escalation logic                │
-│                   │  │  18-sample gold set (κ=0.596)         │
-│  Cache layer      │  │  Drug name sanitiser                  │
-└──────────────────┘  └───────────────────────────────────────┘
-            │
-┌───────────▼──────────────────────────────────────────────────┐
-│                    Streamlit Dashboard                         │
-│                                                               │
-│  Page 1: Scan Overview — metrics, LLMOps, cluster preview    │
-│  Page 2: Prioritised Issues — two-layer display, filters     │
-│  Page 3: Trial Deep Dive — metadata, PubMed, OpenFDA        │
-│  Page 4: Audit Log & Evaluation — per-call trace, gold set   │
-│                                                               │
-│  app_v2.py    — live mode (runs agent, requires OpenAI key)  │
-│  app_demo.py  — demo mode (pre-computed reports, zero deps)  │
-└──────────────────────────────────────────────────────────────┘
+![Agentic architecture](/figures/architecture.png)
 ```
 
 ---
